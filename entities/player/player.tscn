@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://oalne3evw244"]
+[gd_scene load_steps=15 format=3 uid="uid://oalne3evw244"]
 
 [ext_resource type="Script" uid="uid://8bghf13kjjsj" path="res://entities/player/player.gd" id="1_sglur"]
 [ext_resource type="Texture2D" uid="uid://chdkmvgxhhpxt" path="res://assets/texture/player/player.png" id="1_symyc"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://cv6fopcv2mvlb" path="res://entities/player/states/idle_state.gd" id="4_fkugw"]
 [ext_resource type="Script" uid="uid://byhucwtlm0ibc" path="res://entities/player/states/move_state.gd" id="5_8fjmc"]
 [ext_resource type="Script" uid="uid://bw60t7nux1n3i" path="res://entities/player/states/dash_state.gd" id="6_8fjmc"]
+[ext_resource type="Script" uid="uid://dxwvm1no7cvke" path="res://commons/object_pooling/object_pool.gd" id="8_26q78"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_abrql"]
 atlas = ExtResource("1_symyc")
@@ -58,10 +59,12 @@ script = ExtResource("1_sglur")
 rotation = -1.5708
 sprite_frames = SubResource("SpriteFrames_sfv1e")
 autoplay = "default"
-frame_progress = 0.841182
+frame_progress = 0.640853
 
 [node name="InputHandler" type="Node" parent="."]
 script = ExtResource("3_qiwj3")
+
+[node name="ShootCooldown" type="Timer" parent="InputHandler"]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("actor", "starting_state")]
 script = ExtResource("2_abrql")
@@ -84,4 +87,9 @@ one_shot = true
 [node name="DashCooldownTimer" type="Timer" parent="StateMachine/Dash"]
 one_shot = true
 
+[node name="BulletPool" type="Node" parent="."]
+script = ExtResource("8_26q78")
+metadata/_custom_type_script = "uid://dxwvm1no7cvke"
+
+[connection signal="timeout" from="InputHandler/ShootCooldown" to="InputHandler" method="_on_shoot_cooldown_timeout"]
 [connection signal="timeout" from="StateMachine/Dash/DashTimer" to="StateMachine/Dash" method="_on_dash_timer_timeout"]

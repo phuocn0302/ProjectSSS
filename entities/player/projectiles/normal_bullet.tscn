@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cehn3l3u5h5qg"]
+
+[ext_resource type="Script" uid="uid://bg4gv4kmpx0mh" path="res://entities/projectiles/projectile.gd" id="1_6844i"]
+[ext_resource type="Texture2D" uid="uid://vd3lnd6eiuxs" path="res://assets/texture/projectiles/player/player_normal_proj.png" id="1_ax23f"]
+
+[node name="NormalBullet" type="Node2D"]
+script = ExtResource("1_6844i")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.5708
+texture = ExtResource("1_ax23f")
