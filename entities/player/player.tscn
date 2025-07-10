@@ -1,0 +1,87 @@
+[gd_scene load_steps=14 format=3 uid="uid://oalne3evw244"]
+
+[ext_resource type="Script" uid="uid://8bghf13kjjsj" path="res://entities/player/player.gd" id="1_sglur"]
+[ext_resource type="Texture2D" uid="uid://chdkmvgxhhpxt" path="res://assets/texture/player/player.png" id="1_symyc"]
+[ext_resource type="Script" uid="uid://dg0til6w02wfe" path="res://commons/state_machine/state_machine.gd" id="2_abrql"]
+[ext_resource type="Script" uid="uid://dw1jqpnd6whbj" path="res://entities/player/player_input_handler.gd" id="3_qiwj3"]
+[ext_resource type="Script" uid="uid://cv6fopcv2mvlb" path="res://entities/player/states/idle_state.gd" id="4_fkugw"]
+[ext_resource type="Script" uid="uid://byhucwtlm0ibc" path="res://entities/player/states/move_state.gd" id="5_8fjmc"]
+[ext_resource type="Script" uid="uid://bw60t7nux1n3i" path="res://entities/player/states/dash_state.gd" id="6_8fjmc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_abrql"]
+atlas = ExtResource("1_symyc")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sglur"]
+atlas = ExtResource("1_symyc")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bls4j"]
+atlas = ExtResource("1_symyc")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkugw"]
+atlas = ExtResource("1_symyc")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8fjmc"]
+atlas = ExtResource("1_symyc")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sfv1e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_abrql")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sglur")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bls4j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fkugw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8fjmc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_sglur")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = -1.5708
+sprite_frames = SubResource("SpriteFrames_sfv1e")
+autoplay = "default"
+frame_progress = 0.841182
+
+[node name="InputHandler" type="Node" parent="."]
+script = ExtResource("3_qiwj3")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("actor", "starting_state")]
+script = ExtResource("2_abrql")
+actor = NodePath("..")
+starting_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://dg0til6w02wfe"
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_fkugw")
+
+[node name="Move" type="Node" parent="StateMachine"]
+script = ExtResource("5_8fjmc")
+
+[node name="Dash" type="Node" parent="StateMachine"]
+script = ExtResource("6_8fjmc")
+
+[node name="DashTimer" type="Timer" parent="StateMachine/Dash"]
+one_shot = true
+
+[node name="DashCooldownTimer" type="Timer" parent="StateMachine/Dash"]
+one_shot = true
+
+[connection signal="timeout" from="StateMachine/Dash/DashTimer" to="StateMachine/Dash" method="_on_dash_timer_timeout"]
