@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bg4gv4kmpx0mh" path="res://entities/projectiles/projectile.gd" id="1_6844i"]
 [ext_resource type="Texture2D" uid="uid://vd3lnd6eiuxs" path="res://assets/texture/projectiles/player/player_normal_proj.png" id="1_ax23f"]
-[ext_resource type="Script" path="res://commons/components/hitbox_component.gd" id="3_a2sqb"]
+[ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://commons/components/hitbox_component.gd" id="3_a2sqb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a2sqb"]
 radius = 3.0
