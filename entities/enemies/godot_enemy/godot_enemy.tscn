@@ -1,8 +1,26 @@
-[gd_scene load_steps=7 format=3 uid="uid://7fx33mvlv67i"]
+[gd_scene load_steps=12 format=3 uid="uid://7fx33mvlv67i"]
 
 [ext_resource type="Texture2D" uid="uid://dsgkic5beqh6q" path="res://assets/texture/npc/enemies/godot_enemy.png" id="1_0dou4"]
 [ext_resource type="Script" uid="uid://dl3x41ndyxvmj" path="res://entities/enemies/godot_enemy/godot_enemy.gd" id="1_n6ru6"]
 [ext_resource type="Script" uid="uid://c7pvd7cesamyd" path="res://commons/components/move_component.gd" id="3_f2su7"]
+[ext_resource type="Script" path="res://commons/components/health_component.gd" id="4_a5kt4"]
+[ext_resource type="Script" path="res://commons/components/hitbox_component.gd" id="5_xfy8p"]
+[ext_resource type="Script" path="res://commons/components/hurtbox_component.gd" id="6_4o2ve"]
+
+[sub_resource type="Animation" id="Animation_f2su7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_n6ru6"]
 resource_name = "idle"
@@ -21,26 +39,17 @@ tracks/0/keys = {
 "values": [0.0, 0.261799, -0.261799, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_f2su7"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_a5kt4"]
 _data = {
 &"RESET": SubResource("Animation_f2su7"),
 &"idle": SubResource("Animation_n6ru6")
 }
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qav3f"]
+radius = 13.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5t7db"]
+radius = 17.0
 
 [node name="GodotEnemy" type="Node2D"]
 script = ExtResource("1_n6ru6")
@@ -58,5 +67,32 @@ autoplay = "idle"
 [node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("entity")]
 script = ExtResource("3_f2su7")
 move_type = 1
+speed = 0.0
 entity = NodePath("..")
 metadata/_custom_type_script = "uid://c7pvd7cesamyd"
+
+[node name="HealthComponent" type="Node" parent="." node_paths=PackedStringArray("entity")]
+script = ExtResource("4_a5kt4")
+max_health = 5.0
+entity = NodePath("..")
+metadata/_custom_type_script = "uid://s7docibhn2wy"
+
+[node name="HitboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("entity")]
+collision_layer = 16
+script = ExtResource("5_xfy8p")
+entity = NodePath("..")
+metadata/_custom_type_script = "uid://dkij5hjdnu422"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("CircleShape2D_qav3f")
+
+[node name="HurtboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component", "entity")]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("6_4o2ve")
+health_component = NodePath("../HealthComponent")
+entity = NodePath("..")
+metadata/_custom_type_script = "uid://chv2lphkgpnes"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CircleShape2D_5t7db")

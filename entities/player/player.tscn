@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://oalne3evw244"]
+[gd_scene load_steps=18 format=3 uid="uid://oalne3evw244"]
 
 [ext_resource type="Script" uid="uid://8bghf13kjjsj" path="res://entities/player/player.gd" id="1_sglur"]
 [ext_resource type="Texture2D" uid="uid://chdkmvgxhhpxt" path="res://assets/texture/player/player.png" id="1_symyc"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://byhucwtlm0ibc" path="res://entities/player/states/move_state.gd" id="5_8fjmc"]
 [ext_resource type="Script" uid="uid://bw60t7nux1n3i" path="res://entities/player/states/dash_state.gd" id="6_8fjmc"]
 [ext_resource type="Script" uid="uid://dxwvm1no7cvke" path="res://commons/object_pooling/object_pool.gd" id="8_26q78"]
+[ext_resource type="Script" path="res://commons/components/hurtbox_component.gd" id="9_bectd"]
+[ext_resource type="Script" path="res://commons/components/health_component.gd" id="9_wvtmh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_abrql"]
 atlas = ExtResource("1_symyc")
@@ -52,6 +54,9 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_wvtmh"]
+radius = 5.09902
+
 [node name="Player" type="Node2D"]
 script = ExtResource("1_sglur")
 
@@ -90,6 +95,22 @@ one_shot = true
 [node name="BulletPool" type="Node" parent="."]
 script = ExtResource("8_26q78")
 metadata/_custom_type_script = "uid://dxwvm1no7cvke"
+
+[node name="HealthComponent" type="Node" parent="." node_paths=PackedStringArray("entity")]
+script = ExtResource("9_wvtmh")
+max_health = 3.0
+entity = NodePath("..")
+metadata/_custom_type_script = "uid://s7docibhn2wy"
+
+[node name="HurtboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component", "entity")]
+collision_mask = 0
+script = ExtResource("9_bectd")
+health_component = NodePath("../HealthComponent")
+entity = NodePath("..")
+metadata/_custom_type_script = "uid://chv2lphkgpnes"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CircleShape2D_wvtmh")
 
 [connection signal="timeout" from="InputHandler/ShootCooldown" to="InputHandler" method="_on_shoot_cooldown_timeout"]
 [connection signal="timeout" from="StateMachine/Dash/DashTimer" to="StateMachine/Dash" method="_on_dash_timer_timeout"]

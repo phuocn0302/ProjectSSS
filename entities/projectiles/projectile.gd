@@ -26,3 +26,7 @@ func start_lifetime_timer():
 		
 	lifetime_timer = get_tree().create_timer(lifetime)
 	lifetime_timer.timeout.connect(deactive)
+
+
+func _on_hitbox_component_hit() -> void:
+	self.deactive()
