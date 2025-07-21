@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://oalne3evw244"]
+[gd_scene load_steps=19 format=3 uid="uid://oalne3evw244"]
 
 [ext_resource type="Script" uid="uid://8bghf13kjjsj" path="res://entities/player/player.gd" id="1_sglur"]
 [ext_resource type="Texture2D" uid="uid://chdkmvgxhhpxt" path="res://assets/texture/player/player.png" id="1_symyc"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://dxwvm1no7cvke" path="res://commons/object_pooling/object_pool.gd" id="8_26q78"]
 [ext_resource type="Script" uid="uid://chv2lphkgpnes" path="res://commons/components/hurtbox_component.gd" id="9_bectd"]
 [ext_resource type="Script" uid="uid://s7docibhn2wy" path="res://commons/components/health_component.gd" id="9_wvtmh"]
+[ext_resource type="Script" uid="uid://c3dex51h0lylc" path="res://commons/components/hit_flash_component.gd" id="11_7thud"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_abrql"]
 atlas = ExtResource("1_symyc")
@@ -111,6 +112,12 @@ metadata/_custom_type_script = "uid://chv2lphkgpnes"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CircleShape2D_wvtmh")
+
+[node name="HitFlashComponent" type="Node" parent="." node_paths=PackedStringArray("health_component", "entity")]
+script = ExtResource("11_7thud")
+health_component = NodePath("../HealthComponent")
+entity = NodePath("..")
+metadata/_custom_type_script = "uid://c3dex51h0lylc"
 
 [connection signal="timeout" from="InputHandler/ShootCooldown" to="InputHandler" method="_on_shoot_cooldown_timeout"]
 [connection signal="timeout" from="StateMachine/Dash/DashTimer" to="StateMachine/Dash" method="_on_dash_timer_timeout"]
