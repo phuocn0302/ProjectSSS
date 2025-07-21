@@ -36,6 +36,7 @@ func restore_health(heal_amount: float) -> void:
 func die():
 	if die_sfx:
 		var sfx = die_sfx.instantiate()
+		sfx.global_position = entity.global_position
 		get_tree().current_scene.add_child(sfx)
 	
 	if queue_free_on_die:
