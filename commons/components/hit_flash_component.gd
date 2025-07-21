@@ -24,8 +24,7 @@ func _ready() -> void:
 	health_component.health_depleted.connect(flash)
 
 
-# health_depleted signal has 1 arg
-func flash(_t: float) -> void:
+func flash(args: Variant) -> void:
 	entity.material = _flash_mat
 	_flash_mat.set_shader_parameter("flash_strength", 1)
 	
