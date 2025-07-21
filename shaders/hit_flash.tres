@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bivmy3cu8m11a"]
+
+[ext_resource type="Shader" uid="uid://cocss2t024fty" path="res://shaders/hit_flash.gdshader" id="1_4opve"]
+
+[resource]
+shader = ExtResource("1_4opve")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_strength = 0.0
