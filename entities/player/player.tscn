@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://oalne3evw244"]
+[gd_scene load_steps=22 format=3 uid="uid://oalne3evw244"]
 
 [ext_resource type="Script" uid="uid://8bghf13kjjsj" path="res://entities/player/player.gd" id="1_sglur"]
 [ext_resource type="Texture2D" uid="uid://chdkmvgxhhpxt" path="res://assets/texture/player/player.png" id="1_symyc"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dfl00xfc5e7kj" path="res://particles/explode_particles.tscn" id="10_j3ovn"]
 [ext_resource type="Script" uid="uid://c3dex51h0lylc" path="res://commons/components/hit_flash_component.gd" id="11_7thud"]
 [ext_resource type="Script" uid="uid://bn8rssbc5dw31" path="res://commons/components/frame_freeze_component.gd" id="13_j3ovn"]
+[ext_resource type="Script" uid="uid://1hf68snymgbl" path="res://commons/components/ghost_trailing_component.gd" id="14_afbqv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_abrql"]
 atlas = ExtResource("1_symyc")
@@ -127,6 +128,16 @@ script = ExtResource("13_j3ovn")
 entity = NodePath("..")
 metadata/_custom_type_script = "uid://bn8rssbc5dw31"
 
+[node name="GhostTrailingComponent" type="Node" parent="." node_paths=PackedStringArray("anim_sprite", "entity")]
+script = ExtResource("14_afbqv")
+ghost_spawn_interval = 0.01
+anim_sprite = NodePath("../AnimatedSprite2D")
+active = false
+entity = NodePath("..")
+metadata/_custom_type_script = "uid://1hf68snymgbl"
+
 [connection signal="timeout" from="InputHandler/ShootCooldown" to="InputHandler" method="_on_shoot_cooldown_timeout"]
+[connection signal="end_dashed" from="StateMachine/Dash" to="GhostTrailingComponent" method="deactivate"]
+[connection signal="just_dashed" from="StateMachine/Dash" to="GhostTrailingComponent" method="activate"]
 [connection signal="timeout" from="StateMachine/Dash/DashTimer" to="StateMachine/Dash" method="_on_dash_timer_timeout"]
 [connection signal="health_depleted" from="HealthComponent" to="FrameFreezeComponent" method="freeze"]

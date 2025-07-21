@@ -16,3 +16,13 @@ var _active := true
 func _ready() -> void:
 	if not Engine.is_editor_hint() and entity == null:
 		assert(false, "[Component] Entity is required")
+		
+	active = active
+
+
+func activate() -> void:
+	active = true
+
+
+func deactivate() -> void:
+	active = false

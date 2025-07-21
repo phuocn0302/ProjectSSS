@@ -1,6 +1,9 @@
 class_name PlayerDashState
 extends PlayerState
 
+signal just_dashed
+signal end_dashed
+
 @onready var dash_timer: Timer = $DashTimer
 @onready var dash_cooldown_timer: Timer = $DashCooldownTimer
 
@@ -16,6 +19,7 @@ func enter() -> void:
 		dash_direction = player.input_vector 
 	
 	dash_timer.start(player.dash_time)
+	just_dashed.emit()
 
 
 func process_physics(_delta: float) -> void:
@@ -23,9 +27,9 @@ func process_physics(_delta: float) -> void:
 
 
 func exit() -> void:
+	end_dashed.emit()
 	if dash_cooldown_timer.is_stopped():
 		dash_cooldown_timer.start(player.dash_cooldown)
-
 
 func _on_dash_timer_timeout() -> void:
 	state_machine.change_state(states["Idle"])
