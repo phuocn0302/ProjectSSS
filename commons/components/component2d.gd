@@ -1,5 +1,5 @@
-class_name Component
-extends Node
+class_name Component2D
+extends Node2D
 
 var _active := true
 
@@ -13,12 +13,8 @@ var _active := true
 		else:
 			deactivate()
 
-@export var entity: Entity
 
 func _ready() -> void:
-	if not Engine.is_editor_hint() and entity == null:
-		assert(false, "[Component] Entity is required")
-		
 	call_deferred("_apply_active_state")
 
 

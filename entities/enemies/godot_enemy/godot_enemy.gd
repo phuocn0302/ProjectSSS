@@ -1,2 +1,2 @@
 class_name GodotEnemy
-extends Entity
+extends Enemy

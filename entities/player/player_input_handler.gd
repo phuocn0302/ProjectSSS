@@ -1,6 +1,8 @@
 class_name PlayerInputHandler
 extends Node
 
+signal shoot_requested
+
 @onready var shoot_cooldown: Timer = $ShootCooldown
 
 var player: Player
@@ -35,10 +37,7 @@ func _input(event: InputEvent) -> void:
 
 
 func shoot() -> void:
-	var bullet = player.bullet_pool.get_instance()
-	bullet.global_position = player.global_position
-	bullet.direction = Vector2.UP
-	
+	shoot_requested.emit()
 	shoot_cooldown.start()
 
 
