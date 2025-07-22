@@ -24,6 +24,12 @@ window/size/window_height_override=1280
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[global_group]
+
+player=""
+enemy=""
+e_godot=""
+
 [input]
 
 move_up={

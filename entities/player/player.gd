@@ -1,7 +1,6 @@
 class_name Player
 extends Entity
 
-
 const NORMAL_BULLET = preload("res://entities/player/projectiles/normal_bullet.tscn")
 
 @export_category("Movement")
@@ -25,6 +24,10 @@ const NORMAL_BULLET = preload("res://entities/player/projectiles/normal_bullet.t
 @onready var dash_state: PlayerDashState = $StateMachine/Dash
 
 var input_vector := Vector2.ZERO
+
+func _enter_tree() -> void:
+	add_to_group("player")
+
 
 func _ready() -> void:
 	state_machine.setup(self)
