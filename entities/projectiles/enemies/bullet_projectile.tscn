@@ -1,0 +1,128 @@
+[gd_scene load_steps=12 format=3 uid="uid://c7rb61a1nr8dn"]
+
+[ext_resource type="Script" uid="uid://bg4gv4kmpx0mh" path="res://entities/projectiles/projectile.gd" id="1_oa07u"]
+[ext_resource type="Texture2D" uid="uid://bxvabngipk5ie" path="res://assets/texture/projectiles/npc/bullet_1.png" id="2_1kvgc"]
+[ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://commons/components/hitbox_component.gd" id="3_22e3u"]
+[ext_resource type="Texture2D" uid="uid://8wkr5neo2iq7" path="res://assets/texture/sfx/4x_white_particle.png" id="4_1kvgc"]
+[ext_resource type="Script" uid="uid://dxeqbg4jauco4" path="res://particles/projectile_particles.gd" id="4_nkr8c"]
+
+[sub_resource type="Shader" id="Shader_p2ihr"]
+code = "shader_type canvas_item;
+
+// === User Controls ===
+
+// Color of the outline
+uniform vec4 outline_color    : source_color = vec4(1.0);
+// How far to search around a pixel for solid neighbors (in texels)
+uniform float outline_size    : hint_range(0.0, 16.0, 0.1) = 1.0;
+// Minimum alpha for a pixel to be considered solid
+uniform float alpha_threshold : hint_range(0.0, 1.0, 0.01) = 0.0;
+// Number of directions to sample from (max 8)
+uniform int outline_samples   : hint_range(4, 8) = 4;
+// Color to blend with solid pixels (alpha is blend strength)
+uniform vec4 shade_color      : source_color = vec4(1.0, 1.0, 1.0, 0.5);
+
+// === Outline Sampling Directions ===
+
+const vec2[8] DIRS = vec2[8]
+(vec2(1.0, 0.0), vec2(0.0, 1.0),  vec2(-1.0, 0.0),  vec2(0.0, -1.0),
+ vec2(1.0, 1.0), vec2(-1.0, 1.0), vec2(-1.0, -1.0), vec2(1.0, -1.0));
+
+// === Main Fragment ===
+
+void fragment() {
+	vec4 tex = texture(TEXTURE, UV);
+	float alpha = tex.a;
+
+	 // Skip fully transparent pixel with no outline
+	if (alpha <= 0.0 && outline_size <= 0.0) discard;
+
+	bool solid = alpha > alpha_threshold;
+	bool semi  = (alpha > 0.0) && !solid;
+	vec4 out_color = tex;
+
+	// Blend solid pixels toward the shade_color based on its alpha
+	if (solid && shade_color.a > 0.0) {
+		out_color.rgb = mix(tex.rgb, shade_color.rgb, shade_color.a);
+		out_color.a   = alpha;
+	}
+
+	bool found = false;
+
+	// If not solid, check surrounding pixels for solid neighbors
+	if (!solid && outline_size > 0.0) {
+		vec2 offset = TEXTURE_PIXEL_SIZE * outline_size;
+		for (int i = 0; i < outline_samples; i++) {
+			if (texture(TEXTURE, UV + DIRS[i] * offset).a > alpha_threshold) {
+				found = true;
+				break;
+			}
+		}
+	}
+
+	// Set final pixel color
+	if      (solid) COLOR = out_color;
+	else if (found) COLOR = outline_color;
+	else if (semi)  COLOR = tex;
+	else            discard;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8o3l0"]
+shader = SubResource("Shader_p2ihr")
+shader_parameter/outline_color = Color(1, 0, 0.0166664, 1)
+shader_parameter/outline_size = 1.0
+shader_parameter/alpha_threshold = 0.0
+shader_parameter/outline_samples = 4
+shader_parameter/shade_color = Color(1, 1, 1, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6r3my"]
+size = Vector2(5, 4)
+
+[sub_resource type="Curve" id="Curve_faxpo"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.919831, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wtblw"]
+curve = SubResource("Curve_faxpo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_22e3u"]
+lifetime_randomness = 0.4
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(-1, 0, 0)
+spread = 20.0
+initial_velocity_min = 50.0
+initial_velocity_max = 70.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_wtblw")
+
+[node name="BulletProjectile" type="Node2D"]
+script = ExtResource("1_oa07u")
+max_speed = 150.0
+lifetime = 5.0
+metadata/_custom_type_script = "uid://bg4gv4kmpx0mh"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_8o3l0")
+texture = ExtResource("2_1kvgc")
+
+[node name="HitboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("entity")]
+script = ExtResource("3_22e3u")
+entity = NodePath("..")
+metadata/_custom_type_script = "uid://dkij5hjdnu422"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_6r3my")
+
+[node name="ProjectileParticles" type="GPUParticles2D" parent="." node_paths=PackedStringArray("projectile")]
+modulate = Color(1, 0, 0, 1)
+show_behind_parent = true
+scale = Vector2(1, 1.01896)
+texture = ExtResource("4_1kvgc")
+process_material = SubResource("ParticleProcessMaterial_22e3u")
+script = ExtResource("4_nkr8c")
+projectile = NodePath("..")
+metadata/_custom_type_script = "uid://dxeqbg4jauco4"
