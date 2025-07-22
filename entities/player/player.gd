@@ -16,9 +16,6 @@ const NORMAL_BULLET = preload("res://entities/player/projectiles/normal_bullet.t
 
 @export_category("Shoot")
 @export var shoot_interval: float = 0.2
-@export var bullet_pool_size: int = 20
-
-@onready var bullet_pool: ObjectPool = $BulletPool
 
 @onready var input_handler: PlayerInputHandler = $InputHandler
 
@@ -27,13 +24,11 @@ const NORMAL_BULLET = preload("res://entities/player/projectiles/normal_bullet.t
 @onready var move_state: PlayerMoveState = $StateMachine/Move
 @onready var dash_state: PlayerDashState = $StateMachine/Dash
 
-
 var input_vector := Vector2.ZERO
 
 func _ready() -> void:
 	state_machine.setup(self)
 	input_handler.setup(self, state_machine)
-	bullet_pool.setup(NORMAL_BULLET, bullet_pool_size)
 
 
 func _process(delta: float) -> void:

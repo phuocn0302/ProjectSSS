@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://oalne3evw244"]
+[gd_scene load_steps=23 format=3 uid="uid://oalne3evw244"]
 
 [ext_resource type="Script" uid="uid://8bghf13kjjsj" path="res://entities/player/player.gd" id="1_sglur"]
 [ext_resource type="Texture2D" uid="uid://chdkmvgxhhpxt" path="res://assets/texture/player/player.png" id="1_symyc"]
@@ -7,13 +7,14 @@
 [ext_resource type="Script" uid="uid://cv6fopcv2mvlb" path="res://entities/player/states/idle_state.gd" id="4_fkugw"]
 [ext_resource type="Script" uid="uid://byhucwtlm0ibc" path="res://entities/player/states/move_state.gd" id="5_8fjmc"]
 [ext_resource type="Script" uid="uid://bw60t7nux1n3i" path="res://entities/player/states/dash_state.gd" id="6_8fjmc"]
-[ext_resource type="Script" uid="uid://dxwvm1no7cvke" path="res://commons/object_pooling/object_pool.gd" id="8_26q78"]
 [ext_resource type="Script" uid="uid://chv2lphkgpnes" path="res://commons/components/hurtbox_component.gd" id="9_bectd"]
 [ext_resource type="Script" uid="uid://s7docibhn2wy" path="res://commons/components/health_component.gd" id="9_wvtmh"]
 [ext_resource type="PackedScene" uid="uid://dfl00xfc5e7kj" path="res://particles/explode_particles.tscn" id="10_j3ovn"]
 [ext_resource type="Script" uid="uid://c3dex51h0lylc" path="res://commons/components/hit_flash_component.gd" id="11_7thud"]
 [ext_resource type="Script" uid="uid://bn8rssbc5dw31" path="res://commons/components/frame_freeze_component.gd" id="13_j3ovn"]
 [ext_resource type="Script" uid="uid://1hf68snymgbl" path="res://commons/components/ghost_trailing_component.gd" id="14_afbqv"]
+[ext_resource type="Script" uid="uid://ch7r1mf7ar7uc" path="res://commons/components/projectile_spawner_component.gd" id="15_gx6sm"]
+[ext_resource type="PackedScene" uid="uid://cehn3l3u5h5qg" path="res://entities/player/projectiles/normal_bullet.tscn" id="16_yqrof"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_abrql"]
 atlas = ExtResource("1_symyc")
@@ -96,10 +97,6 @@ one_shot = true
 [node name="DashCooldownTimer" type="Timer" parent="StateMachine/Dash"]
 one_shot = true
 
-[node name="BulletPool" type="Node" parent="."]
-script = ExtResource("8_26q78")
-metadata/_custom_type_script = "uid://dxwvm1no7cvke"
-
 [node name="HealthComponent" type="Node" parent="." node_paths=PackedStringArray("entity")]
 script = ExtResource("9_wvtmh")
 max_health = 3.0
@@ -136,6 +133,14 @@ active = false
 entity = NodePath("..")
 metadata/_custom_type_script = "uid://1hf68snymgbl"
 
+[node name="ProjectileSpawner" type="Node2D" parent="."]
+position = Vector2(0, -7)
+script = ExtResource("15_gx6sm")
+projectile = ExtResource("16_yqrof")
+active = false
+metadata/_custom_type_script = "uid://ch7r1mf7ar7uc"
+
+[connection signal="shoot_requested" from="InputHandler" to="ProjectileSpawner" method="spawn"]
 [connection signal="timeout" from="InputHandler/ShootCooldown" to="InputHandler" method="_on_shoot_cooldown_timeout"]
 [connection signal="end_dashed" from="StateMachine/Dash" to="GhostTrailingComponent" method="deactivate"]
 [connection signal="just_dashed" from="StateMachine/Dash" to="GhostTrailingComponent" method="activate"]
