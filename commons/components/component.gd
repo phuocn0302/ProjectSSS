@@ -8,8 +8,10 @@ var _active := true
 		return _active
 	set(value):
 		_active = value
-		set_process(value)
-		set_physics_process(value)
+		if _active:
+			activate()
+		else:
+			deactivate()
 
 @export var entity: Entity
 
@@ -17,12 +19,17 @@ func _ready() -> void:
 	if not Engine.is_editor_hint() and entity == null:
 		assert(false, "[Component] Entity is required")
 		
-	active = active
+	call_deferred("_apply_active_state")
 
 
 func activate() -> void:
-	active = true
+	set_process(true)
+	set_physics_process(true)
 
+
+func _apply_active_state() -> void:
+	active = active
 
 func deactivate() -> void:
-	active = false
+	set_process(false)
+	set_physics_process(false)
