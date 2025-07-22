@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bvk5r1s5euot6"]
+[gd_scene load_steps=5 format=3 uid="uid://bvk5r1s5euot6"]
 
 [ext_resource type="PackedScene" uid="uid://oalne3evw244" path="res://entities/player/player.tscn" id="1_wmpie"]
 [ext_resource type="PackedScene" uid="uid://7fx33mvlv67i" path="res://entities/enemies/godot_enemy/godot_enemy.tscn" id="2_15tlm"]
+[ext_resource type="Script" uid="uid://duxclkhsalect" path="res://commons/components/circle_proj_spawner_component.gd" id="3_q0u38"]
+[ext_resource type="PackedScene" uid="uid://cehn3l3u5h5qg" path="res://entities/player/projectiles/normal_bullet.tscn" id="4_p3pgg"]
 
 [node name="TestScene" type="Node2D"]
 
@@ -10,3 +12,10 @@ position = Vector2(95, 274)
 
 [node name="GodotEnemy" parent="." instance=ExtResource("2_15tlm")]
 position = Vector2(84, 109)
+
+[node name="CircleProjectileSpawner" type="Node2D" parent="."]
+position = Vector2(69, 209)
+script = ExtResource("3_q0u38")
+rotate_pattern = true
+projectile = ExtResource("4_p3pgg")
+metadata/_custom_type_script = "uid://duxclkhsalect"
