@@ -16,6 +16,10 @@ func active() -> void:
 	start_lifetime_timer()
 
 
+func _process(delta: float) -> void:
+	self.global_rotation = direction.angle()
+
+
 func _physics_process(delta: float) -> void:
 	self.global_position += direction.normalized() * max_speed * delta
 
