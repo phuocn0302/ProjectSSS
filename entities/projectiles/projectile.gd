@@ -16,7 +16,7 @@ func active() -> void:
 	start_lifetime_timer()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	self.global_rotation = direction.angle()
 
 

@@ -9,7 +9,7 @@ func _exit_tree() -> void:
 		Engine.time_scale = 1.0
 
 
-func freeze(args: Variant) -> void:
+func freeze(_args: Variant) -> void:
 	Engine.time_scale = freeze_amount
 	await get_tree().create_timer(freeze_duration, true, false, true).timeout
 	Engine.time_scale = 1
