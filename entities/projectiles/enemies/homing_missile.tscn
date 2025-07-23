@@ -1,0 +1,124 @@
+[gd_scene load_steps=20 format=3 uid="uid://32h18qiocp2r"]
+
+[ext_resource type="Script" uid="uid://cgwba0ybyp5gu" path="res://entities/projectiles/homing_projectile.gd" id="1_5dux6"]
+[ext_resource type="Script" uid="uid://baka86c1c2sm2" path="res://entities/projectiles/projectile_stats.gd" id="2_m1htr"]
+[ext_resource type="Texture2D" uid="uid://b3vy0ravaq21x" path="res://assets/texture/projectiles/npc/missile_sheet.png" id="2_sus15"]
+[ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://commons/components/hitbox_component.gd" id="3_njtuk"]
+[ext_resource type="PackedScene" uid="uid://dfl00xfc5e7kj" path="res://particles/explode_particles.tscn" id="4_vyi8j"]
+[ext_resource type="Texture2D" uid="uid://8wkr5neo2iq7" path="res://assets/texture/sfx/4x_white_particle.png" id="5_ru0na"]
+[ext_resource type="Script" uid="uid://dxeqbg4jauco4" path="res://particles/projectile_particles.gd" id="6_m1htr"]
+
+[sub_resource type="Resource" id="Resource_csrul"]
+script = ExtResource("2_m1htr")
+max_speed = 70.0
+damage = 1.0
+life_time = 5.0
+sfx_color = Color(1, 0, 0, 1)
+metadata/_custom_type_script = "uid://baka86c1c2sm2"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mnpd4"]
+atlas = ExtResource("2_sus15")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_njtuk"]
+atlas = ExtResource("2_sus15")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vyi8j"]
+atlas = ExtResource("2_sus15")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ru0na"]
+atlas = ExtResource("2_sus15")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1htr"]
+atlas = ExtResource("2_sus15")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_csrul"]
+atlas = ExtResource("2_sus15")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a8cmh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mnpd4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_njtuk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vyi8j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ru0na")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m1htr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_csrul")
+}],
+"loop": true,
+"name": &"default",
+"speed": 16.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ru0na"]
+size = Vector2(10, 6)
+
+[sub_resource type="Curve" id="Curve_faxpo"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.919831, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wtblw"]
+curve = SubResource("Curve_faxpo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_csrul"]
+lifetime_randomness = 0.4
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(-1, 0, 0)
+spread = 20.0
+initial_velocity_min = 50.0
+initial_velocity_max = 70.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_wtblw")
+
+[node name="HomingMissile" type="Node2D"]
+scale = Vector2(1, 1.01068)
+script = ExtResource("1_5dux6")
+stats = SubResource("Resource_csrul")
+on_hide_sfx = ExtResource("4_vyi8j")
+metadata/_custom_type_script = "uid://cgwba0ybyp5gu"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-3, 0)
+sprite_frames = SubResource("SpriteFrames_a8cmh")
+autoplay = "default"
+frame_progress = 0.731974
+
+[node name="HitboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("entity")]
+collision_layer = 0
+monitorable = false
+script = ExtResource("3_njtuk")
+on_hit_sfx = ExtResource("4_vyi8j")
+entity = NodePath("..")
+metadata/_custom_type_script = "uid://dkij5hjdnu422"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("RectangleShape2D_ru0na")
+
+[node name="ProjectileParticles" type="GPUParticles2D" parent="." node_paths=PackedStringArray("projectile")]
+show_behind_parent = true
+texture = ExtResource("5_ru0na")
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_csrul")
+script = ExtResource("6_m1htr")
+projectile = NodePath("..")
+metadata/_custom_type_script = "uid://dxeqbg4jauco4"
+
+[connection signal="hit" from="HitboxComponent" to="." method="_on_hitbox_component_hit"]

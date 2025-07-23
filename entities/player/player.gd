@@ -1,7 +1,7 @@
 class_name Player
 extends Entity
 
-const NORMAL_BULLET = preload("res://entities/player/projectiles/normal_bullet.tscn")
+const NORMAL_BULLET = preload("res://entities/projectiles/player/normal_bullet.tscn")
 
 @export_category("Movement")
 @export var max_move_speed: float = 150

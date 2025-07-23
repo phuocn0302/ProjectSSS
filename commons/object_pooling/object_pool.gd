@@ -1,48 +1,41 @@
 class_name ObjectPool
 extends Node
 
-@export var pool_size: int = 20
 @export var object_to_pool: PackedScene
 
-var pool: Array = []
+var available_pool: Array[PoolableEntity] = []
+var is_initialized := false
 
-var is_initialized: bool = false
-
-func _ready():
-	if not is_initialized and object_to_pool and pool.is_empty():
-		for i in pool_size:
-			add_to_pool()
-
-func setup(_object_to_pool: PackedScene, _pool_size: int = 20):
+func setup(_object_to_pool: PackedScene):
 	if is_initialized:
 		return
 	is_initialized = true
-	
-	self.object_to_pool = _object_to_pool
-	self.pool_size = _pool_size
-	
-	for i in pool_size:
-		add_to_pool()
-
-func get_instance() -> Node2D:
-	for obj in pool:
-		if not obj.visible:
-			obj.active()
-			return obj
-	
-	return add_to_pool()
+	object_to_pool = _object_to_pool
 
 
-func add_to_pool() -> Node2D:
-	var object = object_to_pool.instantiate() as PoolableEntity
+func _add_to_pool() -> PoolableEntity:
+	var obj: PoolableEntity
 	
-	if not object is PoolableEntity:
-		push_error("ObjectPool: Pooled scene must extend from PoolableEntity.")
-		return null
+	obj = object_to_pool.instantiate() as PoolableEntity
+	assert(obj is PoolableEntity)
+	
+	obj.pool = self
+	add_child(obj)
+	
+	return obj
 
-	object.deactive() 
+
+func get_instance() -> PoolableEntity:
+	var obj: PoolableEntity
 	
-	pool.append(object)
-	pool_size = pool.size()
-	self.add_child(object)
-	return object
+	if available_pool.is_empty():
+		obj = _add_to_pool()
+	else:
+		obj = available_pool.pop_back()
+	
+	obj.active()
+	return obj
+
+
+func return_instance(obj: PoolableEntity) -> void:
+	available_pool.push_back(obj)

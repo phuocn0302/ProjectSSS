@@ -6,7 +6,6 @@ extends Component
 @export var sprite: Sprite2D
 @export var anim_sprite: AnimatedSprite2D
 @export_range(0.0, 1.0) var ghost_transparency: float = 0.5
-@export var pool_size: int = 20
 
 var object_pool: ObjectPool
 var _spawn_timer := 0.0
@@ -18,7 +17,7 @@ func _ready() -> void:
 	add_child(object_pool)
 	
 	var ghost_scene := preload_ghost_scene()
-	object_pool.setup(ghost_scene, pool_size)
+	object_pool.setup(ghost_scene)
 
 
 func _physics_process(delta: float) -> void:

@@ -1,0 +1,65 @@
+[gd_scene load_steps=12 format=3 uid="uid://c7rb61a1nr8dn"]
+
+[ext_resource type="Script" uid="uid://bg4gv4kmpx0mh" path="res://entities/projectiles/projectile.gd" id="1_oa07u"]
+[ext_resource type="Texture2D" uid="uid://bxvabngipk5ie" path="res://assets/texture/projectiles/npc/bullet_1.png" id="2_1kvgc"]
+[ext_resource type="Script" uid="uid://baka86c1c2sm2" path="res://entities/projectiles/projectile_stats.gd" id="2_22e3u"]
+[ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://commons/components/hitbox_component.gd" id="3_22e3u"]
+[ext_resource type="Texture2D" uid="uid://8wkr5neo2iq7" path="res://assets/texture/sfx/4x_white_particle.png" id="4_1kvgc"]
+[ext_resource type="Script" uid="uid://dxeqbg4jauco4" path="res://particles/projectile_particles.gd" id="4_nkr8c"]
+
+[sub_resource type="Resource" id="Resource_nkr8c"]
+script = ExtResource("2_22e3u")
+max_speed = 120.0
+damage = 1.0
+life_time = 5.0
+sfx_color = Color(1, 0, 0, 1)
+metadata/_custom_type_script = "uid://baka86c1c2sm2"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6r3my"]
+size = Vector2(5, 4)
+
+[sub_resource type="Curve" id="Curve_faxpo"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.919831, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wtblw"]
+curve = SubResource("Curve_faxpo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_22e3u"]
+lifetime_randomness = 0.4
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(-1, 0, 0)
+spread = 20.0
+initial_velocity_min = 50.0
+initial_velocity_max = 70.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_wtblw")
+
+[node name="BulletProjectile" type="Node2D"]
+script = ExtResource("1_oa07u")
+stats = SubResource("Resource_nkr8c")
+metadata/_custom_type_script = "uid://bg4gv4kmpx0mh"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_1kvgc")
+
+[node name="HitboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("entity")]
+collision_layer = 0
+script = ExtResource("3_22e3u")
+entity = NodePath("..")
+metadata/_custom_type_script = "uid://dkij5hjdnu422"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_6r3my")
+
+[node name="ProjectileParticles" type="GPUParticles2D" parent="." node_paths=PackedStringArray("projectile")]
+show_behind_parent = true
+scale = Vector2(1, 1.01896)
+texture = ExtResource("4_1kvgc")
+process_material = SubResource("ParticleProcessMaterial_22e3u")
+script = ExtResource("4_nkr8c")
+projectile = NodePath("..")
+metadata/_custom_type_script = "uid://dxeqbg4jauco4"

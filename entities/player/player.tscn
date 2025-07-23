@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://bn8rssbc5dw31" path="res://commons/components/frame_freeze_component.gd" id="13_j3ovn"]
 [ext_resource type="Script" uid="uid://1hf68snymgbl" path="res://commons/components/ghost_trailing_component.gd" id="14_afbqv"]
 [ext_resource type="Script" uid="uid://ch7r1mf7ar7uc" path="res://commons/components/projectile_spawner_component.gd" id="15_gx6sm"]
-[ext_resource type="PackedScene" uid="uid://cehn3l3u5h5qg" path="res://entities/player/projectiles/normal_bullet.tscn" id="16_yqrof"]
+[ext_resource type="PackedScene" uid="uid://cehn3l3u5h5qg" path="res://entities/projectiles/player/normal_bullet.tscn" id="16_yqrof"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_abrql"]
 atlas = ExtResource("1_symyc")
