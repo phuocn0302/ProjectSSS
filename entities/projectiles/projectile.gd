@@ -52,12 +52,15 @@ func apply_stats():
 
 func active() -> void:
 	super.active()
+	if hitbox_component:
+		hitbox_component.activate()
 	start_lifetime_timer()
 
 
 func deactive() -> void:
 	super.deactive()
-	
+	if hitbox_component:
+		hitbox_component.deactivate()
 	if on_hide_sfx:
 		_spawn_sfx(on_hide_sfx)
 
