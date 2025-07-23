@@ -8,8 +8,11 @@ var _active := true
 		return _active
 	set(value):
 		_active = value
-		self.set_deferred("monitoring", value)
-		self.set_deferred("monitorable", value)
+		if value:
+			activate()
+		else:
+			deactivate()
+
 
 @export var entity: Entity
 
@@ -27,3 +30,13 @@ func on_area_entered(_area: Area2D) -> void:
 
 func on_area_exit(_area: Area2D) -> void:
 	pass
+
+
+func activate() -> void:
+	self.set_deferred("monitoring", true)
+	self.set_deferred("monitorable", true)
+
+
+func deactivate() -> void:
+	self.set_deferred("monitoring", false)
+	self.set_deferred("monitorable", false)

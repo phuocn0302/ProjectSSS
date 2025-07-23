@@ -109,6 +109,7 @@ material = SubResource("ShaderMaterial_8o3l0")
 texture = ExtResource("2_1kvgc")
 
 [node name="HitboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("entity")]
+collision_layer = 0
 script = ExtResource("3_22e3u")
 entity = NodePath("..")
 metadata/_custom_type_script = "uid://dkij5hjdnu422"

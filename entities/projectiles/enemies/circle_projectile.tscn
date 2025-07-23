@@ -98,7 +98,7 @@ initial_velocity_max = 50.0
 gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_wtblw")
 
-[node name="Projectile" type="Node2D"]
+[node name="CircleProjectile" type="Node2D"]
 script = ExtResource("1_nyhnm")
 max_speed = 150.0
 lifetime = 5.0
@@ -109,7 +109,7 @@ material = SubResource("ShaderMaterial_o0fp3")
 texture = ExtResource("3_1dfqm")
 
 [node name="HitboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("entity")]
-collision_layer = 32
+collision_layer = 0
 script = ExtResource("4_80hcv")
 entity = NodePath("..")
 metadata/_custom_type_script = "uid://dkij5hjdnu422"
