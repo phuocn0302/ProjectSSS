@@ -11,7 +11,7 @@ uniform float alpha_threshold : hint_range(0.0, 1.0, 0.01) = 0.0;
 // Number of directions to sample from (max 8)
 uniform int outline_samples   : hint_range(4, 8) = 4;
 // Color to blend with solid pixels (alpha is blend strength)
-uniform vec4 shade_color      : source_color = vec4(1.0, 1.0, 1.0, 0.5); 
+uniform vec4 shade_color      : source_color = vec4(1.0, 1.0, 1.0, 0.0); 
 
 // === Outline Sampling Directions ===
 

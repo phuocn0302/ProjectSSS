@@ -1,20 +1,20 @@
 [gd_scene load_steps=13 format=3 uid="uid://cehn3l3u5h5qg"]
 
 [ext_resource type="Script" uid="uid://bg4gv4kmpx0mh" path="res://entities/projectiles/projectile.gd" id="1_2usd3"]
-[ext_resource type="Shader" uid="uid://c1tw86u0jw8mt" path="res://shaders/outline.gdshader" id="2_lg1uu"]
+[ext_resource type="Script" uid="uid://baka86c1c2sm2" path="res://entities/projectiles/projectile_stats.gd" id="2_q0duf"]
 [ext_resource type="Texture2D" uid="uid://vd3lnd6eiuxs" path="res://assets/texture/projectiles/player/player_normal_proj.png" id="3_q0duf"]
 [ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://commons/components/hitbox_component.gd" id="4_j3t8y"]
 [ext_resource type="PackedScene" uid="uid://bt10he0p0pvkk" path="res://particles/projectile_hit_particles.tscn" id="5_y67en"]
 [ext_resource type="Texture2D" uid="uid://8wkr5neo2iq7" path="res://assets/texture/sfx/4x_white_particle.png" id="6_dk60t"]
 [ext_resource type="Script" uid="uid://dxeqbg4jauco4" path="res://particles/projectile_particles.gd" id="7_3n6ku"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vrt1e"]
-shader = ExtResource("2_lg1uu")
-shader_parameter/outline_color = Color(0.65098, 0.890196, 0.631373, 1)
-shader_parameter/outline_size = 1.0
-shader_parameter/alpha_threshold = 0.0
-shader_parameter/outline_samples = 4
-shader_parameter/shade_color = Color(1, 1, 1, 0.5)
+[sub_resource type="Resource" id="Resource_j3t8y"]
+script = ExtResource("2_q0duf")
+max_speed = 200.0
+damage = 1.0
+life_time = 5.0
+sfx_color = Color(0, 0.88944, 0.958787, 1)
+metadata/_custom_type_script = "uid://baka86c1c2sm2"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a2sqb"]
 radius = 3.0
@@ -40,9 +40,11 @@ scale_curve = SubResource("CurveTexture_wtblw")
 
 [node name="NormalBullet" type="Node2D"]
 script = ExtResource("1_2usd3")
+stats = SubResource("Resource_j3t8y")
+on_hide_sfx = ExtResource("5_y67en")
+metadata/_custom_type_script = "uid://bg4gv4kmpx0mh"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_vrt1e")
 texture = ExtResource("3_q0duf")
 
 [node name="HitboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("entity")]
@@ -57,7 +59,6 @@ metadata/_custom_type_script = "uid://dkij5hjdnu422"
 shape = SubResource("CircleShape2D_a2sqb")
 
 [node name="ProjectileParticles" type="GPUParticles2D" parent="." node_paths=PackedStringArray("projectile")]
-modulate = Color(0.65098, 0.890196, 0.631373, 1)
 show_behind_parent = true
 amount = 4
 texture = ExtResource("6_dk60t")

@@ -1,81 +1,20 @@
 [gd_scene load_steps=20 format=3 uid="uid://32h18qiocp2r"]
 
 [ext_resource type="Script" uid="uid://cgwba0ybyp5gu" path="res://entities/projectiles/homing_projectile.gd" id="1_5dux6"]
+[ext_resource type="Script" uid="uid://baka86c1c2sm2" path="res://entities/projectiles/projectile_stats.gd" id="2_m1htr"]
 [ext_resource type="Texture2D" uid="uid://b3vy0ravaq21x" path="res://assets/texture/projectiles/npc/missile_sheet.png" id="2_sus15"]
 [ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://commons/components/hitbox_component.gd" id="3_njtuk"]
 [ext_resource type="PackedScene" uid="uid://dfl00xfc5e7kj" path="res://particles/explode_particles.tscn" id="4_vyi8j"]
 [ext_resource type="Texture2D" uid="uid://8wkr5neo2iq7" path="res://assets/texture/sfx/4x_white_particle.png" id="5_ru0na"]
 [ext_resource type="Script" uid="uid://dxeqbg4jauco4" path="res://particles/projectile_particles.gd" id="6_m1htr"]
 
-[sub_resource type="Shader" id="Shader_njtuk"]
-code = "shader_type canvas_item;
-
-// === User Controls ===
-
-// Color of the outline
-uniform vec4 outline_color    : source_color = vec4(1.0);
-// How far to search around a pixel for solid neighbors (in texels)
-uniform float outline_size    : hint_range(0.0, 16.0, 0.1) = 1.0;
-// Minimum alpha for a pixel to be considered solid
-uniform float alpha_threshold : hint_range(0.0, 1.0, 0.01) = 0.0;
-// Number of directions to sample from (max 8)
-uniform int outline_samples   : hint_range(4, 8) = 4;
-// Color to blend with solid pixels (alpha is blend strength)
-uniform vec4 shade_color      : source_color = vec4(1.0, 1.0, 1.0, 0.5);
-
-// === Outline Sampling Directions ===
-
-const vec2[8] DIRS = vec2[8]
-(vec2(1.0, 0.0), vec2(0.0, 1.0),  vec2(-1.0, 0.0),  vec2(0.0, -1.0),
- vec2(1.0, 1.0), vec2(-1.0, 1.0), vec2(-1.0, -1.0), vec2(1.0, -1.0));
-
-// === Main Fragment ===
-
-void fragment() {
-	vec4 tex = texture(TEXTURE, UV);
-	float alpha = tex.a;
-
-	 // Skip fully transparent pixel with no outline
-	if (alpha <= 0.0 && outline_size <= 0.0) discard;
-
-	bool solid = alpha > alpha_threshold;
-	bool semi  = (alpha > 0.0) && !solid;
-	vec4 out_color = tex;
-
-	// Blend solid pixels toward the shade_color based on its alpha
-	if (solid && shade_color.a > 0.0) {
-		out_color.rgb = mix(tex.rgb, shade_color.rgb, shade_color.a);
-		out_color.a   = alpha;
-	}
-
-	bool found = false;
-
-	// If not solid, check surrounding pixels for solid neighbors
-	if (!solid && outline_size > 0.0) {
-		vec2 offset = TEXTURE_PIXEL_SIZE * outline_size;
-		for (int i = 0; i < outline_samples; i++) {
-			if (texture(TEXTURE, UV + DIRS[i] * offset).a > alpha_threshold) {
-				found = true;
-				break;
-			}
-		}
-	}
-
-	// Set final pixel color
-	if      (solid) COLOR = out_color;
-	else if (found) COLOR = outline_color;
-	else if (semi)  COLOR = tex;
-	else            discard;
-}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vyi8j"]
-shader = SubResource("Shader_njtuk")
-shader_parameter/outline_color = Color(1, 0, 0.0166664, 1)
-shader_parameter/outline_size = 1.0
-shader_parameter/alpha_threshold = 0.0
-shader_parameter/outline_samples = 4
-shader_parameter/shade_color = Color(1, 1, 1, 0)
+[sub_resource type="Resource" id="Resource_csrul"]
+script = ExtResource("2_m1htr")
+max_speed = 70.0
+damage = 1.0
+life_time = 5.0
+sfx_color = Color(1, 0, 0, 1)
+metadata/_custom_type_script = "uid://baka86c1c2sm2"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mnpd4"]
 atlas = ExtResource("2_sus15")
@@ -152,14 +91,11 @@ scale_curve = SubResource("CurveTexture_wtblw")
 [node name="HomingMissile" type="Node2D"]
 scale = Vector2(1, 1.01068)
 script = ExtResource("1_5dux6")
-max_speed = 70.0
-lifetime = 10.0
-on_hit_sfx = ExtResource("4_vyi8j")
+stats = SubResource("Resource_csrul")
 on_hide_sfx = ExtResource("4_vyi8j")
 metadata/_custom_type_script = "uid://cgwba0ybyp5gu"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_vyi8j")
 position = Vector2(-3, 0)
 sprite_frames = SubResource("SpriteFrames_a8cmh")
 autoplay = "default"
@@ -177,7 +113,6 @@ metadata/_custom_type_script = "uid://dkij5hjdnu422"
 shape = SubResource("RectangleShape2D_ru0na")
 
 [node name="ProjectileParticles" type="GPUParticles2D" parent="." node_paths=PackedStringArray("projectile")]
-modulate = Color(1, 0, 0, 1)
 show_behind_parent = true
 texture = ExtResource("5_ru0na")
 explosiveness = 1.0

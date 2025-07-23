@@ -1,17 +1,53 @@
 class_name Projectile
 extends PoolableEntity
 
-@export var direction: Vector2 = Vector2.UP
-@export var max_speed: float = 300
-@export var lifetime: float = 1
+const OUTLINE_SHADER = preload("res://shaders/outline.gdshader")
 
-@export var on_hit_sfx: PackedScene
+@export var stats: ProjectileStats:
+	get: return _stats
+	set(value):
+		_stats = value.duplicate()
+		apply_stats()
+
 @export var on_hide_sfx: PackedScene
 
+var direction: Vector2 = Vector2.UP
+var max_speed: float 
+var lifetime: float
 var lifetime_timer: SceneTreeTimer
+var _stats: ProjectileStats
+
+@onready var projectile_particles: ProjectileParticles = $ProjectileParticles
+@onready var hitbox_component: HitboxComponent = $HitboxComponent
+@onready var sprite: Sprite2D = get_node_or_null("Sprite2D")
+@onready var anim_sprite: AnimatedSprite2D = get_node_or_null("AnimatedSprite2D")
 
 func _ready() -> void:
+	assert(stats)
 	start_lifetime_timer()
+	apply_stats()
+
+
+func apply_stats():
+	max_speed = stats.max_speed
+	lifetime = stats.life_time
+	
+	if hitbox_component:
+		hitbox_component.damage = stats.damage
+	
+	if projectile_particles:
+		projectile_particles.modulate = stats.sfx_color
+	
+	var shader_material := ShaderMaterial.new()
+	shader_material.shader = OUTLINE_SHADER
+	shader_material.set_shader_parameter("outline_color", stats.sfx_color)
+	
+	if sprite:
+		sprite.material = shader_material
+	
+	if anim_sprite:
+		anim_sprite.material = shader_material
+	
 
 
 func active() -> void:
@@ -45,9 +81,6 @@ func start_lifetime_timer():
 
 func _on_hitbox_component_hit() -> void:
 	self.deactive()
-	
-	if on_hit_sfx: 
-		_spawn_sfx(on_hit_sfx)
 
 
 func _spawn_sfx(sfx: PackedScene) -> void:
