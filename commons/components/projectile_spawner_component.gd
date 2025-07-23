@@ -9,7 +9,6 @@ extends Component2D
 		spawn_interval = value
 		if timer:
 			timer.wait_time = value
-@export var pool_size: int = 20
 
 var object_pool: ObjectPool
 var timer: Timer
@@ -41,7 +40,7 @@ func setup_pool() -> void:
 	object_pool = ObjectPool.new()
 	add_child(object_pool)
 	
-	object_pool.setup(projectile, pool_size)
+	object_pool.setup(projectile)
 
 
 func setup_timer() -> void:
