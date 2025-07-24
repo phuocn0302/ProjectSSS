@@ -10,7 +10,7 @@
 [sub_resource type="Resource" id="Resource_80hcv"]
 script = ExtResource("2_o0fp3")
 max_speed = 100.0
-damage = 100.0
+damage = 1.0
 life_time = 5.0
 sfx_color = Color(1, 0, 0, 1)
 metadata/_custom_type_script = "uid://baka86c1c2sm2"
