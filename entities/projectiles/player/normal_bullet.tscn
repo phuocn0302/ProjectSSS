@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bg4gv4kmpx0mh" path="res://entities/projectiles/projectile.gd" id="1_2usd3"]
 [ext_resource type="Script" uid="uid://baka86c1c2sm2" path="res://entities/projectiles/projectile_stats.gd" id="2_q0duf"]
 [ext_resource type="Texture2D" uid="uid://vd3lnd6eiuxs" path="res://assets/texture/projectiles/player/player_normal_proj.png" id="3_q0duf"]
-[ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://commons/components/hitbox_component.gd" id="4_j3t8y"]
+[ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://commons/components/etc/hitbox_component.gd" id="4_j3t8y"]
 [ext_resource type="PackedScene" uid="uid://bt10he0p0pvkk" path="res://particles/projectile_hit_particles.tscn" id="5_y67en"]
 [ext_resource type="Texture2D" uid="uid://8wkr5neo2iq7" path="res://assets/texture/sfx/4x_white_particle.png" id="6_dk60t"]
 [ext_resource type="Script" uid="uid://dxeqbg4jauco4" path="res://particles/projectile_particles.gd" id="7_3n6ku"]
