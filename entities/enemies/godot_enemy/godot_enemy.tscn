@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://7fx33mvlv67i"]
+[gd_scene load_steps=16 format=3 uid="uid://7fx33mvlv67i"]
 
 [ext_resource type="Texture2D" uid="uid://dsgkic5beqh6q" path="res://assets/texture/npc/enemies/godot_enemy.png" id="1_0dou4"]
 [ext_resource type="Script" uid="uid://dl3x41ndyxvmj" path="res://entities/enemies/godot_enemy/godot_enemy.gd" id="1_n6ru6"]
@@ -8,6 +8,70 @@
 [ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://commons/components/etc/hitbox_component.gd" id="5_xfy8p"]
 [ext_resource type="Script" uid="uid://chv2lphkgpnes" path="res://commons/components/etc/hurtbox_component.gd" id="6_4o2ve"]
 [ext_resource type="Script" uid="uid://c3dex51h0lylc" path="res://commons/components/sfx/hit_flash_component.gd" id="9_6oukh"]
+
+[sub_resource type="Shader" id="Shader_5t7db"]
+code = "shader_type canvas_item;
+
+// === Outline Controls ===
+uniform bool outline_enabled = false;
+uniform vec4 outline_color    : source_color = vec4(1.0);
+uniform float outline_size    : hint_range(0.0, 16.0, 0.1) = 1.0;
+uniform float alpha_threshold : hint_range(0.0, 1.0, 0.01) = 0.0;
+uniform int outline_samples   : hint_range(4, 8) = 4;
+
+// === Flash Controls ===
+uniform vec4 flash_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform float flash_strength : hint_range(0.0, 1.0, 0.1) = 0.0;
+
+// === Outline Sampling Directions ===
+const vec2[8] DIRS = vec2[8](
+	vec2(1.0, 0.0), vec2(0.0, 1.0),  vec2(-1.0, 0.0),  vec2(0.0, -1.0),
+	vec2(1.0, 1.0), vec2(-1.0, 1.0), vec2(-1.0, -1.0), vec2(1.0, -1.0)
+);
+
+void fragment() {
+	vec4 tex = texture(TEXTURE, UV);
+	float alpha = tex.a;
+
+	if (alpha <= 0.0 && outline_size <= 0.0) discard;
+
+	bool solid = alpha > alpha_threshold;
+	bool found_outline = false;
+
+	// Only check outline if enabled and current pixel is transparent
+	if (outline_enabled && !solid && outline_size > 0.0) {
+		vec2 offset = TEXTURE_PIXEL_SIZE * outline_size;
+		for (int i = 0; i < outline_samples; i++) {
+			if (texture(TEXTURE, UV + DIRS[i] * offset).a > alpha_threshold) {
+				found_outline = true;
+				break;
+			}
+		}
+	}
+
+	// Color decision
+	if (solid) {
+		COLOR = tex;
+	} else if (outline_enabled && found_outline) {
+		COLOR = outline_color;
+	} else {
+		discard;
+	}
+
+	// === Flash Effect ===
+	COLOR.rgb = mix(COLOR.rgb, flash_color.rgb, flash_strength);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ia1k"]
+shader = SubResource("Shader_5t7db")
+shader_parameter/outline_enabled = false
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_size = 1.0
+shader_parameter/alpha_threshold = 0.0
+shader_parameter/outline_samples = 4
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_strength = 0.0
 
 [sub_resource type="Animation" id="Animation_f2su7"]
 length = 0.001
@@ -57,6 +121,7 @@ radius = 17.0
 script = ExtResource("1_n6ru6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_4ia1k")
 texture = ExtResource("1_0dou4")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -100,8 +165,9 @@ metadata/_custom_type_script = "uid://chv2lphkgpnes"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CircleShape2D_5t7db")
 
-[node name="HitFlashComponent" type="Node" parent="." node_paths=PackedStringArray("health_component", "entity")]
+[node name="HitFlashComponent" type="Node" parent="." node_paths=PackedStringArray("sprite", "health_component", "entity")]
 script = ExtResource("9_6oukh")
+sprite = NodePath("../Sprite2D")
 health_component = NodePath("../HealthComponent")
 entity = NodePath("..")
 metadata/_custom_type_script = "uid://c3dex51h0lylc"

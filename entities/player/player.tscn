@@ -1,7 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://oalne3evw244"]
+[gd_scene load_steps=26 format=3 uid="uid://oalne3evw244"]
 
 [ext_resource type="Script" uid="uid://8bghf13kjjsj" path="res://entities/player/player.gd" id="1_sglur"]
 [ext_resource type="Texture2D" uid="uid://chdkmvgxhhpxt" path="res://assets/texture/player/player.png" id="1_symyc"]
+[ext_resource type="Material" uid="uid://c8p6hbdqamn7e" path="res://shaders/entity_mat.tres" id="1_yqrof"]
 [ext_resource type="Script" uid="uid://dg0til6w02wfe" path="res://commons/state_machine/state_machine.gd" id="2_abrql"]
 [ext_resource type="Script" uid="uid://dw1jqpnd6whbj" path="res://entities/player/player_input_handler.gd" id="3_qiwj3"]
 [ext_resource type="Script" uid="uid://cv6fopcv2mvlb" path="res://entities/player/states/idle_state.gd" id="4_fkugw"]
@@ -15,6 +16,70 @@
 [ext_resource type="Script" uid="uid://1hf68snymgbl" path="res://commons/components/sfx/ghost_trailing_component.gd" id="14_afbqv"]
 [ext_resource type="Script" uid="uid://ch7r1mf7ar7uc" path="res://commons/components/spawner/projectile_spawner_component.gd" id="15_gx6sm"]
 [ext_resource type="PackedScene" uid="uid://cehn3l3u5h5qg" path="res://entities/projectiles/player/normal_bullet.tscn" id="16_yqrof"]
+
+[sub_resource type="Shader" id="Shader_yqrof"]
+code = "shader_type canvas_item;
+
+// === Outline Controls ===
+uniform bool outline_enabled = false;
+uniform vec4 outline_color    : source_color = vec4(1.0);
+uniform float outline_size    : hint_range(0.0, 16.0, 0.1) = 1.0;
+uniform float alpha_threshold : hint_range(0.0, 1.0, 0.01) = 0.0;
+uniform int outline_samples   : hint_range(4, 8) = 4;
+
+// === Flash Controls ===
+uniform vec4 flash_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform float flash_strength : hint_range(0.0, 1.0, 0.1) = 0.0;
+
+// === Outline Sampling Directions ===
+const vec2[8] DIRS = vec2[8](
+	vec2(1.0, 0.0), vec2(0.0, 1.0),  vec2(-1.0, 0.0),  vec2(0.0, -1.0),
+	vec2(1.0, 1.0), vec2(-1.0, 1.0), vec2(-1.0, -1.0), vec2(1.0, -1.0)
+);
+
+void fragment() {
+	vec4 tex = texture(TEXTURE, UV);
+	float alpha = tex.a;
+
+	if (alpha <= 0.0 && outline_size <= 0.0) discard;
+
+	bool solid = alpha > alpha_threshold;
+	bool found_outline = false;
+
+	// Only check outline if enabled and current pixel is transparent
+	if (outline_enabled && !solid && outline_size > 0.0) {
+		vec2 offset = TEXTURE_PIXEL_SIZE * outline_size;
+		for (int i = 0; i < outline_samples; i++) {
+			if (texture(TEXTURE, UV + DIRS[i] * offset).a > alpha_threshold) {
+				found_outline = true;
+				break;
+			}
+		}
+	}
+
+	// Color decision
+	if (solid) {
+		COLOR = tex;
+	} else if (outline_enabled && found_outline) {
+		COLOR = outline_color;
+	} else {
+		discard;
+	}
+
+	// === Flash Effect ===
+	COLOR.rgb = mix(COLOR.rgb, flash_color.rgb, flash_strength);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3wlsy"]
+shader = SubResource("Shader_yqrof")
+shader_parameter/outline_enabled = false
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_size = 1.0
+shader_parameter/alpha_threshold = 0.0
+shader_parameter/outline_samples = 4
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_strength = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_abrql"]
 atlas = ExtResource("1_symyc")
@@ -63,9 +128,11 @@ animations = [{
 radius = 5.09902
 
 [node name="Player" type="Node2D" groups=["player"]]
+material = ExtResource("1_yqrof")
 script = ExtResource("1_sglur")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_3wlsy")
 rotation = -1.5708
 sprite_frames = SubResource("SpriteFrames_sfv1e")
 autoplay = "default"
@@ -114,8 +181,9 @@ metadata/_custom_type_script = "uid://chv2lphkgpnes"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CircleShape2D_wvtmh")
 
-[node name="HitFlashComponent" type="Node" parent="." node_paths=PackedStringArray("health_component", "entity")]
+[node name="HitFlashComponent" type="Node" parent="." node_paths=PackedStringArray("sprite", "health_component", "entity")]
 script = ExtResource("11_7thud")
+sprite = NodePath("../AnimatedSprite2D")
 health_component = NodePath("../HealthComponent")
 entity = NodePath("..")
 metadata/_custom_type_script = "uid://c3dex51h0lylc"

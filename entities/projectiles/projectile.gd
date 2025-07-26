@@ -1,7 +1,7 @@
 class_name Projectile
 extends PoolableEntity
 
-const OUTLINE_SHADER = preload("res://shaders/outline.gdshader")
+const ENTITY_SHADER = preload("res://shaders/entity_shader.gdshader")
 
 @export var stats: ProjectileStats:
 	get: return _stats
@@ -41,7 +41,8 @@ func apply_stats():
 		projectile_particles.modulate = stats.sfx_color
 	
 	var shader_material := ShaderMaterial.new()
-	shader_material.shader = OUTLINE_SHADER
+	shader_material.shader = ENTITY_SHADER
+	shader_material.set_shader_parameter("outline_enabled", true)
 	shader_material.set_shader_parameter("outline_color", stats.sfx_color)
 	
 	if sprite:
