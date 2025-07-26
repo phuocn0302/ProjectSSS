@@ -15,6 +15,10 @@ func _ready() -> void:
 		health_component.health_depleted.connect(flash)
 
 
+func flash_no_args() -> void:
+	flash(null)
+
+
 func flash(_args: Variant) -> void:
 	var _mat = sprite.material
 	_mat.set_shader_parameter("flash_strength", 1)

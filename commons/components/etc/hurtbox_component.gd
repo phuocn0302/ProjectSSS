@@ -1,6 +1,8 @@
 class_name HurtboxComponent
 extends ComponentArea2D
 
+signal hurt
+
 @export var health_component: HealthComponent
 
 func _ready() -> void:
@@ -10,3 +12,4 @@ func _ready() -> void:
 
 func take_damage(amount: float):
 	health_component.take_damage(amount)
+	hurt.emit()
