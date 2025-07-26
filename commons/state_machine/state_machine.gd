@@ -5,6 +5,7 @@ extends Node
 @export var starting_state: State
 @export var states: Dictionary[String, State]
 
+var next_state_requested: State
 var current_state: State
 
 func setup(_actor: Entity) -> void:
@@ -21,6 +22,11 @@ func change_state(new_state: State) -> void:
 		current_state.exit()
 	
 	current_state = new_state
+	
+	if next_state_requested:
+		current_state = next_state_requested
+		next_state_requested = null
+	
 	current_state.enter()
 
 
