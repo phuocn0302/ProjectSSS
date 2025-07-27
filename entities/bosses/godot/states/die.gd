@@ -7,6 +7,11 @@ const CIRCLE_EXPLOSION = preload("res://particles/circle_explosion.tscn")
 @onready var eye_particles: GPUParticles2D = $"../../EyeParticles"
 
 func enter() -> void:
+	for p in get_tree().get_nodes_in_group("projectile"):
+		if p is Projectile:
+			p.deactive()
+	
+	
 	state_machine.active = false
 	
 	for c in components.get_children():

@@ -24,7 +24,10 @@ var _sfx_spawned: bool = false
 @onready var sprite: Sprite2D = get_node_or_null("Sprite2D")
 @onready var anim_sprite: AnimatedSprite2D = get_node_or_null("AnimatedSprite2D")
 
+
+
 func _ready() -> void:
+	add_to_group("projectile")
 	assert(stats)
 	start_lifetime_timer()
 	apply_stats()

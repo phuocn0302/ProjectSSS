@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://c7rb61a1nr8dn"]
+[gd_scene load_steps=13 format=3 uid="uid://c7rb61a1nr8dn"]
 
 [ext_resource type="Script" uid="uid://bg4gv4kmpx0mh" path="res://entities/projectiles/projectile.gd" id="1_oa07u"]
 [ext_resource type="Texture2D" uid="uid://bxvabngipk5ie" path="res://assets/texture/projectiles/npc/bullet_1.png" id="2_1kvgc"]
 [ext_resource type="Script" uid="uid://baka86c1c2sm2" path="res://entities/projectiles/projectile_stats.gd" id="2_22e3u"]
 [ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://commons/components/etc/hitbox_component.gd" id="3_22e3u"]
+[ext_resource type="PackedScene" uid="uid://bt10he0p0pvkk" path="res://particles/projectile_hit_particles.tscn" id="3_nkr8c"]
 [ext_resource type="Texture2D" uid="uid://8wkr5neo2iq7" path="res://assets/texture/sfx/4x_white_particle.png" id="4_1kvgc"]
 [ext_resource type="Script" uid="uid://dxeqbg4jauco4" path="res://particles/projectile_particles.gd" id="4_nkr8c"]
 
@@ -40,6 +41,7 @@ scale_curve = SubResource("CurveTexture_wtblw")
 [node name="BulletProjectile" type="Node2D"]
 script = ExtResource("1_oa07u")
 stats = SubResource("Resource_nkr8c")
+on_hide_sfx = ExtResource("3_nkr8c")
 metadata/_custom_type_script = "uid://bg4gv4kmpx0mh"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
