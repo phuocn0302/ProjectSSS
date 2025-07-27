@@ -9,7 +9,7 @@ var entered_phase_1: bool = false
 
 @onready var hurtbox_component: HurtboxComponent = $"../../Components/HurtboxComponent"
 @onready var idle_move_component: IdleMoveComponent = $"../../Components/IdleMoveComponent"
-@onready var eye_particles: GPUParticles2D = $"../../AnimatedSprite2D/EyeParticles"
+@onready var eye_particles: GPUParticles2D = $"../../EyeParticles"
 
 func enter() -> void:
 	hurtbox_component.active = false

@@ -1,6 +1,7 @@
 class_name StateMachine
 extends Node
 
+@export var active: bool = true
 @export var actor: Entity
 @export var starting_state: State
 @export var states: Dictionary[String, State]
@@ -18,6 +19,9 @@ func setup(_actor: Entity) -> void:
 
 
 func change_state(new_state: State) -> void:
+	if not active:
+		return
+	
 	if current_state:
 		current_state.exit()
 	
@@ -31,12 +35,18 @@ func change_state(new_state: State) -> void:
 
 
 func process_physics(_delta: float) -> void:
+	if not active:
+		return
 	current_state.process_physics(_delta)
 
 
 func process_frame(_delta: float) -> void:
+	if not active:
+		return
 	current_state.process_frame(_delta)
 
 
 func process_input(event: InputEvent) -> void:
+	if not active:
+		return
 	current_state.process_input(event)

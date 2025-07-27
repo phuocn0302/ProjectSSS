@@ -26,13 +26,14 @@ var current_phase: Phase = Phase.PHASE1
 @onready var health_component: HealthComponent = $Components/HealthComponent
 @onready var idle_move_component: IdleMoveComponent = $Components/IdleMoveComponent
 @onready var ghost_trailing_component: GhostTrailingComponent = $Components/GhostTrailingComponent
-@onready var eye_particles: GPUParticles2D = $AnimatedSprite2D/EyeParticles
+@onready var eye_particles: GPUParticles2D = $EyeParticles
 
 @onready var punch_attack: Node = $StateMachine/PunchAttack
 @onready var double_punch_attack: Node = $StateMachine/DoublePunchAttack
 @onready var shoot_at_player_1: Node = $StateMachine/ShootAtPlayer1
 @onready var shoot_at_player_2: Node = $StateMachine/ShootAtPlayer2
 @onready var phase_transition: GodotBossState = $StateMachine/PhaseTransition
+@onready var die: Node = $StateMachine/Die
 
 
 func _ready() -> void:
@@ -97,3 +98,8 @@ func _on_health_component_health_depleted(_amount: float) -> void:
 	print(health_component.current_health)
 	
 	_phase_management()
+
+
+func _on_health_component_health_reached_zero() -> void:
+	state_machine.next_state_requested = null
+	state_machine.change_state(die)

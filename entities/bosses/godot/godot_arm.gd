@@ -54,8 +54,27 @@ func activate() -> void:
 	idle_move_component.active = true
 
 
-func explode() -> void:
+func explode(pos := explode_pos.global_position) -> void:
 	var sfx = CIRCLE_EXPLOSION.instantiate()
-	sfx.global_position = explode_pos.global_position
+	sfx.global_position = pos
 	
 	get_tree().current_scene.add_child(sfx)
+
+
+func self_destruct() -> void:
+	hurtbox_component.active = false
+	hitbox_component.active = false
+	
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_SPRING)
+	
+	tween.tween_property(
+		self,
+		"global_position",
+		active_position.global_position,
+		3
+	)
+	
+	await tween.finished
+	explode(self.global_position)
+	hide()

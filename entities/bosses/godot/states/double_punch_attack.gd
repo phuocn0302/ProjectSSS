@@ -12,6 +12,8 @@ extends GodotBossState
 # Alternate right arm offset side (left/right of player)
 var _right_arm_attack_pos_index = 0
 var _timer: SceneTreeTimer
+var _left_tween: Tween
+var _right_tween: Tween
 
 @onready var right_arm_pos: Marker2D = $"../../Arms/RightArmPos"
 @onready var left_arm_pos: Marker2D = $"../../Arms/LeftArmPos"
@@ -34,6 +36,10 @@ func exit() -> void:
 	boss.circle_projectile_spawner.active = false
 	boss.right_arm.rotation = 0
 	boss.right_arm.scale = Vector2.ONE
+	
+	_timer.timeout.disconnect(_attack)
+	if _left_tween: _left_tween.kill()
+	if _right_tween: _right_tween.kill()
 
 
 func _follow_player(delta: float) -> void:
@@ -69,6 +75,7 @@ func _follow_player(delta: float) -> void:
 		follow_speed * delta
 		)
 
+
 func _rotate_right_arm() -> void:
 	var tween = create_tween().set_parallel()
 	if _right_arm_attack_pos_index == 0:
@@ -92,19 +99,19 @@ func _left_arm_attack() -> void:
 	var punch_pos := prepare_pos + punch_offset
 	
 	left_arm.ghost_trailing_component.active = true
-	var tween = create_tween()
+	_left_tween = create_tween()
 	
-	tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tween.tween_property(left_arm, "position", prepare_pos, punch_prepare_time)
+	_left_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_left_tween.tween_property(left_arm, "position", prepare_pos, punch_prepare_time)
 	
-	tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-	tween.tween_property(left_arm, "position", punch_pos, punch_time)
+	_left_tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	_left_tween.tween_property(left_arm, "position", punch_pos, punch_time)
 	
-	tween.tween_callback(Callable(left_arm, "explode"))
+	_left_tween.tween_callback(Callable(left_arm, "explode"))
 	
-	tween.tween_property(left_arm, "global_position", left_arm_pos.global_position, arm_return_time)
+	_left_tween.tween_property(left_arm, "global_position", left_arm_pos.global_position, arm_return_time)
 	
-	await tween.finished
+	await _left_tween.finished
 	left_arm.ghost_trailing_component.active = false
 
 
@@ -124,19 +131,19 @@ func _right_arm_attack() -> void:
 	
 	right_arm.ghost_trailing_component.active = true
 	
-	var tween = create_tween()
+	_right_tween = create_tween()
 	
-	tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tween.tween_property(right_arm, "position", prepare_pos, punch_prepare_time)
+	_right_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_right_tween.tween_property(right_arm, "position", prepare_pos, punch_prepare_time)
 
-	tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-	tween.tween_property(right_arm, "position", punch_pos, punch_time)
+	_right_tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	_right_tween.tween_property(right_arm, "position", punch_pos, punch_time)
 	
-	tween.tween_callback(Callable(right_arm, "explode"))
+	_right_tween.tween_callback(Callable(right_arm, "explode"))
 	
-	tween.tween_property(right_arm, "global_position", right_arm_pos.global_position, arm_return_time)
+	_right_tween.tween_property(right_arm, "global_position", right_arm_pos.global_position, arm_return_time)
 	
-	await tween.finished
+	await _right_tween.finished
 	right_arm.ghost_trailing_component.active = false
 	
 	state_machine.change_state(states["ShootAtPlayer2"])

@@ -3,9 +3,15 @@ extends GodotBossState
 @export var transit_time: float = 1
 @export var next_state: GodotBossState
 
+var _timer: SceneTreeTimer 
+
 func enter() -> void:
-	var timer = get_tree().create_timer(transit_time)
-	timer.timeout.connect(transit)
+	_timer = get_tree().create_timer(transit_time)
+	_timer.timeout.connect(transit)
+
+
+func exit() -> void:
+	_timer.timeout.disconnect(transit)
 
 
 func transit() -> void:

@@ -13,6 +13,7 @@ var _attack_arm: GodotArm
 var _arm_index: int = 0
 var _arm_original_pos: Vector2
 var _timer: SceneTreeTimer
+var _tween: Tween
 
 @onready var right_arm_pos: Marker2D = $"../../Arms/RightArmPos"
 @onready var left_arm_pos: Marker2D = $"../../Arms/LeftArmPos"
@@ -39,6 +40,8 @@ func process_frame(delta: float) -> void:
 
 func exit() -> void:
 	boss.circle_projectile_spawner.active = false
+	_timer.timeout.disconnect(_attack)
+	if _tween: _tween.kill()
 
 
 func _follow_player(delta: float) -> void:
@@ -66,19 +69,19 @@ func _attack() -> void:
 	
 	_attack_arm.ghost_trailing_component.active = true
 	
-	var tween = create_tween()
+	_tween = create_tween()
 	
-	tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tween.tween_property(_attack_arm, "position", prepare_pos, punch_prepare_time)
+	_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_tween.tween_property(_attack_arm, "position", prepare_pos, punch_prepare_time)
 	
-	tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-	tween.tween_property(_attack_arm, "position", punch_pos, punch_time)
+	_tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	_tween.tween_property(_attack_arm, "position", punch_pos, punch_time)
 	
-	tween.tween_callback(Callable(_attack_arm, "explode"))
+	_tween.tween_callback(Callable(_attack_arm, "explode"))
 	
-	tween.tween_property(_attack_arm, "global_position", _arm_original_pos, arm_return_time)
+	_tween.tween_property(_attack_arm, "global_position", _arm_original_pos, arm_return_time)
 	
-	await tween.finished
+	await _tween.finished
 	_attack_arm.ghost_trailing_component.active = false
 	
 	state_machine.change_state(states["Idle"])
