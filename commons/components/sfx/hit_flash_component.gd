@@ -1,34 +1,28 @@
 class_name HitFlashComponent
 extends Component
 
-const HIT_FLASH = preload("res://shaders/hit_flash.tres")
-
+@export var sprite: Node2D
 @export var health_component: HealthComponent
 @export var flash_time: float = 0.1
 
-var _original_mat: Material = null
-var _flash_mat: ShaderMaterial
 
 func _ready() -> void:
 	super._ready()
-	assert(health_component, "[HitFlashComponent] HealthComponent is required")
 	
-	_flash_mat = HIT_FLASH.duplicate()
-	_original_mat = entity.material
+	assert(sprite or (sprite is Sprite2D or sprite is AnimatedSprite2D))
 	
-	for c in entity.get_children():
-		if c is Sprite2D or c is AnimatedSprite2D:
-			c.use_parent_material = true
-	
-	_flash_mat.set_shader_parameter("flash_strength", 0)
-	health_component.health_depleted.connect(flash)
+	if health_component:
+		health_component.health_depleted.connect(flash)
+
+
+func flash_no_args() -> void:
+	flash(null)
 
 
 func flash(_args: Variant) -> void:
-	entity.material = _flash_mat
-	_flash_mat.set_shader_parameter("flash_strength", 1)
+	var _mat = sprite.material
+	_mat.set_shader_parameter("flash_strength", 1)
 	
 	await get_tree().create_timer(flash_time).timeout
 	
-	_flash_mat.set_shader_parameter("flash_strength", 0)
-	entity.material = _original_mat
+	_mat.set_shader_parameter("flash_strength", 0)

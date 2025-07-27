@@ -47,11 +47,13 @@ func spawn_ghost() -> void:
 	if sprite:
 		ghost_sprite.texture = sprite.texture
 		ghost.global_position = sprite.global_position
+		ghost.global_rotation = sprite.global_rotation
 		ghost.rotation = sprite.rotation
 		ghost.scale = sprite.scale
 	elif anim_sprite:
 		ghost_sprite.texture = anim_sprite.sprite_frames.get_frame_texture(anim_sprite.animation, anim_sprite.frame)
 		ghost.global_position = anim_sprite.global_position
+		ghost.global_rotation = anim_sprite.global_rotation
 		ghost.rotation = anim_sprite.rotation
 		ghost.scale = anim_sprite.scale
 	
