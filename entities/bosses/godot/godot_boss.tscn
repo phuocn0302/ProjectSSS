@@ -337,7 +337,7 @@ shape = SubResource("CircleShape2D_akxlh")
 
 [node name="HealthComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
 script = ExtResource("5_0jihc")
-max_health = 10.0
+max_health = 400.0
 queue_free_on_die = false
 entity = NodePath("../..")
 metadata/_custom_type_script = "uid://s7docibhn2wy"
