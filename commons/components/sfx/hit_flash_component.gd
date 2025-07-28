@@ -13,6 +13,8 @@ func _ready() -> void:
 	
 	if health_component:
 		health_component.health_depleted.connect(flash)
+	
+	_reset_flash()
 
 
 func flash_no_args() -> void:
@@ -25,4 +27,9 @@ func flash(_args: Variant) -> void:
 	
 	await get_tree().create_timer(flash_time).timeout
 	
+	_mat.set_shader_parameter("flash_strength", 0)
+
+
+func _reset_flash() -> void:
+	var _mat = sprite.material
 	_mat.set_shader_parameter("flash_strength", 0)
