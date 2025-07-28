@@ -1,0 +1,75 @@
+[gd_scene load_steps=8 format=3 uid="uid://babk73lv7prc8"]
+
+[ext_resource type="Script" uid="uid://ctbdorumyp7ht" path="res://stages/demo_stage/demo_stage_manager.gd" id="1_ad0qu"]
+[ext_resource type="PackedScene" uid="uid://oalne3evw244" path="res://entities/player/player.tscn" id="2_5rq5q"]
+[ext_resource type="FontFile" uid="uid://dd7cq4p1wglng" path="res://assets/font/monogram.ttf" id="2_ipjiy"]
+[ext_resource type="Texture2D" uid="uid://c1ijkynb2addy" path="res://assets/texture/ui/health_bar.png" id="3_pyo7c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5rq5q"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pyo7c"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5rq5q"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(90, 0, 0)
+emission_shape_scale = Vector3(90, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 180.0
+initial_velocity_max = 220.0
+gravity = Vector3(0, 0, 0)
+
+[node name="DemoStage" type="Node2D"]
+script = ExtResource("1_ad0qu")
+enemy_spawn_pos = Array[Vector2]([Vector2(42, 0), Vector2(74, 0), Vector2(106, 0), Vector2(138, 0)])
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="InputHint" type="Label" parent="CanvasLayer"]
+offset_left = 54.0
+offset_top = 120.0
+offset_right = 126.0
+offset_bottom = 165.0
+theme_override_fonts/font = ExtResource("2_ipjiy")
+text = "WASD: Move
+Ctrl: Dash
+Space: Shoot"
+metadata/_edit_lock_ = true
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+offset_right = 180.0
+offset_bottom = 320.0
+color = Color(0, 0, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="BossHealthBar" type="ProgressBar" parent="CanvasLayer"]
+z_index = 1000
+offset_left = 4.0
+offset_top = 5.0
+offset_right = 176.0
+offset_bottom = 12.0
+theme_override_styles/background = SubResource("StyleBoxFlat_5rq5q")
+theme_override_styles/fill = SubResource("StyleBoxFlat_pyo7c")
+value = 100.0
+show_percentage = false
+
+[node name="Sprite" type="Sprite2D" parent="CanvasLayer/BossHealthBar"]
+position = Vector2(86, 4)
+texture = ExtResource("3_pyo7c")
+
+[node name="Star" type="GPUParticles2D" parent="."]
+modulate = Color(0.44, 0.44, 0.44, 1)
+amount = 70
+lifetime = 5.0
+process_material = SubResource("ParticleProcessMaterial_5rq5q")
+
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+wait_time = 1.5
+
+[node name="Player" parent="." instance=ExtResource("2_5rq5q")]
+position = Vector2(90, 300)
