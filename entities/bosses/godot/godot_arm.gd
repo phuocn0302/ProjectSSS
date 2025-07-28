@@ -64,6 +64,7 @@ func explode(pos := explode_pos.global_position) -> void:
 func self_destruct() -> void:
 	hurtbox_component.active = false
 	hitbox_component.active = false
+	ghost_trailing_component.active = false
 	
 	var tween = create_tween()
 	tween.set_trans(Tween.TRANS_SPRING)
