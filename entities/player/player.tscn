@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://oalne3evw244"]
+[gd_scene load_steps=28 format=3 uid="uid://oalne3evw244"]
 
 [ext_resource type="Script" uid="uid://8bghf13kjjsj" path="res://entities/player/player.gd" id="1_sglur"]
 [ext_resource type="Texture2D" uid="uid://chdkmvgxhhpxt" path="res://assets/texture/player/player.png" id="1_symyc"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://s7docibhn2wy" path="res://commons/components/etc/health_component.gd" id="9_wvtmh"]
 [ext_resource type="PackedScene" uid="uid://dfl00xfc5e7kj" path="res://particles/explode_particles.tscn" id="10_j3ovn"]
 [ext_resource type="Script" uid="uid://c3dex51h0lylc" path="res://commons/components/sfx/hit_flash_component.gd" id="11_7thud"]
+[ext_resource type="Script" uid="uid://km3cwucdktmb" path="res://commons/components/movements/movement_bound_component.gd" id="11_b2kln"]
 [ext_resource type="Script" uid="uid://bn8rssbc5dw31" path="res://commons/components/sfx/frame_freeze_component.gd" id="13_j3ovn"]
 [ext_resource type="Script" uid="uid://1hf68snymgbl" path="res://commons/components/sfx/ghost_trailing_component.gd" id="14_afbqv"]
 [ext_resource type="Script" uid="uid://ch7r1mf7ar7uc" path="res://commons/components/spawner/projectile_spawner_component.gd" id="15_gx6sm"]
@@ -184,6 +185,11 @@ script = ExtResource("17_3wlsy")
 hurtbox_component = NodePath("../HurtboxComponent")
 entity = NodePath("../..")
 metadata/_custom_type_script = "uid://8jap68kirkbv"
+
+[node name="MovementBoundsComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
+script = ExtResource("11_b2kln")
+entity = NodePath("../..")
+metadata/_custom_type_script = "uid://km3cwucdktmb"
 
 [node name="InputHandler" type="Node" parent="."]
 script = ExtResource("3_qiwj3")
