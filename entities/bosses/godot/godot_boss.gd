@@ -1,6 +1,8 @@
 class_name GodotBoss
 extends Enemy
 
+signal defeated
+
 enum Phase {
 	PHASE1,
 	PHASE2,
@@ -38,6 +40,10 @@ var current_phase: Phase = Phase.PHASE1
 
 func _ready() -> void:
 	state_machine.setup(self)
+
+
+func _exit_tree() -> void:
+	defeated.emit()
 
 
 func _process(delta: float) -> void:
