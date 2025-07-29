@@ -35,8 +35,9 @@ offset_top = 120.0
 offset_right = 126.0
 offset_bottom = 165.0
 theme_override_fonts/font = ExtResource("2_ipjiy")
+theme_override_font_sizes/font_size = 0
 text = "WASD: Move
-Ctrl: Dash
+Shift: Dash
 Space: Shoot"
 metadata/_edit_lock_ = true
 
