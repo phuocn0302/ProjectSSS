@@ -1,6 +1,8 @@
 class_name Player
 extends Entity
 
+signal die
+
 const NORMAL_BULLET = preload("res://entities/projectiles/player/normal_bullet.tscn")
 
 @export_category("Movement")
@@ -27,6 +29,9 @@ var input_vector := Vector2.ZERO
 
 func _enter_tree() -> void:
 	add_to_group("player")
+
+func _exit_tree() -> void:
+	die.emit()
 
 
 func _ready() -> void:

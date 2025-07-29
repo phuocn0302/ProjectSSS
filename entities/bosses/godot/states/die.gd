@@ -30,3 +30,6 @@ func enter() -> void:
 	
 	await get_tree().create_timer(1).timeout
 	eye_particles.emitting = false
+	
+	await get_tree().create_timer(1).timeout
+	boss.queue_free()

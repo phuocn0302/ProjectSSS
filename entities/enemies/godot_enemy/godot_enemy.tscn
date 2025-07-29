@@ -64,6 +64,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4ia1k"]
+resource_local_to_scene = true
 shader = SubResource("Shader_5t7db")
 shader_parameter/outline_enabled = false
 shader_parameter/outline_color = Color(1, 1, 1, 1)
@@ -120,6 +121,9 @@ radius = 17.0
 [node name="GodotEnemy" type="Node2D" groups=["e_godot", "enemy"]]
 script = ExtResource("1_n6ru6")
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0, -46)
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_4ia1k")
 texture = ExtResource("1_0dou4")
@@ -129,18 +133,16 @@ root_node = NodePath("../Sprite2D")
 libraries = {
 &"": SubResource("AnimationLibrary_a5kt4")
 }
-autoplay = "idle"
 
 [node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("entity")]
 script = ExtResource("3_f2su7")
 move_type = 1
-speed = 0.0
 entity = NodePath("..")
 metadata/_custom_type_script = "uid://c7pvd7cesamyd"
 
 [node name="HealthComponent" type="Node" parent="." node_paths=PackedStringArray("entity")]
 script = ExtResource("4_a5kt4")
-max_health = 5.0
+max_health = 6.0
 die_sfx = ExtResource("5_qav3f")
 entity = NodePath("..")
 metadata/_custom_type_script = "uid://s7docibhn2wy"
@@ -171,3 +173,6 @@ sprite = NodePath("../Sprite2D")
 health_component = NodePath("../HealthComponent")
 entity = NodePath("..")
 metadata/_custom_type_script = "uid://c3dex51h0lylc"
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]
+[connection signal="health_reached_zero" from="HealthComponent" to="." method="_on_health_component_health_reached_zero"]

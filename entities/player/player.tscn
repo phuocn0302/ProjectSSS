@@ -133,6 +133,8 @@ radius = 5.09902
 z_index = 100
 material = ExtResource("1_yqrof")
 script = ExtResource("1_sglur")
+dash_speed = 400.0
+dash_cooldown = 0.6
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_3wlsy")
