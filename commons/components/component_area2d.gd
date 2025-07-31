@@ -17,9 +17,6 @@ var _active := true
 @export var entity: Entity
 
 func _ready() -> void:
-	if not Engine.is_editor_hint() and entity == null:
-		assert(false, "[ComponentArea2D] Entity is required")
-	
 	self.area_entered.connect(on_area_entered)
 	self.area_exited.connect(on_area_exit)
 
