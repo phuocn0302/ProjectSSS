@@ -23,7 +23,7 @@ func flash_no_args() -> void:
 
 func flash(_args: Variant) -> void:
 	var _mat = sprite.material
-	_mat.set_shader_parameter("flash_strength", 1)
+	_mat.set_shader_parameter("flash_strength", 0.5)
 	
 	await get_tree().create_timer(flash_time).timeout
 	
