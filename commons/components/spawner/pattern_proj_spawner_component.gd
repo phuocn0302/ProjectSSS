@@ -1,5 +1,5 @@
-extends ProjectileSpawner
 class_name PatternProjectileSpawner
+extends ProjectileSpawner
 
 @export var number_of_projectiles: int = 10
 ## Seconds to reach target shape

@@ -24,6 +24,7 @@ func _ready() -> void:
 	_setup_laser()
 
 
+@warning_ignore("unused_parameter")
 func _process(delta: float) -> void:
 	self.points[1] = end_point
 
@@ -89,7 +90,9 @@ func _setup_particles() -> void:
 		particles = GPUParticles2D.new()
 		self.add_child(particles)
 	
+	@warning_ignore("integer_division")
 	particles.amount = length / 2
+	@warning_ignore("integer_division")
 	particles.position = direction * (length / 2)
 	particles.lifetime = emit_time + decay_time
 	particles.randomness = 100
@@ -98,6 +101,7 @@ func _setup_particles() -> void:
 	particles.one_shot = true
 	
 	var particles_mat = LASER_PARTICLE_MAT.duplicate()
+	@warning_ignore("integer_division")
 	particles_mat.emission_box_extents = Vector3(max_width/2 + 3, length/2, 1)
 	
 	particles.process_material = particles_mat
@@ -114,6 +118,7 @@ func _setup_hitbox() -> void:
 		hitbox_component.add_child(hitbox_collision)
 	
 	hitbox_collision.shape.size = Vector2(max_width - 1, length - 1)
+	@warning_ignore("integer_division")
 	hitbox_collision.position = direction * (length / 2)
 	
 	hitbox_component.active = false
