@@ -1,8 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://32h18qiocp2r"]
+[gd_scene load_steps=21 format=3 uid="uid://32h18qiocp2r"]
 
 [ext_resource type="Script" uid="uid://cgwba0ybyp5gu" path="res://entities/projectiles/homing_projectile.gd" id="1_5dux6"]
 [ext_resource type="Script" uid="uid://baka86c1c2sm2" path="res://entities/projectiles/projectile_stats.gd" id="2_m1htr"]
 [ext_resource type="Texture2D" uid="uid://b3vy0ravaq21x" path="res://assets/texture/projectiles/npc/missile_sheet.png" id="2_sus15"]
+[ext_resource type="PackedScene" uid="uid://c3rq577ok406m" path="res://particles/circle_explosion.tscn" id="3_csrul"]
 [ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://commons/components/etc/hitbox_component.gd" id="3_njtuk"]
 [ext_resource type="PackedScene" uid="uid://dfl00xfc5e7kj" path="res://particles/explode_particles.tscn" id="4_vyi8j"]
 [ext_resource type="Texture2D" uid="uid://8wkr5neo2iq7" path="res://assets/texture/sfx/4x_white_particle.png" id="5_ru0na"]
@@ -92,7 +93,7 @@ scale_curve = SubResource("CurveTexture_wtblw")
 scale = Vector2(1, 1.01068)
 script = ExtResource("1_5dux6")
 stats = SubResource("Resource_csrul")
-on_hide_sfx = ExtResource("4_vyi8j")
+on_hide_sfx = ExtResource("3_csrul")
 metadata/_custom_type_script = "uid://cgwba0ybyp5gu"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
