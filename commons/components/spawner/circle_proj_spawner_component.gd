@@ -17,6 +17,4 @@ func spawn() -> void:
 		_projectile.global_position = self.global_position
 	
 	if rotate_pattern:
-		projectile_direction = projectile_direction.rotated(
-			rad_to_deg(rotate_speed) * get_physics_process_delta_time()
-		)
+		projectile_direction = projectile_direction.rotated(deg_to_rad(rotate_speed))

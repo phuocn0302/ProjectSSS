@@ -19,6 +19,10 @@ var particles: GPUParticles2D
 var hitbox_component: HitboxComponent
 var hitbox_collision: CollisionShape2D
 
+var _cast_tween: Tween
+var _decay_tween: Tween
+var _emit_timer: SceneTreeTimer
+
 func _ready() -> void:
 	assert(laser_stats)
 	_setup_laser()
@@ -35,30 +39,36 @@ func cast() -> void:
 	if particles: 
 		particles.emitting = true
 	
-	var tween = self.create_tween().set_parallel(true)
-	tween.set_trans(Tween.TRANS_EXPO)
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(self, "end_point", direction * length, cast_time/ 2)
-	tween.tween_property(self, "width", max_width, cast_time)
+	_cast_tween = self.create_tween().set_parallel(true)
+	_cast_tween.set_trans(Tween.TRANS_EXPO)
+	_cast_tween.set_ease(Tween.EASE_IN_OUT)
+	_cast_tween.tween_property(self, "end_point", direction * length, cast_time/ 2)
+	_cast_tween.tween_property(self, "width", max_width, cast_time)
 	
-	await tween.finished
+	await _cast_tween.finished
 	
 	if hitbox_component:
 		hitbox_component.active = true
 		
-	await get_tree().create_timer(emit_time).timeout
+	_emit_timer = get_tree().create_timer(emit_time)
+	_emit_timer.timeout.connect(_on_emit_timer_timeout)
+
+
+func stop_casting() -> void:
+	_cast_tween.stop()
+	_emit_timer.timeout.disconnect(_on_emit_timer_timeout)
 	
 	if hitbox_component:
 		hitbox_component.active = false
-		
+	
 	_decay()
 
 
 func _decay() -> void:
-	var tween = self.create_tween()
-	tween.set_trans(Tween.TRANS_SINE)
-	tween.set_ease(Tween.EASE_OUT)
-	tween.tween_property(self, "default_color:a", 0, decay_time)
+	_decay_tween = self.create_tween()
+	_decay_tween.set_trans(Tween.TRANS_SINE)
+	_decay_tween.set_ease(Tween.EASE_OUT)
+	_decay_tween.tween_property(self, "default_color:a", 0, decay_time)
 
 
 func _apply_stats(stats: LaserStats) -> void:
@@ -123,3 +133,10 @@ func _setup_hitbox() -> void:
 	
 	hitbox_component.active = false
 	hitbox_component.collision_mask = collision_mask
+
+
+func _on_emit_timer_timeout() -> void:
+	if hitbox_component:
+		hitbox_component.active = false
+		
+	_decay()

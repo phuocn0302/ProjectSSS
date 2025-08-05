@@ -23,6 +23,13 @@ func emit_laser() -> void:
 	laser.cast()
 
 
+func force_stop_emit() -> void:
+	if not laser:
+		return
+	
+	laser.stop_casting()
+
+
 func _set_stats(val: LaserStats) -> void:
 	laser_stats = val
 	_setup_laser()
