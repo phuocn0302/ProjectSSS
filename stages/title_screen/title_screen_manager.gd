@@ -1,5 +1,7 @@
 extends Node2D
 
+const QUIT_GAME_CONFIRM = preload("res://utils/scenes/ui/quit_game_confirm.tscn")
+
 @export var button_move_amount: int = 10
 @export var hover_anim_time: float = 0.2
 
@@ -56,4 +58,5 @@ func _on_options_button_pressed() -> void:
 
 
 func _on_quit_button_pressed() -> void:
-	pass
+	var confirm_dialog = QUIT_GAME_CONFIRM.instantiate()
+	get_tree().current_scene.add_child(confirm_dialog)
