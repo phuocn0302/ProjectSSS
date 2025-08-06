@@ -18,7 +18,12 @@ script = ExtResource("1_woy87")
 layout_mode = 0
 offset_right = 180.0
 offset_bottom = 320.0
-color = Color(0, 0, 0, 0.819608)
+color = Color(0, 0, 0, 0.784314)
+
+[node name="DissmissButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_right = 180.0
+offset_bottom = 320.0
 
 [node name="QuitConfirm" type="Sprite2D" parent="."]
 position = Vector2(90, 160)
@@ -53,5 +58,6 @@ grow_vertical = 0
 texture_normal = ExtResource("4_5iuam")
 texture_hover = ExtResource("5_ix0td")
 
+[connection signal="pressed" from="DissmissButton" to="." method="_on_no_button_pressed"]
 [connection signal="pressed" from="NoButton" to="." method="_on_no_button_pressed"]
 [connection signal="pressed" from="YesButton" to="." method="_on_yes_button_pressed"]

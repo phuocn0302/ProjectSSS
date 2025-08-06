@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cqxxrjqqqi565"]
+[gd_scene load_steps=20 format=3 uid="uid://cqxxrjqqqi565"]
 
 [ext_resource type="Script" uid="uid://dv4blyo2v1bd8" path="res://stages/title_screen/title_screen_manager.gd" id="1_yctb5"]
 [ext_resource type="PackedScene" uid="uid://1npoa32dabp" path="res://particles/screen_star.tscn" id="2_681iy"]
@@ -109,6 +109,26 @@ shader_parameter/outline_samples = 4
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_strength = 0.0
 
+[sub_resource type="Curve" id="Curve_l08vr"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.919831, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_64dyw"]
+curve = SubResource("Curve_l08vr")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_681iy"]
+lifetime_randomness = 0.4
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(15, 1, 1)
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 70.0
+initial_velocity_max = 90.0
+gravity = Vector3(0, 0, 0)
+scale_max = 5.0
+scale_curve = SubResource("CurveTexture_64dyw")
+
 [node name="TitleScreen" type="Node2D"]
 script = ExtResource("1_yctb5")
 
@@ -136,6 +156,7 @@ offset = Vector2(16, 9)
 
 [node name="FireParticles" parent="Title/Title" instance=ExtResource("6_681iy")]
 position = Vector2(38, -3)
+process_material = SubResource("ParticleProcessMaterial_681iy")
 
 [node name="Buttons" type="Control" parent="."]
 modulate = Color(1, 1, 1, 0)

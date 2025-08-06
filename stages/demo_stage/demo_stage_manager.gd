@@ -1,8 +1,9 @@
+class_name DemoStageManager
 extends Node2D
 
 const GODOT_ENEMY = preload("res://entities/enemies/godot_enemy/godot_enemy.tscn")
-const GODOT_BOSS = preload("res://entities/bosses/godot/godot_boss.tscn")
 
+@export var boss: PackedScene
 @export var enemy_spawn_pos: Array[Vector2]
 
 @onready var input_hint: Label = $CanvasLayer/InputHint
@@ -14,6 +15,7 @@ const GODOT_BOSS = preload("res://entities/bosses/godot/godot_boss.tscn")
 var _score: int = 0
 
 func _ready() -> void:
+	assert(boss)
 	assert(not enemy_spawn_pos.is_empty())
 	
 	enemy_spawn_timer.autostart = false
@@ -40,16 +42,16 @@ func _spawn_enemy() -> void:
 
 
 func _spawn_boss() -> void:
-	var boss = GODOT_BOSS.instantiate() as GodotBoss
-	boss.global_position = Vector2(90,-30)
+	var _boss = boss.instantiate()
+	_boss.global_position = Vector2(90,-30)
 	
-	boss.defeated.connect(_on_boss_defeated)
+	_boss.defeated.connect(_on_boss_defeated)
 	
-	get_tree().current_scene.add_child(boss)
+	get_tree().current_scene.add_child(_boss)
 	
-	_setup_health_bar(boss.health_component.max_health)
+	_setup_health_bar(_boss.health_component.max_health)
 	
-	boss.health_component.health_depleted.connect(_update_health_bar)
+	_boss.health_component.health_depleted.connect(_update_health_bar)
 
 
 func _update_score(amount: int) -> void:

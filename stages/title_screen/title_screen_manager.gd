@@ -1,6 +1,7 @@
 extends Node2D
 
 const QUIT_GAME_CONFIRM = preload("res://utils/scenes/ui/quit_game_confirm.tscn")
+const DEMO_BOSS_SELECTOR = preload("res://stages/demo_boss_selector/demo_boss_selector.tscn")
 
 @export var button_move_amount: int = 10
 @export var hover_anim_time: float = 0.2
@@ -50,7 +51,8 @@ func _unhover_button(button: TextureButton) -> void:
 
 
 func _on_start_button_pressed() -> void:
-	pass
+	var demo_boss_selector = DEMO_BOSS_SELECTOR.instantiate()
+	get_tree().current_scene.add_child(demo_boss_selector)
 
 
 func _on_options_button_pressed() -> void:
