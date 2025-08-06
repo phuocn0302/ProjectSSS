@@ -14,6 +14,7 @@ script = ExtResource("1_uxeac")
 bosses_data = Array[ExtResource("2_wju0y")]([ExtResource("3_h0vkj"), ExtResource("4_w2ruo")])
 
 [node name="BG" type="ColorRect" parent="."]
+layout_mode = 0
 offset_right = 180.0
 offset_bottom = 320.0
 color = Color(0, 0, 0, 0.784314)

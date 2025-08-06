@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cqxxrjqqqi565"]
+[gd_scene load_steps=20 format=3 uid="uid://c3rf03lph6xe7"]
 
 [ext_resource type="Script" uid="uid://dv4blyo2v1bd8" path="res://stages/title_screen/title_screen_manager.gd" id="1_yctb5"]
 [ext_resource type="PackedScene" uid="uid://1npoa32dabp" path="res://particles/screen_star.tscn" id="2_681iy"]
@@ -164,6 +164,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
 
 [node name="StartButton" type="TextureButton" parent="Buttons"]
 unique_name_in_owner = true
@@ -175,6 +176,7 @@ offset_bottom = 205.0
 disabled = true
 texture_normal = ExtResource("6_tsp1v")
 texture_hover = ExtResource("7_3aitq")
+metadata/_edit_use_anchors_ = true
 
 [node name="OptionsButton" type="TextureButton" parent="Buttons"]
 unique_name_in_owner = true
@@ -186,6 +188,7 @@ offset_bottom = 235.0
 disabled = true
 texture_normal = ExtResource("8_igvpv")
 texture_hover = ExtResource("9_lwj2x")
+metadata/_edit_use_anchors_ = true
 
 [node name="QuitButton" type="TextureButton" parent="Buttons"]
 unique_name_in_owner = true
@@ -197,6 +200,7 @@ offset_bottom = 265.0
 disabled = true
 texture_normal = ExtResource("10_rf16a")
 texture_hover = ExtResource("11_gn4uv")
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="Buttons/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="Buttons/OptionsButton" to="." method="_on_options_button_pressed"]
