@@ -11,10 +11,12 @@ config_version=5
 [application]
 
 config/name="ProjectSSS"
-run/main_scene="uid://c3rf03lph6xe7"
+run/main_scene="uid://b1sqsoed8ou5n"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
 config/icon="res://icon.svg"
+boot_splash/minimum_display_time=100
 
 [display]
 
