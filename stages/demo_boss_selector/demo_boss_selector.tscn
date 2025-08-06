@@ -1,0 +1,72 @@
+[gd_scene load_steps=7 format=3 uid="uid://dr0hj25a3exdq"]
+
+[ext_resource type="Script" uid="uid://b578c28ub7e1o" path="res://stages/demo_boss_selector/demo_boss_selector.gd" id="1_uxeac"]
+[ext_resource type="Script" uid="uid://cv8e7txkgwr01" path="res://stages/demo_boss_selector/boss_entry_data.gd" id="2_wju0y"]
+[ext_resource type="Resource" uid="uid://dxwj2dnak3ny6" path="res://stages/demo_boss_selector/resources/godot_boss_entry.tres" id="3_h0vkj"]
+[ext_resource type="Resource" uid="uid://cfxmmq3gvq4ga" path="res://stages/demo_boss_selector/resources/capy_boss_entry.tres" id="4_w2ruo"]
+[ext_resource type="Texture2D" uid="uid://c1u6q6oj1vaar" path="res://assets/texture/ui/dialog/return_button.png" id="5_h0vkj"]
+[ext_resource type="Texture2D" uid="uid://djrgdi181neaa" path="res://assets/texture/ui/dialog/return_button_hover.png" id="6_w2ruo"]
+
+[node name="DemoBossSelector" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_uxeac")
+bosses_data = Array[ExtResource("2_wju0y")]([ExtResource("3_h0vkj"), ExtResource("4_w2ruo")])
+
+[node name="BG" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 180.0
+offset_bottom = 320.0
+color = Color(0, 0, 0, 0.784314)
+
+[node name="DissmissButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_top = -1.0
+offset_right = 180.0
+offset_bottom = 319.0
+
+[node name="BossEntryControl" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 70.0
+offset_top = 140.0
+offset_right = 110.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EntryContainer" type="VBoxContainer" parent="BossEntryControl"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.0
+offset_top = -100.0
+offset_right = 65.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ButtonControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ReturnButton" type="TextureButton" parent="ButtonControl"]
+layout_mode = 0
+offset_right = 70.0
+offset_bottom = 30.0
+texture_normal = ExtResource("5_h0vkj")
+texture_hover = ExtResource("6_w2ruo")
+
+[connection signal="pressed" from="DissmissButton" to="." method="_on_return_button_pressed"]
+[connection signal="pressed" from="ButtonControl/ReturnButton" to="." method="_on_return_button_pressed"]
