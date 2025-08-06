@@ -74,6 +74,9 @@ func _update_score(amount: int) -> void:
 
 func _on_boss_defeated() -> void:
 	boss_health_bar.visible = false
+	await get_tree().create_timer(1).timeout
+	
+	_return_to_title()
 	
 
 
