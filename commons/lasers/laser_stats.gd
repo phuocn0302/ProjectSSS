@@ -8,3 +8,4 @@ extends Resource
 @export var emit_time: float = 1
 @export var cast_time: float = 0.2
 @export var decay_time: float = 0.2
+@export var outline_color: Color = Color.RED

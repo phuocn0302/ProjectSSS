@@ -13,6 +13,7 @@ var max_width: int
 var emit_time: float
 var cast_time: float
 var decay_time: float
+var outline_color: Color
 
 var end_point: Vector2
 var particles: GPUParticles2D
@@ -22,10 +23,27 @@ var hitbox_collision: CollisionShape2D
 var _cast_tween: Tween
 var _decay_tween: Tween
 var _emit_timer: SceneTreeTimer
+var _is_emitting: bool = false
 
 func _ready() -> void:
 	assert(laser_stats)
 	_setup_laser()
+
+
+func _draw() -> void:
+	if not _is_emitting:
+		return
+	
+	# Outline 
+	if outline_color:
+		draw_polyline(points, outline_color, max_width + 2)
+		draw_circle(points[0], (max_width + 2) / 2.0, outline_color)
+		draw_circle(points[1], (max_width + 2) / 2.0, outline_color)
+	
+	# Main laser
+	draw_polyline(points, default_color, max_width)
+	draw_circle(points[0], max_width / 2.0, default_color)
+	draw_circle(points[1], max_width / 2.0, default_color)
 
 
 @warning_ignore("unused_parameter")
@@ -46,6 +64,7 @@ func cast() -> void:
 	_cast_tween.tween_property(self, "width", max_width, cast_time)
 	
 	await _cast_tween.finished
+	_is_emitting = true
 	
 	if hitbox_component:
 		hitbox_component.active = true
@@ -58,6 +77,7 @@ func stop_casting() -> void:
 	_cast_tween.stop()
 	_emit_timer.timeout.disconnect(_on_emit_timer_timeout)
 	
+	_is_emitting = false
 	if hitbox_component:
 		hitbox_component.active = false
 	
@@ -80,6 +100,7 @@ func _apply_stats(stats: LaserStats) -> void:
 	self.emit_time = stats.emit_time
 	self.cast_time = stats.cast_time
 	self.decay_time = stats.decay_time
+	self.outline_color = stats.outline_color
 	
 	_setup_particles()
 	_setup_hitbox()
@@ -136,6 +157,8 @@ func _setup_hitbox() -> void:
 
 
 func _on_emit_timer_timeout() -> void:
+	_is_emitting = false
+	
 	if hitbox_component:
 		hitbox_component.active = false
 		

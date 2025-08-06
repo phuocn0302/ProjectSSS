@@ -332,6 +332,7 @@ max_width = 12
 emit_time = 1.0
 cast_time = 0.2
 decay_time = 0.2
+outline_color = Color(1, 0, 0, 1)
 metadata/_custom_type_script = "uid://bgfjkax5hcagh"
 
 [node name="CapyBoss" type="Node2D" node_paths=PackedStringArray("phase1_states", "phase2_states", "phase3_states")]
