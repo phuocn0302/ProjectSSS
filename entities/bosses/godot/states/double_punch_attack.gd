@@ -23,7 +23,7 @@ func enter() -> void:
 	
 	_right_arm_attack_pos_index = fposmod(_right_arm_attack_pos_index + 1, 2)
 	
-	_timer = get_tree().create_timer(attack_delay)
+	_timer = Utils.create_timer(attack_delay)
 	_timer.timeout.connect(_attack)
 
 

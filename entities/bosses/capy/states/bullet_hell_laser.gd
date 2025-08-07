@@ -23,9 +23,9 @@ func enter() -> void:
 	_setup_circle_projectile_spawner()
 	_setup_laser_emitter()
 	
-	await get_tree().create_timer(shoot_delay).timeout
+	await Utils.create_timer(shoot_delay).timeout
 	warning_line.hide()
-	await get_tree().create_timer(0.3).timeout
+	await Utils.create_timer(0.3).timeout
 	_start_shooting()
 
 
@@ -57,7 +57,7 @@ func _start_shooting() -> void:
 	laser_emitter.emit_laser()
 	circle_projectile_spawner.active = true
 	
-	_timer = get_tree().create_timer(duration)
+	_timer = Utils.create_timer(duration)
 	_timer.timeout.connect(_on_timer_timeout)
 
 

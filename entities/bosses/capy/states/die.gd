@@ -21,7 +21,7 @@ func enter() -> void:
 		s.active = false
 	
 	state_machine.active = false
-	await get_tree().create_timer(3).timeout
+	await Utils.create_timer(3).timeout
 	
 	var sfx = CIRCLE_EXPLOSION.instantiate()
 	sfx.global_position = boss.global_position
@@ -30,8 +30,8 @@ func enter() -> void:
 	main.hide()
 	gun.hide()
 	
-	await get_tree().create_timer(1).timeout
+	await Utils.create_timer(1).timeout
 	gpu_particles_2d.emitting = false
 	
-	await get_tree().create_timer(1).timeout
+	await Utils.create_timer(1).timeout
 	boss.queue_free()

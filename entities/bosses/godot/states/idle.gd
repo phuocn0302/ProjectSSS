@@ -6,7 +6,7 @@ var _last_state: GodotBossState
 var _second_last_state: GodotBossState
 
 func enter() -> void:
-	var timer = get_tree().create_timer(idle_time)
+	var timer = Utils.create_timer(idle_time)
 	timer.timeout.connect(
 		Callable(state_machine, "change_state")
 		.bind(pick_random_state())

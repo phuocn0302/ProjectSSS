@@ -22,7 +22,7 @@ func enter() -> void:
 	right_missile_spawner.active = true
 	pattern_projectile_spawner.active = true
 	
-	_timer = get_tree().create_timer(duration)
+	_timer = Utils.create_timer(duration)
 	_timer.timeout.connect(_on_timer_timeout)
 
 

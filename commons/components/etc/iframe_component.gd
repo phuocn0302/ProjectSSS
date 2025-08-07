@@ -21,5 +21,5 @@ func start_iframe(duration: float = -1) -> void:
 	if duration == -1:
 		duration = iframe_duration
 	
-	await get_tree().create_timer(duration).timeout
+	await Utils.create_timer(duration).timeout
 	hurtbox_component.active = true

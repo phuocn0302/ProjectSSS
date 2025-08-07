@@ -52,7 +52,7 @@ func _sweep() -> void:
 	
 	move_warning_line.show()
 	
-	await get_tree().create_timer(delay_before_sweep).timeout
+	await Utils.create_timer(delay_before_sweep).timeout
 	
 	move_warning_line.hide()
 	_shoot()
@@ -78,7 +78,7 @@ func _on_sweep_end() -> void:
 	else:
 		_continue_sweep = randf() < continue_sweep_chance
 	
-	await get_tree().create_timer(delay_before_sweep).timeout
+	await Utils.create_timer(delay_before_sweep).timeout
 	
 	if _continue_sweep and _sweep_counter < max_number_of_sweep:
 		_sweep()

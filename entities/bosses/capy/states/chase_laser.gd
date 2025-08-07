@@ -28,7 +28,7 @@ func enter() -> void:
 	
 	_setup_laser_emitter()
 	
-	_shoot_timer = get_tree().create_timer(chase_duration)
+	_shoot_timer = Utils.create_timer(chase_duration)
 	_shoot_timer.timeout.connect(_shoot)
 
 
@@ -75,7 +75,7 @@ func _shoot() -> void:
 	laser_emitter.emit_laser()
 	
 	var total_laser_time = _laser_stats.cast_time + _laser_stats.decay_time + _laser_stats.emit_time
-	await get_tree().create_timer(total_laser_time).timeout
+	await Utils.create_timer(total_laser_time).timeout
 	
 	_is_shooting = false
 	_shot_counter += 1
@@ -84,7 +84,7 @@ func _shoot() -> void:
 		state_machine.change_state(states["Idle"])
 		return
 	
-	_shoot_timer = get_tree().create_timer(chase_duration)
+	_shoot_timer = Utils.create_timer(chase_duration)
 	_shoot_timer.timeout.connect(_shoot)
 
 

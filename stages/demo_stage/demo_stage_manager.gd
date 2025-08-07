@@ -70,13 +70,13 @@ func _update_score(amount: int) -> void:
 	if enemy_spawn_timer.timeout.is_connected(_spawn_enemy) and _score > 7:
 		enemy_spawn_timer.timeout.disconnect(_spawn_enemy)
 		
-		await get_tree().create_timer(2).timeout
+		await Utils.create_timer(2).timeout
 		_spawn_boss()
 
 
 func _on_boss_defeated() -> void:
 	boss_health_bar.visible = false
-	await get_tree().create_timer(1).timeout
+	await Utils.create_timer(1).timeout
 	
 	_return_to_title()
 	
@@ -112,14 +112,14 @@ func _update_health_bar(amount: float) -> void:
 
 
 func disable_input_hint() -> void:
-	await get_tree().create_timer(1).timeout
+	await Utils.create_timer(1).timeout
 	var tween = create_tween()
 	tween.tween_property(input_hint, "modulate:a", 0, 1)
 
 
 func _on_player_die() -> void:
 	PauseManger.is_in_stage = false
-	await get_tree().create_timer(1).timeout
+	await Utils.create_timer(1).timeout
 	
 	var retry = STAGE_RETRY.instantiate()
 	

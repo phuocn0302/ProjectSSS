@@ -29,7 +29,7 @@ func enter() -> void:
 		right_arm_pos.global_position
 		][_arm_index]
 	
-	_timer = get_tree().create_timer(attack_delay)
+	_timer = Utils.create_timer(attack_delay)
 	_timer.timeout.connect(_attack)
 
 

@@ -89,7 +89,7 @@ func move(delta: float) -> void:
 
 
 func start_lifetime_timer() -> void:
-	lifetime_timer = get_tree().create_timer(lifetime)
+	lifetime_timer = Utils.create_timer(lifetime, false)
 	lifetime_timer.timeout.connect(deactive)
 
 

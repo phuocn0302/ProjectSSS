@@ -20,7 +20,7 @@ func enter() -> void:
 	boss.left_arm.self_destruct()
 	await boss.right_arm.self_destruct()
 	
-	await get_tree().create_timer(1).timeout
+	await Utils.create_timer(1).timeout
 	
 	
 	var sfx = CIRCLE_EXPLOSION.instantiate()
@@ -28,8 +28,8 @@ func enter() -> void:
 	get_tree().current_scene.add_child(sfx)
 	sprite.hide()
 	
-	await get_tree().create_timer(1).timeout
+	await Utils.create_timer(1).timeout
 	eye_particles.emitting = false
 	
-	await get_tree().create_timer(1).timeout
+	await Utils.create_timer(1).timeout
 	boss.queue_free()

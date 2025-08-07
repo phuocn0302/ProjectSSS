@@ -51,6 +51,7 @@ func setup_timer() -> void:
 	add_child(timer)
 	
 	timer.timeout.connect(spawn)
+	timer.process_mode = Node.PROCESS_MODE_PAUSABLE
 	timer.wait_time = spawn_interval
 	timer.autostart = true
 	timer.start()

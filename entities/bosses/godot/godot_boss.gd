@@ -56,7 +56,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _phase1_transtion() -> void:
-	await get_tree().create_timer(0.3).timeout
+	await Utils.create_timer(0.3).timeout
 	state_machine.change_state(shoot_at_player_1)
 
 

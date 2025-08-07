@@ -7,7 +7,7 @@ var _timer: SceneTreeTimer
 func enter() -> void:
 	boss.target_projectile_spawner.active = true
 	boss.pattern_projectile_spawner.active = true
-	_timer = get_tree().create_timer(duration)
+	_timer = Utils.create_timer(duration)
 	_timer.timeout.connect(change_state)
 
 

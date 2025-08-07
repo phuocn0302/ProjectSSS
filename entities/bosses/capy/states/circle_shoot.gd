@@ -24,7 +24,7 @@ func enter() -> void:
 	
 	missile_spawners = [left_missile_spawner, right_missile_spawner]
 	
-	_timer = get_tree().create_timer(duration)
+	_timer = Utils.create_timer(duration)
 	_timer.timeout.connect(_on_timer_timeout)
 	_shoot()
 
@@ -43,7 +43,7 @@ func _shoot() -> void:
 	circle_projectile_spawner.active = true
 	circle_projectile_spawner.rotate_speed *= -1
 	
-	_burst_timer = get_tree().create_timer(burst_time)
+	_burst_timer = Utils.create_timer(burst_time)
 	await _burst_timer.timeout
 	
 	if not circle_projectile_spawner.active:
@@ -51,7 +51,7 @@ func _shoot() -> void:
 	
 	circle_projectile_spawner.active = false
 	
-	_burst_delay_timer = get_tree().create_timer(burst_delay)
+	_burst_delay_timer = Utils.create_timer(burst_delay)
 	_burst_delay_timer.timeout.connect(_shoot)
 
 

@@ -6,7 +6,7 @@ extends GodotBossState
 var _timer: SceneTreeTimer 
 
 func enter() -> void:
-	_timer = get_tree().create_timer(transit_time)
+	_timer = Utils.create_timer(transit_time)
 	_timer.timeout.connect(transit)
 
 

@@ -11,7 +11,7 @@ func _ready() -> void:
 	super._ready()
 	assert(chase_delay < lifetime)
 	
-	get_tree().create_timer(chase_delay).timeout.connect(
+	Utils.create_timer(chase_delay).timeout.connect(
 		func(): _chasing = true
 	)
 

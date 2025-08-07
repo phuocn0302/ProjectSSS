@@ -69,7 +69,7 @@ func cast() -> void:
 	if hitbox_component:
 		hitbox_component.active = true
 		
-	_emit_timer = get_tree().create_timer(emit_time)
+	_emit_timer = Utils.create_timer(emit_time)
 	_emit_timer.timeout.connect(_on_emit_timer_timeout)
 
 
