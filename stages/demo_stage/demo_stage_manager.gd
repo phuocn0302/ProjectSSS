@@ -30,6 +30,8 @@ func _ready() -> void:
 	
 	boss_health_bar.visible = false
 	player.die.connect(_on_player_die)
+	
+	PauseManger.is_in_stage = true
 
 
 func _process(_delta: float) -> void:
@@ -116,6 +118,7 @@ func disable_input_hint() -> void:
 
 
 func _on_player_die() -> void:
+	PauseManger.is_in_stage = false
 	await get_tree().create_timer(1).timeout
 	
 	var retry = STAGE_RETRY.instantiate()
