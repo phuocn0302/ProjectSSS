@@ -160,10 +160,11 @@ func _check_visible() -> void:
 func _on_collision(hits: Array) -> void:
 	for hit in hits:
 		var collider = hit["collider"]
-		if collider is Area2D and not collider.monitorable:
-			continue
-			
 		if collider is HurtboxComponent:
+			
+			if not collider.active:
+				return
+			
 			collider.take_damage(projectile_data.damage)
 			deactive()
 
