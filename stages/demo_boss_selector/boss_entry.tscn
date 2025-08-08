@@ -10,7 +10,7 @@
 offset_right = 130.0
 offset_bottom = 60.0
 texture_normal = ExtResource("1_j4idr")
-texture_hover = ExtResource("2_3xef8")
+texture_focused = ExtResource("2_3xef8")
 script = ExtResource("1_7ijsv")
 
 [node name="BossMugshot" type="Sprite2D" parent="."]

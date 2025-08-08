@@ -12,14 +12,27 @@ func _ready() -> void:
 	_add_boss_entry()
 
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		_on_return_button_pressed()
+
+
 func _add_boss_entry() -> void:
+	var boss_entries: Array[Control]
 	for b in bosses_data:
 		var entry = BOSS_ENTRY.instantiate()
+		
 		entry.boss_name = b.boss_name
 		entry.boss_mugshot = b.boss_mugshot
+		
+		entry.mouse_entered.connect(func(): entry.grab_focus())
 		entry.pressed.connect(Callable(self,"_on_stages_selected").bind(b.boss_scene))
 		
 		entry_container.add_child(entry)
+		boss_entries.append(entry)
+	
+	if not boss_entries.is_empty():
+		boss_entries[0].grab_focus()
 
 
 func _on_stages_selected(boss: PackedScene) -> void:

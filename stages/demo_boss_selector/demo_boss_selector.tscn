@@ -24,6 +24,7 @@ layout_mode = 0
 offset_top = -1.0
 offset_right = 180.0
 offset_bottom = 319.0
+focus_mode = 0
 
 [node name="BossEntryControl" type="Control" parent="."]
 layout_mode = 1
@@ -67,6 +68,7 @@ offset_right = 70.0
 offset_bottom = 30.0
 texture_normal = ExtResource("5_h0vkj")
 texture_hover = ExtResource("6_w2ruo")
+texture_focused = ExtResource("6_w2ruo")
 
 [connection signal="pressed" from="DissmissButton" to="." method="_on_return_button_pressed"]
 [connection signal="pressed" from="ButtonControl/ReturnButton" to="." method="_on_return_button_pressed"]
