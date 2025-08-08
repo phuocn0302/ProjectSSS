@@ -222,7 +222,6 @@ one_shot = true
 [node name="ProjectileSpawner" type="Node2D" parent="."]
 position = Vector2(0, -7)
 script = ExtResource("15_gx6sm")
-type = 1
 projectile_data = ExtResource("18_b2kln")
 active = false
 metadata/_custom_type_script = "uid://ch7r1mf7ar7uc"
