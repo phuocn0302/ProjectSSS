@@ -15,9 +15,9 @@
 [ext_resource type="Script" uid="uid://km3cwucdktmb" path="res://commons/components/movements/movement_bound_component.gd" id="11_b2kln"]
 [ext_resource type="Script" uid="uid://bn8rssbc5dw31" path="res://commons/components/sfx/frame_freeze_component.gd" id="13_j3ovn"]
 [ext_resource type="Script" uid="uid://1hf68snymgbl" path="res://commons/components/sfx/ghost_trailing_component.gd" id="14_afbqv"]
-[ext_resource type="Script" uid="uid://ch7r1mf7ar7uc" path="res://commons/components/spawner/projectile_spawner_component.gd" id="15_gx6sm"]
-[ext_resource type="PackedScene" uid="uid://cehn3l3u5h5qg" path="res://entities/projectiles/player/normal_bullet.tscn" id="16_yqrof"]
+[ext_resource type="Script" uid="uid://ch7r1mf7ar7uc" path="res://entities/projectiles/projectile_spawner.gd" id="15_gx6sm"]
 [ext_resource type="Script" uid="uid://8jap68kirkbv" path="res://commons/components/etc/iframe_component.gd" id="17_3wlsy"]
+[ext_resource type="Resource" uid="uid://d20y1i8w5tvfe" path="res://entities/projectiles/data_resources/player/base.tres" id="18_b2kln"]
 
 [sub_resource type="Shader" id="Shader_yqrof"]
 code = "shader_type canvas_item;
@@ -222,7 +222,8 @@ one_shot = true
 [node name="ProjectileSpawner" type="Node2D" parent="."]
 position = Vector2(0, -7)
 script = ExtResource("15_gx6sm")
-projectile = ExtResource("16_yqrof")
+type = 1
+projectile_data = ExtResource("18_b2kln")
 active = false
 metadata/_custom_type_script = "uid://ch7r1mf7ar7uc"
 

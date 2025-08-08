@@ -22,9 +22,12 @@ func spawn() -> void:
 	
 	for i in number_of_projectiles:
 		var instance = object_pool.get_instance() as Projectile
+		var proj_data: ProjectileData = instance.projectile_data.duplicate()
+		proj_data.speed = cached_distances[i] / travel_time
+		
+		instance.projectile_data = proj_data
 		instance.global_position = global_position
 		instance.direction = cached_directions[i]
-		instance.max_speed = cached_distances[i] / travel_time
 
 
 func _cache_pattern() -> void:

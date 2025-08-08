@@ -10,15 +10,15 @@
 [ext_resource type="Script" uid="uid://chv2lphkgpnes" path="res://commons/components/etc/hurtbox_component.gd" id="7_exahm"]
 [ext_resource type="Script" uid="uid://c3dex51h0lylc" path="res://commons/components/sfx/hit_flash_component.gd" id="8_emtw0"]
 [ext_resource type="Texture2D" uid="uid://cbmdtg4widyj3" path="res://assets/texture/npc/bosses/boss_capybara/raygun.png" id="9_coggl"]
-[ext_resource type="Script" uid="uid://bonurqbakdykh" path="res://commons/components/spawner/pattern_proj_spawner_component.gd" id="10_8qm53"]
+[ext_resource type="Script" uid="uid://bonurqbakdykh" path="res://entities/projectiles/spawners/pattern_proj_spawner.gd" id="10_8qm53"]
 [ext_resource type="Script" uid="uid://1hf68snymgbl" path="res://commons/components/sfx/ghost_trailing_component.gd" id="10_attqv"]
-[ext_resource type="PackedScene" uid="uid://b5g2rcdyndfgf" path="res://entities/projectiles/enemies/circle_projectile.tscn" id="11_mikmi"]
 [ext_resource type="Script" uid="uid://dbd157q18m2w2" path="res://commons/lasers/laser_emitter.gd" id="11_tv2n2"]
 [ext_resource type="Script" uid="uid://bgfjkax5hcagh" path="res://commons/lasers/laser_stats.gd" id="12_mikmi"]
-[ext_resource type="Script" uid="uid://ch7r1mf7ar7uc" path="res://commons/components/spawner/projectile_spawner_component.gd" id="14_frdsb"]
-[ext_resource type="PackedScene" uid="uid://32h18qiocp2r" path="res://entities/projectiles/enemies/homing_missile.tscn" id="15_52pfg"]
-[ext_resource type="Script" uid="uid://duxclkhsalect" path="res://commons/components/spawner/circle_proj_spawner_component.gd" id="16_xvc4h"]
-[ext_resource type="PackedScene" uid="uid://c7rb61a1nr8dn" path="res://entities/projectiles/enemies/bullet_projectile.tscn" id="17_jb3gi"]
+[ext_resource type="Resource" uid="uid://btj1wpnlgy41t" path="res://entities/projectiles/data_resources/enemies/bullet.tres" id="13_k3tu0"]
+[ext_resource type="Script" uid="uid://ch7r1mf7ar7uc" path="res://entities/projectiles/projectile_spawner.gd" id="14_frdsb"]
+[ext_resource type="Resource" uid="uid://bir702nqk15lx" path="res://entities/projectiles/data_resources/enemies/circle.tres" id="15_rcygr"]
+[ext_resource type="Script" uid="uid://duxclkhsalect" path="res://entities/projectiles/spawners/circle_proj_spawner.gd" id="16_xvc4h"]
+[ext_resource type="Resource" uid="uid://b3wai27flh2jf" path="res://entities/projectiles/data_resources/enemies/homing_missile.tres" id="17_oknix"]
 [ext_resource type="Script" uid="uid://dg0til6w02wfe" path="res://commons/state_machine/state_machine.gd" id="18_jb3gi"]
 [ext_resource type="Script" uid="uid://5e8y3lq5jsgs" path="res://entities/bosses/capy/states/idle.gd" id="19_ks51w"]
 [ext_resource type="Script" uid="uid://b6bsthxa2e0l" path="res://entities/bosses/capy/states/circle_shoot.gd" id="20_co413"]
@@ -454,7 +454,7 @@ position = Vector2(0, 37)
 script = ExtResource("10_8qm53")
 number_of_projectiles = 5
 travel_time = 1.0
-projectile = ExtResource("17_jb3gi")
+projectile_data = ExtResource("13_k3tu0")
 spawn_interval = 1.5
 active = false
 metadata/_custom_type_script = "uid://bonurqbakdykh"
@@ -468,7 +468,7 @@ script = ExtResource("16_xvc4h")
 number_of_projectile = 15
 rotate_pattern = true
 rotate_speed = 10.0
-projectile = ExtResource("11_mikmi")
+projectile_data = ExtResource("15_rcygr")
 spawn_interval = 0.1
 active = false
 metadata/_custom_type_script = "uid://duxclkhsalect"
@@ -476,7 +476,8 @@ metadata/_custom_type_script = "uid://duxclkhsalect"
 [node name="ProjectileSpawner" type="Node2D" parent="Spawners"]
 position = Vector2(-38, 39)
 script = ExtResource("14_frdsb")
-projectile = ExtResource("15_52pfg")
+type = 1
+projectile_data = ExtResource("17_oknix")
 projectile_direction = Vector2(0, 1)
 spawn_interval = 4.0
 active = false
@@ -485,7 +486,8 @@ metadata/_custom_type_script = "uid://ch7r1mf7ar7uc"
 [node name="ProjectileSpawner2" type="Node2D" parent="Spawners"]
 position = Vector2(38, 39)
 script = ExtResource("14_frdsb")
-projectile = ExtResource("15_52pfg")
+type = 1
+projectile_data = ExtResource("17_oknix")
 projectile_direction = Vector2(0, 1)
 spawn_interval = 4.0
 active = false
