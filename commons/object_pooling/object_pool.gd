@@ -6,6 +6,8 @@ extends Node
 var available_pool: Array[PoolableEntity] = []
 var is_initialized := false
 
+var object_node: Node
+
 func setup(_object_to_pool: PackedScene):
 	if is_initialized:
 		return
@@ -13,10 +15,24 @@ func setup(_object_to_pool: PackedScene):
 	object_to_pool = _object_to_pool
 
 
+func setup_node(_node: PoolableEntity) -> void:
+	if is_initialized:
+		return
+	is_initialized = true
+	object_node = _node
+
+
 func _add_to_pool() -> PoolableEntity:
 	var obj: PoolableEntity
 	
-	obj = object_to_pool.instantiate() as PoolableEntity
+	if object_to_pool:
+		obj = object_to_pool.instantiate() as PoolableEntity
+	elif object_node:
+		obj = object_node.duplicate() as PoolableEntity
+	else:
+		push_error("ObjectPool not initialized with a valid object.")
+		return null
+	
 	assert(obj is PoolableEntity)
 	
 	obj.pool = self

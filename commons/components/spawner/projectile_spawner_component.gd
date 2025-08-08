@@ -1,7 +1,10 @@
 class_name ProjectileSpawner
 extends Component2D
 
-@export var projectile: PackedScene
+
+@export var type: ProjectileFactory.Type = ProjectileFactory.Type.NORMAL
+@export var projectile_data: ProjectileData
+
 @export var projectile_direction: Vector2 = Vector2.UP
 @export var spawn_interval: float = 0.5:
 	get: return spawn_interval
@@ -15,7 +18,7 @@ var timer: Timer
 
 func _ready() -> void:
 	super._ready()
-	assert(projectile)
+	assert(projectile_data)
 	
 	setup_pool()
 	setup_timer()
@@ -40,7 +43,8 @@ func setup_pool() -> void:
 	object_pool = ObjectPool.new()
 	add_child(object_pool)
 	
-	object_pool.setup(projectile)
+	var proj = ProjectileFactory.create_projectile(projectile_data, type)
+	object_pool.setup_node(proj)
 
 
 func setup_timer() -> void:

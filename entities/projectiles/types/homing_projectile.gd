@@ -1,15 +1,21 @@
 class_name HomingProjectile
 extends Projectile
 
-@export var target_group: String = "player"
-@export var rotate_speed: float = 90
-@export var chase_delay: float = 0.5
+var target_group: String = "player"
+var rotate_speed: float = 90
+var chase_delay: float = 0.5
 
 var _chasing: bool = false
 
 func _ready() -> void:
 	super._ready()
-	assert(chase_delay < lifetime)
+	
+	if projectile_data is HomingProjectileData:
+		target_group = projectile_data.target_group
+		rotate_speed = projectile_data.rotate_speed
+		chase_delay = projectile_data.chase_delay 
+	
+	assert(chase_delay < projectile_data.life_time)
 	
 	Utils.create_timer(chase_delay).timeout.connect(
 		func(): _chasing = true
@@ -52,7 +58,7 @@ func chase(delta: float) -> void:
 	
 	direction = direction.rotated(clamped_angle).normalized()
 	
-	global_position += direction * max_speed * delta
+	global_position += direction * projectile_data.speed * delta
 	global_rotation = direction.angle()
 
 

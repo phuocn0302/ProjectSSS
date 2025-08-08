@@ -3,8 +3,6 @@ extends Entity
 
 signal die
 
-const NORMAL_BULLET = preload("res://entities/projectiles/player/normal_bullet.tscn")
-
 @export_category("Movement")
 @export var max_move_speed: float = 150
 @export var min_move_speed: float = 50
