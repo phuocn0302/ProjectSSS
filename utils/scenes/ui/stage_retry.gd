@@ -6,6 +6,8 @@ signal yes_pressed
 @onready var bg: ColorRect = $BG
 @onready var dialog_control: Control = $DialogControl
 @onready var you_died: Label = $YouDied
+@onready var no_button: TextureButton = $DialogControl/NoButton
+@onready var yes_button: TextureButton = $DialogControl/YesButton
 
 
 func _ready() -> void:
@@ -20,7 +22,11 @@ func _ready() -> void:
 	tween.tween_property(you_died, "modulate:a", 1, 1)
 	tween.chain()
 	tween.tween_property(dialog_control, "modulate:a", 1, 0.5)
-
+	
+	no_button.mouse_entered.connect(func(): no_button.grab_focus())
+	yes_button.mouse_entered.connect(func(): yes_button.grab_focus())
+	
+	yes_button.grab_focus()
 
 func _on_no_button_pressed(free: bool = true) -> void:
 	no_pressed.emit()

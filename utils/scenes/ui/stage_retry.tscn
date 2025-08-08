@@ -58,7 +58,7 @@ offset_right = 81.0
 offset_bottom = 207.0
 grow_vertical = 0
 texture_normal = ExtResource("3_grdp6")
-texture_hover = ExtResource("4_o76y0")
+texture_focused = ExtResource("4_o76y0")
 
 [node name="YesButton" type="TextureButton" parent="DialogControl"]
 layout_mode = 1
@@ -74,7 +74,7 @@ offset_bottom = 207.0
 grow_horizontal = 0
 grow_vertical = 0
 texture_normal = ExtResource("5_umcr0")
-texture_hover = ExtResource("6_u8575")
+texture_focused = ExtResource("6_u8575")
 
 [connection signal="pressed" from="DialogControl/NoButton" to="." method="_on_no_button_pressed"]
 [connection signal="pressed" from="DialogControl/YesButton" to="." method="_on_yes_button_pressed"]
