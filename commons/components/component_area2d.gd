@@ -1,19 +1,7 @@
 class_name ComponentArea2D
 extends Area2D
 
-var _active := true
-
-@export var active: bool = true:
-	get:
-		return _active
-	set(value):
-		_active = value
-		if value:
-			activate()
-		else:
-			deactivate()
-
-
+@export var active: bool = true: set = _set_active
 @export var entity: Entity
 
 func _ready() -> void:
@@ -29,11 +17,16 @@ func on_area_exit(_area: Area2D) -> void:
 	pass
 
 
+func _set_active(val: bool) -> void:
+	active = val
+	
+	self.set_deferred("monitoring", val)
+	self.set_deferred("monitorable", val)
+
+
 func activate() -> void:
-	self.set_deferred("monitoring", true)
-	self.set_deferred("monitorable", true)
+	active = true
 
 
 func deactivate() -> void:
-	self.set_deferred("monitoring", false)
-	self.set_deferred("monitorable", false)
+	active = false
