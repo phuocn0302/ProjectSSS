@@ -63,6 +63,9 @@ show_percentage = false
 position = Vector2(86, 4)
 texture = ExtResource("3_pyo7c")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
 [node name="Star" type="GPUParticles2D" parent="."]
 modulate = Color(0.44, 0.44, 0.44, 1)
 amount = 70
