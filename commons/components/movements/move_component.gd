@@ -38,7 +38,7 @@ func straight_move(delta: float) -> void:
 
 
 func sinewave_move(delta: float) -> void:
-	_sine_t = fposmod(_sine_t + delta, TAU)
+	_sine_t += delta
 
 	var forward_offset = direction * speed * _sine_t
 
