@@ -3,7 +3,8 @@ extends Component
 
 enum MoveType {
 	CIRCLE,
-	FIGURE8
+	FIGURE8,
+	OSCILLATE,
 }
 
 @export var move_type: MoveType = MoveType.CIRCLE
@@ -15,6 +16,10 @@ enum MoveType {
 
 @export_group("Figure 8 Settings")
 @export var figure8_amplitude: float = 1.0
+
+@export_group("Oscillate Settings")
+@export var osc_speed: float = 1.0
+@export var osc_range: float = 50
 
 var _t: float = 0.0
 var _prev_offset: Vector2 = Vector2.ZERO
@@ -32,6 +37,8 @@ func _physics_process(delta: float) -> void:
 			_circle_move()
 		MoveType.FIGURE8:
 			_figure8_move()
+		MoveType.OSCILLATE:
+			_oscillate_move()
 
 
 func _circle_move() -> void:
@@ -55,3 +62,10 @@ func _figure8_move() -> void:
 	var delta_offset = rotated_offset - _prev_offset
 	entity.global_position += delta_offset
 	_prev_offset = rotated_offset
+
+
+func _oscillate_move() -> void:
+	var local_offset = direction * (osc_range * sin(_t * osc_speed))
+	var delta_offset = local_offset - _prev_offset
+	entity.global_position += delta_offset
+	_prev_offset = local_offset
