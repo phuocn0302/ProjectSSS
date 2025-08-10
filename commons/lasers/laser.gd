@@ -130,6 +130,7 @@ func _setup_particles() -> void:
 	particles.show_behind_parent = true
 	particles.emitting = false
 	particles.one_shot = true
+	particles.rotation = direction.angle() - PI/2
 	
 	var particles_mat = LASER_PARTICLE_MAT.duplicate()
 	@warning_ignore("integer_division")
@@ -150,7 +151,8 @@ func _setup_hitbox() -> void:
 	
 	hitbox_collision.shape.size = Vector2(max_width - 1, length - 1)
 	@warning_ignore("integer_division")
-	hitbox_collision.position = direction * (length / 2)
+	hitbox_collision.position = Vector2(0, length/2)
+	hitbox_component.rotation = direction.angle() - PI/2
 	
 	hitbox_component.active = false
 	hitbox_component.collision_mask = collision_mask
