@@ -18,7 +18,7 @@
 [ext_resource type="Script" uid="uid://1hf68snymgbl" path="res://commons/components/sfx/ghost_trailing_component.gd" id="14_afbqv"]
 [ext_resource type="Script" uid="uid://ch7r1mf7ar7uc" path="res://entities/projectiles/projectile_spawner.gd" id="15_gx6sm"]
 [ext_resource type="Script" uid="uid://8jap68kirkbv" path="res://commons/components/etc/iframe_component.gd" id="17_3wlsy"]
-[ext_resource type="Resource" uid="uid://d20y1i8w5tvfe" path="res://entities/projectiles/data_resources/player/base.tres" id="18_b2kln"]
+[ext_resource type="Resource" uid="uid://d20y1i8w5tvfe" path="res://entities/projectiles/resources/player/base.tres" id="18_b2kln"]
 
 [sub_resource type="Shader" id="Shader_yqrof"]
 code = "shader_type canvas_item;
