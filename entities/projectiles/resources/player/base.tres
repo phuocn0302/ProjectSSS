@@ -11,6 +11,7 @@ size = Vector2(6, 4)
 [resource]
 script = ExtResource("3_a8ufv")
 texture = ExtResource("4_dcwdl")
+texture_rotate_with_dir = true
 collision_shape = SubResource("RectangleShape2D_y5jm2")
 shape_offset = Vector2(0, 0)
 collision_mask = 16

@@ -7,6 +7,8 @@ const PROJECTILE_PARTICLES = preload("res://particles/projectile_particles.tscn"
 @export_group("Texture")
 @export var texture: Texture2D
 @export var sprite_frames: SpriteFrames
+## Turn this on if texture is asymetric or collision shape is not circle
+@export var texture_rotate_with_dir: bool = false
 
 @export_group("Collision")
 @export var collision_shape: Shape2D

@@ -27,6 +27,7 @@ func _process(delta: float) -> void:
 	move(delta)
 	_check_visible()
 	_update_hitbox() 
+	_update_sprite_rotation()
 
 
 func active() -> void:
@@ -145,6 +146,11 @@ func _update_hitbox() -> void:
 	
 	if hits.size() > 0:
 		_on_collision(hits)
+
+
+func _update_sprite_rotation() -> void:
+	if not projectile_data.texture_rotate_with_dir:
+		sprite_node.global_rotation = Vector2.ZERO.angle()
 
 
 func _check_visible() -> void:
