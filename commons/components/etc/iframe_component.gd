@@ -14,7 +14,7 @@ func _ready() -> void:
 
 
 func start_iframe(duration: float = -1) -> void:
-	hurtbox_component.active = false
+	hurtbox_component.call_deferred("deactivate")
 	
 	iframe_activated.emit()
 	
@@ -22,4 +22,4 @@ func start_iframe(duration: float = -1) -> void:
 		duration = iframe_duration
 	
 	await Utils.create_timer(duration).timeout
-	hurtbox_component.active = true
+	hurtbox_component.call_deferred("activate")

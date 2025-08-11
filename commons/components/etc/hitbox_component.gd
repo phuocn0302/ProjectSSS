@@ -29,11 +29,3 @@ func on_area_entered(area: Area2D) -> void:
 				sfx.global_position = entity.global_position
 				get_tree().current_scene.add_child(sfx)
 			entity.queue_free()
-
-
-func activate() -> void:
-	self.set_deferred("monitoring", true)
-
-
-func deactivate() -> void:
-	self.set_deferred("monitoring", false)

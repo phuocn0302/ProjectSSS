@@ -20,8 +20,8 @@ func on_area_exit(_area: Area2D) -> void:
 func _set_active(val: bool) -> void:
 	active = val
 	
-	self.set_deferred("monitoring", val)
-	self.set_deferred("monitorable", val)
+	self.monitorable = val
+	self.monitoring = val
 
 
 func activate() -> void:
