@@ -7,11 +7,11 @@ extends Component
 var _camera: Camera2D
 var _shake_t: float = 0
 var _tween: Tween
+var _is_shaking: bool = false
 
 func _process(_delta: float) -> void:
 	_camera = get_viewport().get_camera_2d()
-	
-	if not _camera:
+	if not _camera or not _is_shaking:
 		return
 	
 	if _shake_t > 0:
@@ -20,16 +20,21 @@ func _process(_delta: float) -> void:
 		_camera.offset = Vector2.ZERO
 
 
+
 func _exit_tree() -> void:
 	if _camera:
 		_camera.offset = Vector2.ZERO
 
 
 func shake() -> void:
+	_is_shaking = true
 	_shake_t = shake_amount
 	
 	_tween = create_tween()
 	_tween.tween_property(self, "_shake_t", 0, shake_duration)
+	_tween.finished.connect(
+		func(): _is_shaking = false
+	)
 
 
 func _random_offset() -> Vector2:
