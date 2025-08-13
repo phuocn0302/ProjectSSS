@@ -14,11 +14,13 @@ var end_point: Vector2
 func _ready() -> void:
 	self.texture = line_texture
 	self.texture_mode = Line2D.LINE_TEXTURE_TILE
+	self.width = line_texture.get_height()
 	self.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	self.z_index = -999
 	self.points = [Vector2.ZERO, Vector2.ZERO]
 	
 	self.visibility_changed.connect(_on_visibility_change)
+	self.hide()
 
 
 func _process(_delta: float) -> void:
