@@ -3,15 +3,22 @@ extends Component2D
 
 @export var laser_stats: LaserStats: set = _set_stats
 @export var auto: bool = false: set = _set_auto
+@export var screen_shake: bool = true
 
 @export_group("Auto") 
 @export var emit_interval: float = 3: set = _set_emit_interval
 
 var timer: Timer
 var laser: Laser
+var _screen_shake_component: ScreenShakeComponent
 
 func _ready() -> void:
 	assert(laser_stats)
+	
+	if screen_shake and not _screen_shake_component:
+		_screen_shake_component = ScreenShakeComponent.new()
+		_screen_shake_component.shake_duration = 0.5
+		self.add_child(_screen_shake_component)
 	
 	_setup_laser()
 
@@ -19,6 +26,9 @@ func _ready() -> void:
 func emit_laser() -> void:
 	if not laser: 
 		return
+	
+	if screen_shake and _screen_shake_component:
+		_screen_shake_component.shake()
 	
 	laser.cast()
 
