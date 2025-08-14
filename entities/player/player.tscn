@@ -186,6 +186,7 @@ metadata/_custom_type_script = "uid://1hf68snymgbl"
 [node name="IFrameComponent" type="Node" parent="Components" node_paths=PackedStringArray("hurtbox_component", "entity")]
 script = ExtResource("17_3wlsy")
 hurtbox_component = NodePath("../HurtboxComponent")
+iframe_duration = 1.0
 entity = NodePath("../..")
 metadata/_custom_type_script = "uid://8jap68kirkbv"
 
@@ -236,9 +237,8 @@ metadata/_custom_type_script = "uid://ch7r1mf7ar7uc"
 [connection signal="hurt" from="Components/HurtboxComponent" to="Components/ScreenShakeComponent" method="shake"]
 [connection signal="shoot_requested" from="InputHandler" to="ProjectileSpawner" method="spawn"]
 [connection signal="timeout" from="InputHandler/ShootCooldown" to="InputHandler" method="_on_shoot_cooldown_timeout"]
-[connection signal="end_dashed" from="StateMachine/Dash" to="Components/HurtboxComponent" method="activate"]
 [connection signal="end_dashed" from="StateMachine/Dash" to="Components/GhostTrailingComponent" method="deactivate"]
-[connection signal="end_dashed" from="StateMachine/Dash" to="Components/IFrameComponent" method="start_iframe" binds= [0.1]]
+[connection signal="end_dashed" from="StateMachine/Dash" to="Components/IFrameComponent" method="start_iframe" binds= [0.5]]
 [connection signal="just_dashed" from="StateMachine/Dash" to="Components/HurtboxComponent" method="deactivate"]
 [connection signal="just_dashed" from="StateMachine/Dash" to="Components/GhostTrailingComponent" method="activate"]
 [connection signal="timeout" from="StateMachine/Dash/DashTimer" to="StateMachine/Dash" method="_on_dash_timer_timeout"]
