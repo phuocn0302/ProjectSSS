@@ -11,6 +11,10 @@ const MED_MOVE_WARNING_LINE = preload("res://assets/texture/sfx/line/med_move_wa
 var start_point: Vector2
 var end_point: Vector2
 
+func _init() -> void:
+	add_to_group("warning_line")
+
+
 func _ready() -> void:
 	self.texture = line_texture
 	self.texture_mode = Line2D.LINE_TEXTURE_TILE
