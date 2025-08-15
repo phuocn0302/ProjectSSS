@@ -1,0 +1,481 @@
+[gd_scene load_steps=66 format=3 uid="uid://dlkqlab5u0ccw"]
+
+[ext_resource type="Script" uid="uid://cktxbys1fq54i" path="res://entities/bosses/worm/worm_boss.gd" id="1_er2ad"]
+[ext_resource type="Texture2D" uid="uid://drp22vdkaaiua" path="res://assets/texture/npc/bosses/boss_worm/head_sheet.png" id="1_p7hdf"]
+[ext_resource type="Texture2D" uid="uid://8wkr5neo2iq7" path="res://assets/texture/sfx/4x_white_particle.png" id="3_n434n"]
+[ext_resource type="Script" uid="uid://s7docibhn2wy" path="res://commons/components/etc/health_component.gd" id="3_ngrlu"]
+[ext_resource type="Texture2D" uid="uid://clq7vtr5sg8yu" path="res://assets/texture/sfx/3x_white_particle.png" id="4_gfa7e"]
+[ext_resource type="Script" uid="uid://chv2lphkgpnes" path="res://commons/components/etc/hurtbox_component.gd" id="4_hybpq"]
+[ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://commons/components/etc/hitbox_component.gd" id="5_ejlpn"]
+[ext_resource type="Script" uid="uid://co2kl5qnx2yrs" path="res://commons/components/movements/idle_move_component.gd" id="6_01cui"]
+[ext_resource type="Script" uid="uid://c3dex51h0lylc" path="res://commons/components/sfx/hit_flash_component.gd" id="6_rhiqv"]
+[ext_resource type="PackedScene" uid="uid://rj3hxypveqt8" path="res://particles/projectile_particles.tscn" id="8_gfa7e"]
+[ext_resource type="Script" uid="uid://c7pvd7cesamyd" path="res://commons/components/movements/move_component.gd" id="8_rhiqv"]
+[ext_resource type="Script" uid="uid://bpmqwg4oj70ye" path="res://entities/projectiles/projectile_data.gd" id="9_vftis"]
+[ext_resource type="Script" uid="uid://bonurqbakdykh" path="res://entities/projectiles/spawners/pattern_proj_spawner.gd" id="11_q5ais"]
+[ext_resource type="Resource" uid="uid://bir702nqk15lx" path="res://entities/projectiles/resources/enemies/circle.tres" id="12_bqxbe"]
+[ext_resource type="Script" uid="uid://duxclkhsalect" path="res://entities/projectiles/spawners/circle_proj_spawner.gd" id="13_v05h8"]
+[ext_resource type="Resource" uid="uid://4dpmvua60dgk" path="res://entities/projectiles/resources/enemies/tri.tres" id="14_rudrh"]
+[ext_resource type="Script" uid="uid://sj2recp8wcj2" path="res://entities/projectiles/spawners/target_proj_spawner.gd" id="15_3o0o1"]
+[ext_resource type="Resource" uid="uid://g5qufoff42o7" path="res://entities/projectiles/resources/enemies/2spawner.tres" id="15_v05h8"]
+[ext_resource type="Script" uid="uid://bue745k8n3n7r" path="res://commons/components/sfx/screen_shake_component.gd" id="17_ejs58"]
+[ext_resource type="Script" uid="uid://dg0til6w02wfe" path="res://commons/state_machine/state_machine.gd" id="19_lw3v4"]
+[ext_resource type="Script" uid="uid://buqt8it7sopxo" path="res://entities/bosses/worm/states/sproj_spawn.gd" id="20_lw3v4"]
+[ext_resource type="Script" uid="uid://wq47ysxbciuv" path="res://commons/state_machine/enemy_idle_state.gd" id="20_xo1be"]
+[ext_resource type="Script" uid="uid://c4jh6upx13dgk" path="res://entities/bosses/worm/states/pattern_shoot.gd" id="22_odmwb"]
+[ext_resource type="Script" uid="uid://u3ml53dmya06" path="res://entities/bosses/worm/states/circle_shoot.gd" id="23_xo1be"]
+[ext_resource type="PackedScene" uid="uid://c3rq577ok406m" path="res://particles/circle_explosion.tscn" id="24_82coa"]
+[ext_resource type="Texture2D" uid="uid://beum0m4l3cbaf" path="res://assets/texture/projectiles/npc/godot.png" id="25_82coa"]
+[ext_resource type="Script" uid="uid://cx14oxr84efy0" path="res://commons/state_machine/enemy_entrance_state.gd" id="28_0h152"]
+[ext_resource type="Script" uid="uid://durm0px5qgvq5" path="res://entities/bosses/worm/states/die.gd" id="29_vftis"]
+[ext_resource type="Script" uid="uid://blahj332ha3tb" path="res://entities/bosses/worm/states/ram.gd" id="30_k4f8m"]
+[ext_resource type="Script" uid="uid://c5ajolvm4ncdf" path="res://entities/bosses/worm/states/bounce_shoot.gd" id="31_82coa"]
+[ext_resource type="Script" uid="uid://dr5n82rfbbxq7" path="res://entities/bosses/worm/states/free_ram.gd" id="32_lq2ed"]
+[ext_resource type="Script" uid="uid://bh83jb3700sfs" path="res://entities/bosses/boss_phase_manager.gd" id="36_sgtc3"]
+[ext_resource type="Script" uid="uid://dd4yinx6w8in" path="res://entities/bosses/boss_phase_data.gd" id="37_ywbgp"]
+[ext_resource type="Resource" uid="uid://hdexn3rl1366" path="res://entities/bosses/worm/phase_datas/phase_0.tres" id="38_vw5eb"]
+[ext_resource type="Resource" uid="uid://bwcmc2ln6b5s1" path="res://entities/bosses/worm/phase_datas/phase_1.tres" id="39_0h152"]
+[ext_resource type="Resource" uid="uid://3j15lulqw8or" path="res://entities/bosses/worm/phase_datas/phase_2.tres" id="40_ohvt0"]
+
+[sub_resource type="Shader" id="Shader_01cui"]
+code = "shader_type canvas_item;
+
+// === Outline Controls ===
+uniform bool outline_enabled = false;
+uniform vec4 outline_color    : source_color = vec4(1.0);
+uniform float outline_size    : hint_range(0.0, 16.0, 0.1) = 1.0;
+uniform float alpha_threshold : hint_range(0.0, 1.0, 0.01) = 0.0;
+uniform int outline_samples   : hint_range(4, 8) = 4;
+
+// === Flash Controls ===
+uniform vec4 flash_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform float flash_strength : hint_range(0.0, 1.0, 0.1) = 0.0;
+
+// === Outline Sampling Directions ===
+const vec2[8] DIRS = vec2[8](
+	vec2(1.0, 0.0), vec2(0.0, 1.0),  vec2(-1.0, 0.0),  vec2(0.0, -1.0),
+	vec2(1.0, 1.0), vec2(-1.0, 1.0), vec2(-1.0, -1.0), vec2(1.0, -1.0)
+);
+
+void fragment() {
+	vec4 tex = texture(TEXTURE, UV);
+	float alpha = tex.a;
+
+	if (alpha <= 0.0 && outline_size <= 0.0) discard;
+
+	bool solid = alpha > alpha_threshold;
+	bool found_outline = false;
+
+	// Only check outline if enabled and current pixel is transparent
+	if (outline_enabled && !solid && outline_size > 0.0) {
+		vec2 offset = TEXTURE_PIXEL_SIZE * outline_size;
+		for (int i = 0; i < outline_samples; i++) {
+			if (texture(TEXTURE, UV + DIRS[i] * offset).a > alpha_threshold) {
+				found_outline = true;
+				break;
+			}
+		}
+	}
+
+	// Color decision
+	if (solid) {
+		COLOR = tex;
+	} else if (outline_enabled && found_outline) {
+		COLOR = outline_color;
+	} else {
+		discard;
+	}
+
+	// === Flash Effect ===
+	COLOR.rgb = mix(COLOR.rgb, flash_color.rgb, flash_strength);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rhiqv"]
+shader = SubResource("Shader_01cui")
+shader_parameter/outline_enabled = true
+shader_parameter/outline_color = Color(1, 0, 0, 1)
+shader_parameter/outline_size = 1.0
+shader_parameter/alpha_threshold = 0.0
+shader_parameter/outline_samples = 4
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_strength = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7hdf"]
+atlas = ExtResource("1_p7hdf")
+region = Rect2(0, 0, 60, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_er2ad"]
+atlas = ExtResource("1_p7hdf")
+region = Rect2(60, 0, 60, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5o5jo"]
+atlas = ExtResource("1_p7hdf")
+region = Rect2(120, 0, 60, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ngrlu"]
+atlas = ExtResource("1_p7hdf")
+region = Rect2(180, 0, 60, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hybpq"]
+atlas = ExtResource("1_p7hdf")
+region = Rect2(240, 0, 60, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejlpn"]
+atlas = ExtResource("1_p7hdf")
+region = Rect2(300, 0, 60, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_01cui"]
+atlas = ExtResource("1_p7hdf")
+region = Rect2(360, 0, 60, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rhiqv"]
+atlas = ExtResource("1_p7hdf")
+region = Rect2(420, 0, 60, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n434n"]
+atlas = ExtResource("1_p7hdf")
+region = Rect2(480, 0, 60, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ir4fa"]
+atlas = ExtResource("1_p7hdf")
+region = Rect2(540, 0, 60, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q5ais"]
+atlas = ExtResource("1_p7hdf")
+region = Rect2(600, 0, 60, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqxbe"]
+atlas = ExtResource("1_p7hdf")
+region = Rect2(660, 0, 60, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i5mkp"]
+atlas = ExtResource("1_p7hdf")
+region = Rect2(720, 0, 60, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rudrh"]
+atlas = ExtResource("1_p7hdf")
+region = Rect2(780, 0, 60, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nf0t5"]
+atlas = ExtResource("1_p7hdf")
+region = Rect2(840, 0, 60, 84)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q2lnd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p7hdf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_er2ad")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5o5jo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ngrlu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hybpq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejlpn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_01cui")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rhiqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n434n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ir4fa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q5ais")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bqxbe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i5mkp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rudrh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nf0t5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="Curve" id="Curve_n434n"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.919831, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_n434n"]
+curve = SubResource("Curve_n434n")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n434n"]
+lifetime_randomness = 0.4
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(25, 1, 1)
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 70.0
+initial_velocity_max = 90.0
+gravity = Vector3(0, 0, 0)
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_n434n")
+
+[sub_resource type="Curve" id="Curve_vftis"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_gfa7e"]
+curve = SubResource("Curve_vftis")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vftis"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 50.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -100.0
+radial_accel_max = -100.0
+scale_min = 2.0
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_gfa7e")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rhiqv"]
+radius = 31.0
+height = 80.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n434n"]
+radius = 20.0
+height = 80.0
+
+[sub_resource type="Curve2D" id="Curve2D_q5ais"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -64, 56, 0, 0, 0, 0, 64, 56, 0, 0, 0, 0, 0, -57, 0, 0, 0, 0, -64, 56)
+}
+point_count = 4
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3bekc"]
+radius = 12.0
+
+[sub_resource type="Resource" id="Resource_gfa7e"]
+script = ExtResource("9_vftis")
+texture = ExtResource("25_82coa")
+texture_rotate_with_dir = true
+collision_shape = SubResource("CircleShape2D_3bekc")
+shape_offset = Vector2(0, 0)
+collision_mask = 1
+speed = 200.0
+damage = 1.0
+life_time = 5.0
+vfx_color = Color(1, 0, 0, 1)
+on_hit_vfx = ExtResource("24_82coa")
+use_particles = true
+particles = ExtResource("8_gfa7e")
+metadata/_custom_type_script = "uid://bpmqwg4oj70ye"
+
+[node name="WormBoss" type="Node2D"]
+script = ExtResource("1_er2ad")
+number_of_segment = 25
+
+[node name="Head" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_rhiqv")
+sprite_frames = SubResource("SpriteFrames_q2lnd")
+autoplay = "default"
+frame = 5
+frame_progress = 0.912758
+
+[node name="JointSegmentPos" type="Marker2D" parent="."]
+position = Vector2(0, -56)
+
+[node name="HeadParticles" type="GPUParticles2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+show_behind_parent = true
+position = Vector2(0, -17)
+amount = 10
+texture = ExtResource("3_n434n")
+process_material = SubResource("ParticleProcessMaterial_n434n")
+
+[node name="BounceShootChargeParticles" type="GPUParticles2D" parent="."]
+show_behind_parent = true
+position = Vector2(0, 31)
+emitting = false
+amount = 30
+texture = ExtResource("4_gfa7e")
+explosiveness = 0.28
+fixed_fps = 0
+draw_order = 0
+process_material = SubResource("ParticleProcessMaterial_vftis")
+
+[node name="Components" type="Node2D" parent="."]
+
+[node name="HealthComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
+script = ExtResource("3_ngrlu")
+max_health = 350.0
+queue_free_on_die = false
+entity = NodePath("../..")
+metadata/_custom_type_script = "uid://s7docibhn2wy"
+
+[node name="HurtboxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("health_component", "entity")]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("4_hybpq")
+health_component = NodePath("../HealthComponent")
+entity = NodePath("../..")
+metadata/_custom_type_script = "uid://chv2lphkgpnes"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/HurtboxComponent"]
+shape = SubResource("CapsuleShape2D_rhiqv")
+
+[node name="HitboxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("entity")]
+collision_layer = 0
+script = ExtResource("5_ejlpn")
+entity = NodePath("../..")
+metadata/_custom_type_script = "uid://dkij5hjdnu422"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/HitboxComponent"]
+shape = SubResource("CapsuleShape2D_n434n")
+
+[node name="HitFlashComponent" type="Node" parent="Components" node_paths=PackedStringArray("sprite", "health_component", "entity")]
+script = ExtResource("6_rhiqv")
+sprite = NodePath("../../Head")
+health_component = NodePath("../HealthComponent")
+entity = NodePath("../..")
+metadata/_custom_type_script = "uid://c3dex51h0lylc"
+
+[node name="IdleMoveComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
+script = ExtResource("6_01cui")
+move_type = 2
+osc_speed = 3.0
+osc_range = 30.0
+entity = NodePath("../..")
+metadata/_custom_type_script = "uid://co2kl5qnx2yrs"
+
+[node name="MoveComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
+script = ExtResource("8_rhiqv")
+move_type = 1
+speed = 80.0
+active = false
+entity = NodePath("../..")
+metadata/_custom_type_script = "uid://c7pvd7cesamyd"
+
+[node name="ScreenShakeComponent" type="Node" parent="Components"]
+script = ExtResource("17_ejs58")
+shake_duration = 0.5
+metadata/_custom_type_script = "uid://bue745k8n3n7r"
+
+[node name="Spawners" type="Node2D" parent="."]
+
+[node name="PatternProjectileSpawner" type="Node2D" parent="Spawners"]
+script = ExtResource("11_q5ais")
+number_of_projectiles = 30
+travel_time = 0.7
+projectile_data = ExtResource("12_bqxbe")
+active = false
+metadata/_custom_type_script = "uid://bonurqbakdykh"
+
+[node name="Path2D" type="Path2D" parent="Spawners/PatternProjectileSpawner"]
+curve = SubResource("Curve2D_q5ais")
+
+[node name="CircleProjectileSpawner" type="Node2D" parent="Spawners"]
+script = ExtResource("13_v05h8")
+number_of_projectile = 4
+rotate_pattern = true
+rotate_speed = 9.0
+projectile_data = ExtResource("14_rudrh")
+spawn_interval = 0.1
+active = false
+metadata/_custom_type_script = "uid://duxclkhsalect"
+
+[node name="TargetProjectileSpawner" type="Node2D" parent="Spawners"]
+script = ExtResource("15_3o0o1")
+type = 2
+projectile_data = ExtResource("15_v05h8")
+spawn_interval = 1.0
+active = false
+metadata/_custom_type_script = "uid://sj2recp8wcj2"
+
+[node name="TargetProjectileSpawner2" type="Node2D" parent="Spawners"]
+script = ExtResource("15_3o0o1")
+projectile_data = ExtResource("14_rudrh")
+spawn_interval = 0.3
+active = false
+metadata/_custom_type_script = "uid://sj2recp8wcj2"
+
+[node name="BounceProjSpawner" type="Node2D" parent="Spawners"]
+position = Vector2(0, 31)
+script = ExtResource("15_3o0o1")
+type = 3
+projectile_data = SubResource("Resource_gfa7e")
+spawn_interval = 0.3
+active = false
+metadata/_custom_type_script = "uid://sj2recp8wcj2"
+
+[node name="BossPhaseManager" type="Node" parent="." node_paths=PackedStringArray("health_component", "state_machine")]
+script = ExtResource("36_sgtc3")
+health_component = NodePath("../Components/HealthComponent")
+state_machine = NodePath("../StateMachine")
+phase_datas = Array[ExtResource("37_ywbgp")]([ExtResource("38_vw5eb"), ExtResource("39_0h152"), ExtResource("40_ohvt0")])
+metadata/_custom_type_script = "uid://bh83jb3700sfs"
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("actor", "starting_state")]
+script = ExtResource("19_lw3v4")
+actor = NodePath("..")
+starting_state = NodePath("BossEntranceState")
+metadata/_custom_type_script = "uid://dg0til6w02wfe"
+
+[node name="BossEntranceState" type="Node" parent="StateMachine" node_paths=PackedStringArray("hurtbox_component", "next_state")]
+script = ExtResource("28_0h152")
+hurtbox_component = NodePath("../../Components/HurtboxComponent")
+next_state = NodePath("../Idle")
+metadata/_custom_type_script = "uid://cx14oxr84efy0"
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("20_xo1be")
+idle_time = 2.0
+metadata/_custom_type_script = "uid://wq47ysxbciuv"
+
+[node name="Die" type="Node" parent="StateMachine"]
+script = ExtResource("29_vftis")
+metadata/_custom_type_script = "uid://kr4ktwlkaayj"
+
+[node name="SProjShoot" type="Node" parent="StateMachine"]
+script = ExtResource("20_lw3v4")
+metadata/_custom_type_script = "uid://ckdlwxt7cdufi"
+
+[node name="PatternShoot" type="Node" parent="StateMachine"]
+script = ExtResource("22_odmwb")
+metadata/_custom_type_script = "uid://kr4ktwlkaayj"
+
+[node name="CircleShoot" type="Node" parent="StateMachine"]
+script = ExtResource("23_xo1be")
+metadata/_custom_type_script = "uid://kr4ktwlkaayj"
+
+[node name="BounceShoot" type="Node" parent="StateMachine"]
+script = ExtResource("31_82coa")
+duration = 1.5
+metadata/_custom_type_script = "uid://kr4ktwlkaayj"
+
+[node name="Ram" type="Node" parent="StateMachine"]
+script = ExtResource("30_k4f8m")
+metadata/_custom_type_script = "uid://kr4ktwlkaayj"
+
+[node name="FreeRam" type="Node" parent="StateMachine"]
+script = ExtResource("32_lq2ed")
+number_of_ram = 7
+metadata/_custom_type_script = "uid://kr4ktwlkaayj"
+
+[connection signal="health_reached_zero" from="Components/HealthComponent" to="." method="_on_health_component_health_reached_zero"]
