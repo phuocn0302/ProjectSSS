@@ -25,7 +25,7 @@ var default_position: Vector2
 @onready var idle_move_component: IdleMoveComponent = $Components/IdleMoveComponent
 @onready var ghost_trailing_component: GhostTrailingComponent = $Components/GhostTrailingComponent
 
-@onready var boss_entrance_state: BossEntranceState = $StateMachine/BossEntranceState
+@onready var boss_entrance_state: EnemyEntranceState = $StateMachine/BossEntranceState
 @onready var missile_shoot: CapyBossState = $StateMachine/MissileShoot
 @onready var bullet_hell_laser: CapyBossState = $StateMachine/BulletHellLaser
 @onready var sweep_laser: CapyBossState = $StateMachine/SweepLaser

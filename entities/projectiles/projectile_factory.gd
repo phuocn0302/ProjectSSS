@@ -5,6 +5,7 @@ enum Type {
 	NORMAL,
 	HOMING,
 	SPAWNER,
+	BOUCING,
 }
 
 static func create_projectile(data: ProjectileData, type: Type) -> Projectile:
@@ -19,6 +20,9 @@ static func create_projectile(data: ProjectileData, type: Type) -> Projectile:
 		
 		Type.SPAWNER:
 			proj = SpawnerProjectile.new()
+			
+		Type.BOUCING:
+			proj = BouncingProjectile.new()
 		
 	proj.projectile_data = data
 	

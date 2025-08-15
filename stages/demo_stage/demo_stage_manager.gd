@@ -67,7 +67,7 @@ func _update_score(amount: int) -> void:
 	_score += amount
 	print(_score)
 	
-	if enemy_spawn_timer.timeout.is_connected(_spawn_enemy) and _score > 7:
+	if enemy_spawn_timer.timeout.is_connected(_spawn_enemy) and _score > 2:
 		enemy_spawn_timer.timeout.disconnect(_spawn_enemy)
 		
 		await Utils.create_timer(2).timeout
@@ -76,7 +76,7 @@ func _update_score(amount: int) -> void:
 
 func _on_boss_defeated() -> void:
 	boss_health_bar.visible = false
-	await Utils.create_timer(1).timeout
+	await Utils.create_timer(4).timeout
 	
 	_return_to_title()
 	
