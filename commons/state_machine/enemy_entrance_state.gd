@@ -1,4 +1,4 @@
-class_name BossEntranceState
+class_name EnemyEntranceState
 extends State
 
 signal finished

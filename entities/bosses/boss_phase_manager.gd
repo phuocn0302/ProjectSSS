@@ -7,7 +7,7 @@ extends Node
 
 var current_phase_index: int = -1
 var _boss_idle_state: EnemyIdleState
-var _boss_entrance_state: BossEntranceState
+var _boss_entrance_state: EnemyEntranceState
 
 func _ready() -> void:
 	assert(health_component)
@@ -27,7 +27,7 @@ func _ready() -> void:
 	for s in state_machine.get_children():
 		if s is EnemyIdleState:
 			_boss_idle_state = s
-		elif s is BossEntranceState:
+		elif s is EnemyEntranceState:
 			_boss_entrance_state = s
 	
 	assert(_boss_idle_state)
