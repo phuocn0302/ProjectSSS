@@ -36,9 +36,11 @@ func _ready() -> void:
 		await _boss_entrance_state.finished
 	
 	# dummy null param
-	_update_phase(null)
 	
 	health_component.health_depleted.connect(_update_phase)
+	
+	await get_tree().process_frame
+	_update_phase(null)
 
 ## Use dummy _t varg because health depleted signal has amount arg
 func _update_phase(_t) -> void:

@@ -1,21 +1,14 @@
-extends GodotBossState
+extends EnemyDieState
 
 const CIRCLE_EXPLOSION = preload("res://particles/circle_explosion.tscn")
 
 @onready var sprite: AnimatedSprite2D = $"../../AnimatedSprite2D"
 @onready var components: Node2D = $"../../Components"
 @onready var eye_particles: GPUParticles2D = $"../../EyeParticles"
+@onready var boss: GodotBoss = $"../.."
 
 func enter() -> void:
-	for p in get_tree().get_nodes_in_group("projectile"):
-		if p is Projectile:
-			p.deactive()
-	
-	
-	state_machine.active = false
-	
-	for c in components.get_children():
-		c.active = false
+	super.enter()
 	
 	boss.left_arm.self_destruct()
 	await boss.right_arm.self_destruct()

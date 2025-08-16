@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://ckjlvrurfq6x2"]
+[gd_scene load_steps=51 format=3 uid="uid://ckjlvrurfq6x2"]
 
 [ext_resource type="Script" uid="uid://cj5lqlctqndda" path="res://entities/bosses/godot/godot_boss.gd" id="1_m4p5g"]
 [ext_resource type="Texture2D" uid="uid://dnf8hqs1b4rrd" path="res://assets/texture/npc/bosses/boss_godot/base_sheet.png" id="2_52t2c"]
@@ -6,24 +6,32 @@
 [ext_resource type="Script" uid="uid://chv2lphkgpnes" path="res://commons/components/etc/hurtbox_component.gd" id="3_gofui"]
 [ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://commons/components/etc/hitbox_component.gd" id="4_ldboo"]
 [ext_resource type="Script" uid="uid://s7docibhn2wy" path="res://commons/components/etc/health_component.gd" id="5_0jihc"]
+[ext_resource type="Script" uid="uid://2akmfsdx7k6s" path="res://commons/components/component_container.gd" id="5_bpu3v"]
 [ext_resource type="Script" uid="uid://co2kl5qnx2yrs" path="res://commons/components/movements/idle_move_component.gd" id="7_ncdkc"]
 [ext_resource type="Script" uid="uid://c3dex51h0lylc" path="res://commons/components/sfx/hit_flash_component.gd" id="8_0jihc"]
 [ext_resource type="PackedScene" uid="uid://dptehxrxtfpx3" path="res://entities/bosses/godot/godot_arm.tscn" id="8_ncdkc"]
 [ext_resource type="Script" uid="uid://1hf68snymgbl" path="res://commons/components/sfx/ghost_trailing_component.gd" id="9_q4ssp"]
 [ext_resource type="Script" uid="uid://duxclkhsalect" path="res://entities/projectiles/spawners/circle_proj_spawner.gd" id="10_v33mg"]
+[ext_resource type="Script" uid="uid://bue745k8n3n7r" path="res://commons/components/sfx/screen_shake_component.gd" id="12_44c5p"]
 [ext_resource type="Resource" uid="uid://bir702nqk15lx" path="res://entities/projectiles/resources/enemies/circle.tres" id="12_c2l74"]
+[ext_resource type="Script" uid="uid://cktu0h1knqsbd" path="res://entities/projectiles/spawners/projectile_spawner_container.gd" id="12_sy6tn"]
 [ext_resource type="Script" uid="uid://sj2recp8wcj2" path="res://entities/projectiles/spawners/target_proj_spawner.gd" id="12_xmx3y"]
 [ext_resource type="Script" uid="uid://bonurqbakdykh" path="res://entities/projectiles/spawners/pattern_proj_spawner.gd" id="13_ayqat"]
 [ext_resource type="Script" uid="uid://dg0til6w02wfe" path="res://commons/state_machine/state_machine.gd" id="13_fg3tp"]
 [ext_resource type="Script" uid="uid://boyt7skbgak5o" path="res://entities/bosses/godot/states/shoot_at_player.gd" id="14_0vgfa"]
-[ext_resource type="Script" uid="uid://d2buvn4isauxs" path="res://entities/bosses/godot/states/idle.gd" id="14_fg3tp"]
 [ext_resource type="Resource" uid="uid://btj1wpnlgy41t" path="res://entities/projectiles/resources/enemies/bullet.tres" id="14_lxydi"]
 [ext_resource type="Script" uid="uid://bbfed12jv7o8r" path="res://entities/bosses/godot/states/punch_attack.gd" id="16_s0t23"]
 [ext_resource type="Script" uid="uid://cthj31id47kl0" path="res://entities/bosses/godot/states/double_punch_attack.gd" id="17_030pk"]
-[ext_resource type="Script" uid="uid://ggvdu6nn2l1t" path="res://entities/bosses/godot/states/entrance.gd" id="18_irf51"]
+[ext_resource type="Script" uid="uid://bh83jb3700sfs" path="res://entities/bosses/boss_phase_manager.gd" id="18_44c5p"]
 [ext_resource type="Script" uid="uid://cgvyv5ilsymnm" path="res://entities/bosses/godot/states/die.gd" id="19_c2l74"]
-[ext_resource type="Script" uid="uid://dkhle0tg5nwm8" path="res://entities/bosses/godot/states/phase_transition.gd" id="19_irf51"]
+[ext_resource type="Script" uid="uid://dkhle0tg5nwm8" path="res://entities/bosses/godot/states/phase_2_transition.gd" id="19_irf51"]
+[ext_resource type="Script" uid="uid://cx14oxr84efy0" path="res://entities/enemies/common_states/enemy_entrance_state.gd" id="19_jfwlp"]
+[ext_resource type="Script" uid="uid://dd4yinx6w8in" path="res://entities/bosses/boss_phase_data.gd" id="19_sy6tn"]
 [ext_resource type="Script" uid="uid://cbaopb0v2ypb2" path="res://entities/bosses/godot/states/shoot_at_player_2.gd" id="19_xss0f"]
+[ext_resource type="Resource" uid="uid://dht6y81bpafys" path="res://entities/bosses/godot/phase_datas/phase_1.tres" id="21_8yaq8"]
+[ext_resource type="Script" uid="uid://wq47ysxbciuv" path="res://entities/enemies/common_states/enemy_idle_state.gd" id="22_44c5p"]
+[ext_resource type="Resource" uid="uid://bmfjhtsaywf8c" path="res://entities/bosses/godot/phase_datas/phase_2.tres" id="22_f0sph"]
+[ext_resource type="Resource" uid="uid://dox2cooo3i43b" path="res://entities/bosses/godot/phase_datas/phase_3.tres" id="23_1q802"]
 
 [sub_resource type="Shader" id="Shader_irf51"]
 code = "shader_type canvas_item;
@@ -153,12 +161,6 @@ scale_min = 2.0
 scale_max = 2.0
 scale_curve = SubResource("CurveTexture_q4ssp")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_bemkk"]
-radius = 25.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_akxlh"]
-radius = 22.0227
-
 [sub_resource type="Shader" id="Shader_lxydi"]
 code = "shader_type canvas_item;
 
@@ -287,17 +289,20 @@ shader_parameter/outline_samples = 4
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_strength = 0.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_bemkk"]
+radius = 25.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_akxlh"]
+radius = 22.0227
+
 [sub_resource type="Curve2D" id="Curve2D_ayqat"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 0, -48, 0, 0, 0, 0, -8, -48, 0, 0, 0, 0, -16, -56, 0, 0, 0, 0, -16, -72, 0, 0, 0, 0, -24, -80, 0, 0, 0, 0, -16, -88, 0, 0, 0, 0, -8, -80, 0, 0, 0, 0, -8, -88, 0, 0, 0, 0, 0, -88, 0, 0, 0, 0, 4, -80, 0, 0, 0, 0, 8, -88, 0, 0, 0, 0, 16, -88, 0, 0, 0, 0, 16, -80, 0, 0, 0, 0, 24, -88, 0, 0, 0, 0, 32, -80, 0, 0, 0, 0, 24, -72, 0, 0, 0, 0, 24, -56, 0, 0, 0, 0, 16, -48, 0, 0, 0, 0, 0, -48)
 }
 point_count = 19
 
-[node name="GodotBoss" type="Node2D" node_paths=PackedStringArray("phase1_states", "phase2_states", "phase3_states")]
+[node name="GodotBoss" type="Node2D"]
 script = ExtResource("1_m4p5g")
-phase1_states = [NodePath("StateMachine/ShootAtPlayer1")]
-phase2_states = [NodePath("StateMachine/ShootAtPlayer1"), NodePath("StateMachine/PunchAttack")]
-phase3_states = [NodePath("StateMachine/ShootAtPlayer2"), NodePath("StateMachine/DoublePunchAttack"), NodePath("StateMachine/PunchAttack")]
 metadata/_custom_type_script = "uid://efllwjrpocom"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -309,11 +314,48 @@ frame_progress = 0.977381
 [node name="EyeParticles" type="GPUParticles2D" parent="."]
 modulate = Color(1, 0, 0, 1)
 position = Vector2(-10, 1)
+emitting = false
 amount = 12
 texture = ExtResource("3_52t2c")
 process_material = SubResource("ParticleProcessMaterial_irf51")
 
+[node name="Arms" type="Node2D" parent="."]
+
+[node name="RightArmPos" type="Marker2D" parent="Arms"]
+position = Vector2(49, 24)
+
+[node name="LeftArmPos" type="Marker2D" parent="Arms"]
+position = Vector2(-49, 24)
+
+[node name="RightArm" parent="Arms" node_paths=PackedStringArray("godot_boss", "active_position") instance=ExtResource("8_ncdkc")]
+position = Vector2(49, 24)
+godot_boss = NodePath("../..")
+active_position = NodePath("../RightArmPos")
+
+[node name="Sprite2D" parent="Arms/RightArm" index="0"]
+material = SubResource("ShaderMaterial_uxonu")
+
+[node name="HurtboxComponent" parent="Arms/RightArm" index="1" node_paths=PackedStringArray("health_component")]
+health_component = NodePath("../../../Components/HealthComponent")
+
+[node name="IdleMoveComponent" parent="Arms/RightArm" index="3"]
+direction = Vector2(-1, 0)
+
+[node name="LeftArm" parent="Arms" node_paths=PackedStringArray("godot_boss", "active_position") instance=ExtResource("8_ncdkc")]
+position = Vector2(-49, 24)
+godot_boss = NodePath("../..")
+active_position = NodePath("../LeftArmPos")
+
+[node name="Sprite2D" parent="Arms/LeftArm" index="0"]
+material = SubResource("ShaderMaterial_lxydi")
+scale = Vector2(1, -1)
+
+[node name="HurtboxComponent" parent="Arms/LeftArm" index="1" node_paths=PackedStringArray("health_component")]
+health_component = NodePath("../../../Components/HealthComponent")
+
 [node name="Components" type="Node2D" parent="."]
+script = ExtResource("5_bpu3v")
+metadata/_custom_type_script = "uid://2akmfsdx7k6s"
 
 [node name="HurtboxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("health_component", "entity")]
 collision_layer = 16
@@ -356,6 +398,7 @@ move_type = 1
 angular_speed = 4.0
 circle_radius = 3.0
 figure8_amplitude = 8.0
+active = false
 entity = NodePath("../..")
 metadata/_custom_type_script = "uid://co2kl5qnx2yrs"
 
@@ -366,41 +409,14 @@ active = false
 entity = NodePath("../..")
 metadata/_custom_type_script = "uid://1hf68snymgbl"
 
-[node name="Arms" type="Node2D" parent="."]
-
-[node name="RightArmPos" type="Marker2D" parent="Arms"]
-position = Vector2(49, 24)
-
-[node name="LeftArmPos" type="Marker2D" parent="Arms"]
-position = Vector2(-49, 24)
-
-[node name="RightArm" parent="Arms" node_paths=PackedStringArray("godot_boss", "active_position") instance=ExtResource("8_ncdkc")]
-position = Vector2(49, 24)
-godot_boss = NodePath("../..")
-active_position = NodePath("../RightArmPos")
-
-[node name="Sprite2D" parent="Arms/RightArm" index="0"]
-material = SubResource("ShaderMaterial_uxonu")
-
-[node name="HurtboxComponent" parent="Arms/RightArm" index="1" node_paths=PackedStringArray("health_component")]
-health_component = NodePath("../../../Components/HealthComponent")
-
-[node name="IdleMoveComponent" parent="Arms/RightArm" index="3"]
-direction = Vector2(-1, 0)
-
-[node name="LeftArm" parent="Arms" node_paths=PackedStringArray("godot_boss", "active_position") instance=ExtResource("8_ncdkc")]
-position = Vector2(-49, 24)
-godot_boss = NodePath("../..")
-active_position = NodePath("../LeftArmPos")
-
-[node name="Sprite2D" parent="Arms/LeftArm" index="0"]
-material = SubResource("ShaderMaterial_lxydi")
-scale = Vector2(1, -1)
-
-[node name="HurtboxComponent" parent="Arms/LeftArm" index="1" node_paths=PackedStringArray("health_component")]
-health_component = NodePath("../../../Components/HealthComponent")
+[node name="ScreenShakeComponent" type="Node" parent="Components"]
+script = ExtResource("12_44c5p")
+shake_duration = 1.0
+metadata/_custom_type_script = "uid://bue745k8n3n7r"
 
 [node name="Spawner" type="Node2D" parent="."]
+script = ExtResource("12_sy6tn")
+metadata/_custom_type_script = "uid://cktu0h1knqsbd"
 
 [node name="CircleProjectileSpawner" type="Node2D" parent="Spawner"]
 script = ExtResource("10_v33mg")
@@ -430,26 +446,38 @@ visible = false
 position = Vector2(-4, 75)
 curve = SubResource("Curve2D_ayqat")
 
+[node name="BossPhaseManager" type="Node" parent="." node_paths=PackedStringArray("health_component", "state_machine")]
+script = ExtResource("18_44c5p")
+health_component = NodePath("../Components/HealthComponent")
+state_machine = NodePath("../StateMachine")
+phase_datas = Array[ExtResource("19_sy6tn")]([ExtResource("21_8yaq8"), ExtResource("22_f0sph"), ExtResource("23_1q802")])
+metadata/_custom_type_script = "uid://bh83jb3700sfs"
+
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("actor", "starting_state")]
 script = ExtResource("13_fg3tp")
 actor = NodePath("..")
-starting_state = NodePath("Entrance")
+starting_state = NodePath("EnemyEntranceState")
 metadata/_custom_type_script = "uid://dg0til6w02wfe"
 
-[node name="Entrance" type="Node" parent="StateMachine"]
-script = ExtResource("18_irf51")
-metadata/_custom_type_script = "uid://b31a7kb51yxfm"
+[node name="EnemyEntranceState" type="Node" parent="StateMachine" node_paths=PackedStringArray("hurtbox_component", "next_state")]
+script = ExtResource("19_jfwlp")
+hurtbox_component = NodePath("../../Components/HurtboxComponent")
+next_state = NodePath("../Idle")
+metadata/_custom_type_script = "uid://cx14oxr84efy0"
 
 [node name="Idle" type="Node" parent="StateMachine"]
-script = ExtResource("14_fg3tp")
-metadata/_custom_type_script = "uid://b31a7kb51yxfm"
+script = ExtResource("22_44c5p")
+metadata/_custom_type_script = "uid://wq47ysxbciuv"
 
-[node name="Die" type="Node" parent="StateMachine"]
+[node name="Die" type="Node" parent="StateMachine" node_paths=PackedStringArray("component_container", "proj_spawner_container")]
 script = ExtResource("19_c2l74")
-metadata/_custom_type_script = "uid://b31a7kb51yxfm"
+component_container = NodePath("../../Components")
+proj_spawner_container = NodePath("../../Spawner")
+metadata/_custom_type_script = "uid://btifskqmt4ya"
 
-[node name="PhaseTransition" type="Node" parent="StateMachine"]
+[node name="Phase2Transition" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_state")]
 script = ExtResource("19_irf51")
+next_state = NodePath("../PunchAttack")
 metadata/_custom_type_script = "uid://b31a7kb51yxfm"
 
 [node name="ShootAtPlayer1" type="Node" parent="StateMachine"]
@@ -468,9 +496,7 @@ metadata/_custom_type_script = "uid://b31a7kb51yxfm"
 script = ExtResource("17_030pk")
 metadata/_custom_type_script = "uid://b31a7kb51yxfm"
 
-[connection signal="health_depleted" from="Components/HealthComponent" to="." method="_on_health_component_health_depleted"]
 [connection signal="health_reached_zero" from="Components/HealthComponent" to="." method="_on_health_component_health_reached_zero"]
-[connection signal="finished" from="StateMachine/Entrance" to="." method="_phase1_transtion"]
 
 [editable path="Arms/RightArm"]
 [editable path="Arms/LeftArm"]

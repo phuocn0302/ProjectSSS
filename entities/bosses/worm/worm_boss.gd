@@ -3,12 +3,6 @@ extends Enemy
 
 signal defeated
 
-enum Phase {
-	PHASE1,
-	PHASE2,
-	PHASE3,
-}
-
 const WORM_BOSS_BODY = preload("res://entities/bosses/worm/worm_boss_body.tscn")
 const BODY_SPRITEFRAMES = preload("res://entities/bosses/worm/spriteframes/body_spriteframes.tres")
 const TAIL_SPRITEFRAMES = preload("res://entities/bosses/worm/spriteframes/tail_spriteframes.tres")
@@ -16,7 +10,6 @@ const TAIL_SPRITEFRAMES = preload("res://entities/bosses/worm/spriteframes/tail_
 @export var number_of_segment: int = 5
 
 var player: Player
-var current_phase: Phase = Phase.PHASE1
 var default_position: Vector2
 var segments: Array[WormBossBody]
 

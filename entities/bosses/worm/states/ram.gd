@@ -113,6 +113,8 @@ func _wind_up() -> void:
 
 
 func _ram() -> void:
+	screen_shake_component.shake()
+	
 	_is_ramming = true
 	_ram_to_pos = boss.global_position + _attack_dir * ram_distance
 	_direction = _attack_dir

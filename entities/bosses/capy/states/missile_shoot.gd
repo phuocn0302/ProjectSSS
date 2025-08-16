@@ -26,7 +26,6 @@ func enter() -> void:
 	_timer.timeout.connect(_on_timer_timeout)
 
 
-
 func _on_timer_timeout() -> void:
 	left_missile_spawner.active = false
 	right_missile_spawner.active = false

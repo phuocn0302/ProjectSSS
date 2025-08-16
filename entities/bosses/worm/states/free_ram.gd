@@ -8,6 +8,7 @@ signal went_to_start_pos
 @export var going_back_pos: Vector2 = Vector2(90,0)
 
 @onready var idle_move_component: IdleMoveComponent = $"../../Components/IdleMoveComponent"
+@onready var screen_shake_component: ScreenShakeComponent = $"../../Components/ScreenShakeComponent"
 
 var _tween: Tween
 var _ram_counter: int = 0
@@ -92,7 +93,8 @@ func _attack() -> void:
 
 	_warning_line.hide()
 	_is_ramming = true
-
+	screen_shake_component.shake()
+	
 	await Utils.create_timer(3).timeout
 	
 	_is_ramming = false

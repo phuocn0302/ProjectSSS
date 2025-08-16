@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BossPhaseData" load_steps=2 format=3 uid="uid://bsi8ewtont5qf"]
+
+[ext_resource type="Script" uid="uid://dd4yinx6w8in" path="res://entities/bosses/boss_phase_data.gd" id="1_vcmo6"]
+
+[resource]
+script = ExtResource("1_vcmo6")
+health_percentage = 100.0
+states = Array[NodePath]([NodePath("../StateMachine/CircleShoot"), NodePath("../StateMachine/MissileShoot")])
+first_state = NodePath("../StateMachine/MissileShoot")
+metadata/_custom_type_script = "uid://dd4yinx6w8in"

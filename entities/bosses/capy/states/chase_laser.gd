@@ -3,8 +3,8 @@ extends CapyBossState
 @export var number_of_shot: int = 4
 @export var chase_duration: float = 3
 @export var move_speed: float = 15
+@export var laser_stats: LaserStats
 
-var _laser_stats: LaserStats
 var _shoot_timer: SceneTreeTimer
 var _is_shooting: bool = false
 var _shot_counter: int = 0
@@ -74,7 +74,7 @@ func _shoot() -> void:
 	boss.recoil_gun()
 	laser_emitter.emit_laser()
 	
-	var total_laser_time = _laser_stats.cast_time + _laser_stats.decay_time + _laser_stats.emit_time
+	var total_laser_time = laser_stats.cast_time + laser_stats.decay_time + laser_stats.emit_time
 	await Utils.create_timer(total_laser_time).timeout
 	
 	_is_shooting = false
@@ -89,5 +89,4 @@ func _shoot() -> void:
 
 
 func _setup_laser_emitter() -> void:
-	_laser_stats = LaserStats.new()
-	laser_emitter.laser_stats = _laser_stats
+	laser_emitter.laser_stats = laser_stats

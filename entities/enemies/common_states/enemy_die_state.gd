@@ -15,9 +15,13 @@ func enter() -> void:
 	
 	if component_container:
 		component_container.disable_all_component()
+	else:
+		push_error("[EnemyDieState] No ComponentContainer")
 	
 	if proj_spawner_container:
 		proj_spawner_container.disable_all_spawner()
+	else:
+		push_error("[EnemyDieState] No ProjectileSpawnerContainer")
 	
 	for s in state_machine.get_children():
 		if not s == self:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://bqvomxuvx0srd"]
+[gd_scene load_steps=69 format=3 uid="uid://bqvomxuvx0srd"]
 
 [ext_resource type="Script" uid="uid://b682oomv2daac" path="res://entities/bosses/capy/capy_boss.gd" id="1_lc7ns"]
 [ext_resource type="Texture2D" uid="uid://hjh0m774qw4p" path="res://assets/texture/npc/bosses/boss_capybara/base_with_launcher.png" id="2_7xee8"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://cauec7sioln5u" path="res://commons/warning_line.gd" id="5_0oyj3"]
 [ext_resource type="Script" uid="uid://s7docibhn2wy" path="res://commons/components/etc/health_component.gd" id="5_exahm"]
 [ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://commons/components/etc/hitbox_component.gd" id="6_ajorv"]
+[ext_resource type="Script" uid="uid://2akmfsdx7k6s" path="res://commons/components/component_container.gd" id="6_ium81"]
 [ext_resource type="Script" uid="uid://chv2lphkgpnes" path="res://commons/components/etc/hurtbox_component.gd" id="7_exahm"]
 [ext_resource type="Script" uid="uid://c3dex51h0lylc" path="res://commons/components/sfx/hit_flash_component.gd" id="8_emtw0"]
 [ext_resource type="Texture2D" uid="uid://cbmdtg4widyj3" path="res://assets/texture/npc/bosses/boss_capybara/raygun.png" id="9_coggl"]
@@ -14,20 +15,27 @@
 [ext_resource type="Script" uid="uid://1hf68snymgbl" path="res://commons/components/sfx/ghost_trailing_component.gd" id="10_attqv"]
 [ext_resource type="Script" uid="uid://dbd157q18m2w2" path="res://commons/lasers/laser_emitter.gd" id="11_tv2n2"]
 [ext_resource type="Script" uid="uid://bgfjkax5hcagh" path="res://commons/lasers/laser_stats.gd" id="12_mikmi"]
+[ext_resource type="Script" uid="uid://cktu0h1knqsbd" path="res://entities/projectiles/spawners/projectile_spawner_container.gd" id="13_gdlwh"]
 [ext_resource type="Resource" uid="uid://btj1wpnlgy41t" path="res://entities/projectiles/resources/enemies/bullet.tres" id="13_k3tu0"]
+[ext_resource type="Script" uid="uid://bue745k8n3n7r" path="res://commons/components/sfx/screen_shake_component.gd" id="13_klcld"]
 [ext_resource type="Script" uid="uid://ch7r1mf7ar7uc" path="res://entities/projectiles/projectile_spawner.gd" id="14_frdsb"]
 [ext_resource type="Resource" uid="uid://bir702nqk15lx" path="res://entities/projectiles/resources/enemies/circle.tres" id="15_rcygr"]
 [ext_resource type="Script" uid="uid://duxclkhsalect" path="res://entities/projectiles/spawners/circle_proj_spawner.gd" id="16_xvc4h"]
 [ext_resource type="Resource" uid="uid://b3wai27flh2jf" path="res://entities/projectiles/resources/enemies/homing_missile.tres" id="17_oknix"]
 [ext_resource type="Script" uid="uid://dg0til6w02wfe" path="res://commons/state_machine/state_machine.gd" id="18_jb3gi"]
-[ext_resource type="Script" uid="uid://5e8y3lq5jsgs" path="res://entities/bosses/capy/states/idle.gd" id="19_ks51w"]
 [ext_resource type="Script" uid="uid://b6bsthxa2e0l" path="res://entities/bosses/capy/states/circle_shoot.gd" id="20_co413"]
 [ext_resource type="Script" uid="uid://c6uunht0obnm1" path="res://entities/bosses/capy/states/missile_shoot.gd" id="20_ks51w"]
 [ext_resource type="Script" uid="uid://cx14oxr84efy0" path="res://entities/enemies/common_states/enemy_entrance_state.gd" id="21_0oyj3"]
 [ext_resource type="Script" uid="uid://cp6vfj844mix6" path="res://entities/bosses/capy/states/bullet_hell_laser.gd" id="22_mmg25"]
+[ext_resource type="Script" uid="uid://bh83jb3700sfs" path="res://entities/bosses/boss_phase_manager.gd" id="22_oafah"]
 [ext_resource type="Script" uid="uid://dui1teeyokwtf" path="res://entities/bosses/capy/states/chase_laser.gd" id="23_ald4w"]
 [ext_resource type="Script" uid="uid://gyu240n2dhx2" path="res://entities/bosses/capy/states/die.gd" id="23_k3tu0"]
+[ext_resource type="Script" uid="uid://dd4yinx6w8in" path="res://entities/bosses/boss_phase_data.gd" id="23_klcld"]
+[ext_resource type="Resource" uid="uid://bsi8ewtont5qf" path="res://entities/bosses/capy/phase_datas/phase_1.tres" id="24_klcld"]
+[ext_resource type="Resource" uid="uid://d2qb6vwah7myn" path="res://entities/bosses/capy/phase_datas/phase_2.tres" id="25_cp7bw"]
 [ext_resource type="Script" uid="uid://cnxpy6y7chrty" path="res://entities/bosses/capy/states/sweep_laser.gd" id="25_kg4pj"]
+[ext_resource type="Script" uid="uid://wq47ysxbciuv" path="res://entities/enemies/common_states/enemy_idle_state.gd" id="26_ium81"]
+[ext_resource type="Resource" uid="uid://b1xuqsne0nrrt" path="res://entities/bosses/capy/phase_datas/phase_3.tres" id="26_j3h1l"]
 
 [sub_resource type="Shader" id="Shader_7xee8"]
 code = "shader_type canvas_item;
@@ -335,11 +343,20 @@ decay_time = 0.2
 outline_color = Color(1, 0, 0, 1)
 metadata/_custom_type_script = "uid://bgfjkax5hcagh"
 
-[node name="CapyBoss" type="Node2D" node_paths=PackedStringArray("phase1_states", "phase2_states", "phase3_states")]
+[sub_resource type="Resource" id="Resource_ium81"]
+script = ExtResource("12_mikmi")
+collision_mask = 1
+direction = Vector2(0, 1)
+length = 320
+max_width = 12
+emit_time = 0.5
+cast_time = 0.2
+decay_time = 0.2
+outline_color = Color(1, 0, 0, 1)
+metadata/_custom_type_script = "uid://bgfjkax5hcagh"
+
+[node name="CapyBoss" type="Node2D"]
 script = ExtResource("1_lc7ns")
-phase1_states = [NodePath("StateMachine/CircleShoot"), NodePath("StateMachine/CircleShoot"), NodePath("StateMachine/MissileShoot")]
-phase2_states = [NodePath("StateMachine/BulletHellLaser"), NodePath("StateMachine/MissileShoot")]
-phase3_states = [NodePath("StateMachine/SweepLaser"), NodePath("StateMachine/ChaseLaser")]
 metadata/_custom_type_script = "uid://efllwjrpocom"
 
 [node name="Main" type="Sprite2D" parent="."]
@@ -372,7 +389,8 @@ texture = ExtResource("3_vyw8q")
 process_material = SubResource("ParticleProcessMaterial_coggl")
 
 [node name="Components" type="Node2D" parent="."]
-visible = false
+script = ExtResource("6_ium81")
+metadata/_custom_type_script = "uid://2akmfsdx7k6s"
 
 [node name="HurtboxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("health_component", "entity")]
 collision_layer = 16
@@ -414,7 +432,7 @@ shape = SubResource("RectangleShape2D_emtw0")
 
 [node name="HealthComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
 script = ExtResource("5_exahm")
-max_health = 450.0
+max_health = 400.0
 queue_free_on_die = false
 entity = NodePath("../..")
 metadata/_custom_type_script = "uid://s7docibhn2wy"
@@ -447,7 +465,13 @@ active = false
 entity = NodePath("../..")
 metadata/_custom_type_script = "uid://1hf68snymgbl"
 
+[node name="ScreenShakeComponent" type="Node" parent="Components"]
+script = ExtResource("13_klcld")
+metadata/_custom_type_script = "uid://bue745k8n3n7r"
+
 [node name="Spawners" type="Node2D" parent="."]
+script = ExtResource("13_gdlwh")
+metadata/_custom_type_script = "uid://cktu0h1knqsbd"
 
 [node name="PatternProjectileSpawner" type="Node2D" parent="Spawners"]
 position = Vector2(0, 37)
@@ -506,25 +530,35 @@ width = 2.0
 default_color = Color(1, 0, 0, 1)
 begin_cap_mode = 2
 
+[node name="BossPhaseManager" type="Node" parent="." node_paths=PackedStringArray("health_component", "state_machine")]
+script = ExtResource("22_oafah")
+health_component = NodePath("../Components/HealthComponent")
+state_machine = NodePath("../StateMachine")
+phase_datas = Array[ExtResource("23_klcld")]([ExtResource("24_klcld"), ExtResource("25_cp7bw"), ExtResource("26_j3h1l")])
+metadata/_custom_type_script = "uid://bh83jb3700sfs"
+
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("actor", "starting_state")]
 script = ExtResource("18_jb3gi")
 actor = NodePath("..")
-starting_state = NodePath("BossEntranceState")
+starting_state = NodePath("EnemyEntranceState")
 metadata/_custom_type_script = "uid://dg0til6w02wfe"
 
-[node name="BossEntranceState" type="Node" parent="StateMachine" node_paths=PackedStringArray("hurtbox_component")]
+[node name="EnemyEntranceState" type="Node" parent="StateMachine" node_paths=PackedStringArray("hurtbox_component", "next_state")]
 script = ExtResource("21_0oyj3")
 hurtbox_component = NodePath("../../Components/HurtboxComponent")
-metadata/_custom_type_script = "uid://ckdlwxt7cdufi"
+next_state = NodePath("../Idle")
+metadata/_custom_type_script = "uid://cx14oxr84efy0"
 
 [node name="Idle" type="Node" parent="StateMachine"]
-script = ExtResource("19_ks51w")
-idle_time = 2.0
-metadata/_custom_type_script = "uid://cd033sfu46rh5"
+script = ExtResource("26_ium81")
+idle_time = 0.5
+metadata/_custom_type_script = "uid://wq47ysxbciuv"
 
-[node name="Die" type="Node" parent="StateMachine"]
+[node name="Die" type="Node" parent="StateMachine" node_paths=PackedStringArray("component_container", "proj_spawner_container")]
 script = ExtResource("23_k3tu0")
-metadata/_custom_type_script = "uid://cd033sfu46rh5"
+component_container = NodePath("../../Components")
+proj_spawner_container = NodePath("../../Spawners")
+metadata/_custom_type_script = "uid://btifskqmt4ya"
 
 [node name="CircleShoot" type="Node" parent="StateMachine"]
 script = ExtResource("20_co413")
@@ -534,6 +568,7 @@ metadata/_custom_type_script = "uid://cd033sfu46rh5"
 
 [node name="MissileShoot" type="Node" parent="StateMachine"]
 script = ExtResource("20_ks51w")
+duration = 5.0
 metadata/_custom_type_script = "uid://cd033sfu46rh5"
 
 [node name="BulletHellLaser" type="Node" parent="StateMachine"]
@@ -542,7 +577,8 @@ metadata/_custom_type_script = "uid://cd033sfu46rh5"
 
 [node name="ChaseLaser" type="Node" parent="StateMachine"]
 script = ExtResource("23_ald4w")
-number_of_shot = 5
+number_of_shot = 6
+laser_stats = SubResource("Resource_ium81")
 metadata/_custom_type_script = "uid://cd033sfu46rh5"
 
 [node name="SweepLaser" type="Node" parent="StateMachine"]
@@ -550,6 +586,4 @@ script = ExtResource("25_kg4pj")
 metadata/_custom_type_script = "uid://cd033sfu46rh5"
 
 [connection signal="hurt" from="Components/HurtboxComponent" to="Components/GunHitFlashComponent2" method="flash_no_args"]
-[connection signal="health_depleted" from="Components/HealthComponent" to="." method="_on_health_component_health_depleted"]
 [connection signal="health_reached_zero" from="Components/HealthComponent" to="." method="_on_health_component_health_reached_zero"]
-[connection signal="finished" from="StateMachine/BossEntranceState" to="." method="_phase1_transtion"]
