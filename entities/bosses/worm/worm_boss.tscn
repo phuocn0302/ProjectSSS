@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://dlkqlab5u0ccw"]
+[gd_scene load_steps=68 format=3 uid="uid://dlkqlab5u0ccw"]
 
 [ext_resource type="Script" uid="uid://cktxbys1fq54i" path="res://entities/bosses/worm/worm_boss.gd" id="1_er2ad"]
 [ext_resource type="Texture2D" uid="uid://drp22vdkaaiua" path="res://assets/texture/npc/bosses/boss_worm/head_sheet.png" id="1_p7hdf"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://clq7vtr5sg8yu" path="res://assets/texture/sfx/3x_white_particle.png" id="4_gfa7e"]
 [ext_resource type="Script" uid="uid://chv2lphkgpnes" path="res://commons/components/etc/hurtbox_component.gd" id="4_hybpq"]
 [ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://commons/components/etc/hitbox_component.gd" id="5_ejlpn"]
+[ext_resource type="Script" uid="uid://2akmfsdx7k6s" path="res://commons/components/component_container.gd" id="5_jikab"]
 [ext_resource type="Script" uid="uid://co2kl5qnx2yrs" path="res://commons/components/movements/idle_move_component.gd" id="6_01cui"]
 [ext_resource type="Script" uid="uid://c3dex51h0lylc" path="res://commons/components/sfx/hit_flash_component.gd" id="6_rhiqv"]
 [ext_resource type="PackedScene" uid="uid://rj3hxypveqt8" path="res://particles/projectile_particles.tscn" id="8_gfa7e"]
@@ -15,6 +16,7 @@
 [ext_resource type="Script" uid="uid://bonurqbakdykh" path="res://entities/projectiles/spawners/pattern_proj_spawner.gd" id="11_q5ais"]
 [ext_resource type="Resource" uid="uid://bir702nqk15lx" path="res://entities/projectiles/resources/enemies/circle.tres" id="12_bqxbe"]
 [ext_resource type="Script" uid="uid://duxclkhsalect" path="res://entities/projectiles/spawners/circle_proj_spawner.gd" id="13_v05h8"]
+[ext_resource type="Script" uid="uid://cktu0h1knqsbd" path="res://entities/projectiles/spawners/projectile_spawner_container.gd" id="13_x734i"]
 [ext_resource type="Resource" uid="uid://4dpmvua60dgk" path="res://entities/projectiles/resources/enemies/tri.tres" id="14_rudrh"]
 [ext_resource type="Script" uid="uid://sj2recp8wcj2" path="res://entities/projectiles/spawners/target_proj_spawner.gd" id="15_3o0o1"]
 [ext_resource type="Resource" uid="uid://g5qufoff42o7" path="res://entities/projectiles/resources/enemies/2spawner.tres" id="15_v05h8"]
@@ -321,6 +323,8 @@ draw_order = 0
 process_material = SubResource("ParticleProcessMaterial_vftis")
 
 [node name="Components" type="Node2D" parent="."]
+script = ExtResource("5_jikab")
+metadata/_custom_type_script = "uid://2akmfsdx7k6s"
 
 [node name="HealthComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
 script = ExtResource("3_ngrlu")
@@ -378,6 +382,8 @@ shake_duration = 0.5
 metadata/_custom_type_script = "uid://bue745k8n3n7r"
 
 [node name="Spawners" type="Node2D" parent="."]
+script = ExtResource("13_x734i")
+metadata/_custom_type_script = "uid://cktu0h1knqsbd"
 
 [node name="PatternProjectileSpawner" type="Node2D" parent="Spawners"]
 script = ExtResource("11_q5ais")
