@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://c3rq577ok406m"]
+[gd_scene load_steps=15 format=3 uid="uid://c3rq577ok406m"]
 
 [ext_resource type="Texture2D" uid="uid://djwg6o0pu41" path="res://assets/texture/sfx/circle_explosion_2.png" id="1_uyiyp"]
 [ext_resource type="PackedScene" uid="uid://dfl00xfc5e7kj" path="res://particles/explode_particles.tscn" id="2_sf7re"]
+[ext_resource type="Script" uid="uid://bue745k8n3n7r" path="res://commons/components/sfx/screen_shake_component.gd" id="3_veyq0"]
 
 [sub_resource type="Shader" id="Shader_uyiyp"]
 code = "shader_type canvas_item;
@@ -138,4 +139,10 @@ autoplay = "default"
 
 [node name="ExplodeParticles" parent="." instance=ExtResource("2_sf7re")]
 
+[node name="ScreenShakeComponent" type="Node" parent="."]
+script = ExtResource("3_veyq0")
+shake_duration = 0.1
+metadata/_custom_type_script = "uid://bue745k8n3n7r"
+
 [connection signal="animation_finished" from="." to="." method="queue_free"]
+[connection signal="tree_entered" from="." to="ScreenShakeComponent" method="shake"]
