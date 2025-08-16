@@ -1,37 +1,15 @@
-extends WormBossState
+extends EnemyDieState
 
 const CIRCLE_EXPLOSION = preload("res://particles/circle_explosion.tscn")
 
-@onready var components: Node2D = $"../../Components"
-@onready var spawners: Node2D = $"../../Spawners"
+@onready var boss: WormBoss = $"../.."
 
 func enter() -> void:
-	for p in get_tree().get_nodes_in_group("projectile"):
-		if p is Projectile:
-			p.deactive()
-	
-	for p in get_tree().get_nodes_in_group("warning_line"):
-		if p is MoveWarningLine:
-			p.hide()
-	
-	for c in components.get_children():
-		c.active = false
-	
-	for s in spawners.get_children():
-		s.active = false
-	
-	for s in state_machine.get_children():
-		if not s == self:
-			s.queue_free()
+	super.enter()
 	
 	for s in boss.segments:
-		for c in s.components.get_children():
-			c.active = false
-		
-		for sp in s.spawners.get_children():
-			sp.active = false
-	
-	state_machine.active = false
+		s.components.disable_all_component()
+		s.spawners.disable_all_spawner()
 	
 	await Utils.create_timer(2).timeout
 	

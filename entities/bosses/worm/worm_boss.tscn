@@ -328,7 +328,7 @@ metadata/_custom_type_script = "uid://2akmfsdx7k6s"
 
 [node name="HealthComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
 script = ExtResource("3_ngrlu")
-max_health = 350.0
+max_health = 3.0
 queue_free_on_die = false
 entity = NodePath("../..")
 metadata/_custom_type_script = "uid://s7docibhn2wy"
@@ -454,8 +454,10 @@ script = ExtResource("20_xo1be")
 idle_time = 2.0
 metadata/_custom_type_script = "uid://wq47ysxbciuv"
 
-[node name="Die" type="Node" parent="StateMachine"]
+[node name="Die" type="Node" parent="StateMachine" node_paths=PackedStringArray("component_container", "proj_spawner_container")]
 script = ExtResource("29_vftis")
+component_container = NodePath("../../Components")
+proj_spawner_container = NodePath("../../Spawners")
 metadata/_custom_type_script = "uid://kr4ktwlkaayj"
 
 [node name="SProjShoot" type="Node" parent="StateMachine"]

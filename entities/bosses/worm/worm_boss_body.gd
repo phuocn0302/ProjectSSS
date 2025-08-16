@@ -17,8 +17,8 @@ const CIRCLE_EXPLOSION = preload("res://particles/circle_explosion.tscn")
 @onready var circle_projectile_spawner: CircleProjectileSpawner = $Spawners/CircleProjectileSpawner
 @onready var target_projectile_spawner: TargetProjectileSpawner = $Spawners/TargetProjectileSpawner
 @onready var shoot_trigger: VisibleOnScreenNotifier2D = $ShootTrigger
-@onready var components: Node2D = $Components
-@onready var spawners: Node2D = $Spawners
+@onready var components: ComponentContainer = $Components
+@onready var spawners: ProjectileSpawnerContainer = $Spawners
 
 func _ready() -> void:
 	assert(worm_boss)
