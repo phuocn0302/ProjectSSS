@@ -23,7 +23,7 @@
 [ext_resource type="Script" uid="uid://5e8y3lq5jsgs" path="res://entities/bosses/capy/states/idle.gd" id="19_ks51w"]
 [ext_resource type="Script" uid="uid://b6bsthxa2e0l" path="res://entities/bosses/capy/states/circle_shoot.gd" id="20_co413"]
 [ext_resource type="Script" uid="uid://c6uunht0obnm1" path="res://entities/bosses/capy/states/missile_shoot.gd" id="20_ks51w"]
-[ext_resource type="Script" uid="uid://cx14oxr84efy0" path="res://commons/state_machine/enemy_entrance_state.gd" id="21_0oyj3"]
+[ext_resource type="Script" uid="uid://cx14oxr84efy0" path="res://entities/enemies/common_states/enemy_entrance_state.gd" id="21_0oyj3"]
 [ext_resource type="Script" uid="uid://cp6vfj844mix6" path="res://entities/bosses/capy/states/bullet_hell_laser.gd" id="22_mmg25"]
 [ext_resource type="Script" uid="uid://dui1teeyokwtf" path="res://entities/bosses/capy/states/chase_laser.gd" id="23_ald4w"]
 [ext_resource type="Script" uid="uid://gyu240n2dhx2" path="res://entities/bosses/capy/states/die.gd" id="23_k3tu0"]
