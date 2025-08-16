@@ -88,7 +88,7 @@ func _decay() -> void:
 	_decay_tween = self.create_tween()
 	_decay_tween.set_trans(Tween.TRANS_SINE)
 	_decay_tween.set_ease(Tween.EASE_OUT)
-	_decay_tween.tween_property(self, "default_color:a", 0, decay_time)
+	_decay_tween.tween_property(self, "width", 0, decay_time)
 
 
 func _apply_stats(stats: LaserStats) -> void:
