@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=6 format=3 uid="uid://d20y1i8w5tvfe"]
+
+[ext_resource type="PackedScene" uid="uid://bt10he0p0pvkk" path="res://src/particles/projectile_hit_particles.tscn" id="1_cnye7"]
+[ext_resource type="PackedScene" uid="uid://rj3hxypveqt8" path="res://src/particles/projectile_particles.tscn" id="2_mpqvu"]
+[ext_resource type="Script" uid="uid://bpmqwg4oj70ye" path="res://src/entities/projectiles/projectile_data.gd" id="3_a8ufv"]
+[ext_resource type="Texture2D" uid="uid://vd3lnd6eiuxs" path="res://assets/texture/projectiles/player/player_normal_proj.png" id="4_dcwdl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y5jm2"]
+size = Vector2(6, 4)
+
+[resource]
+script = ExtResource("3_a8ufv")
+texture = ExtResource("4_dcwdl")
+texture_rotate_with_dir = true
+collision_shape = SubResource("RectangleShape2D_y5jm2")
+shape_offset = Vector2(0, 0)
+collision_mask = 16
+speed = 200.0
+damage = 1.0
+life_time = 5.0
+vfx_color = Color(0, 0.889, 0.959, 1)
+on_hit_vfx = ExtResource("1_cnye7")
+use_particles = true
+particles = ExtResource("2_mpqvu")
+metadata/_custom_type_script = "uid://bpmqwg4oj70ye"

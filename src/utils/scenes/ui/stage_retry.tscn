@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=3 uid="uid://cjcln02nsqn7k"]
+
+[ext_resource type="Script" uid="uid://tfjso1ftch0u" path="res://src/utils/scenes/ui/stage_retry.gd" id="1_gi1iw"]
+[ext_resource type="Texture2D" uid="uid://nirtsbb8flm2" path="res://assets/texture/ui/dialog/try_again.png" id="2_28j0g"]
+[ext_resource type="Texture2D" uid="uid://r6ilnjuvjiix" path="res://assets/texture/ui/dialog/no_button.png" id="3_grdp6"]
+[ext_resource type="Texture2D" uid="uid://cx3m20gph5kgf" path="res://assets/texture/ui/dialog/no_button_hover.png" id="4_o76y0"]
+[ext_resource type="Texture2D" uid="uid://c3hgka1l7csrc" path="res://assets/texture/ui/dialog/yes_button.png" id="5_umcr0"]
+[ext_resource type="Texture2D" uid="uid://ddbm6i08o8n5g" path="res://assets/texture/ui/dialog/yes_button_hover.png" id="6_u8575"]
+[ext_resource type="FontFile" uid="uid://csadesa85hrv4" path="res://assets/font/OptimusPrinceps.ttf" id="7_c66nc"]
+
+[node name="StageRetry" type="Control"]
+z_index = 999
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gi1iw")
+
+[node name="BG" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 180.0
+offset_bottom = 320.0
+color = Color(0, 0, 0, 0.784314)
+
+[node name="YouDied" type="Label" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 129.0
+offset_right = 148.0
+offset_bottom = 155.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_c66nc")
+theme_override_font_sizes/font_size = 24
+text = "YOU DIED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DialogControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 32.0
+offset_bottom = 40.0
+
+[node name="TryAgain" type="Sprite2D" parent="DialogControl"]
+position = Vector2(90, 222)
+texture = ExtResource("2_28j0g")
+
+[node name="NoButton" type="TextureButton" parent="DialogControl"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 45.0
+offset_top = 187.0
+offset_right = 81.0
+offset_bottom = 207.0
+grow_vertical = 0
+texture_normal = ExtResource("3_grdp6")
+texture_focused = ExtResource("4_o76y0")
+
+[node name="YesButton" type="TextureButton" parent="DialogControl"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 67.0
+offset_top = 187.0
+offset_right = 103.0
+offset_bottom = 207.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("5_umcr0")
+texture_focused = ExtResource("6_u8575")
+
+[connection signal="pressed" from="DialogControl/NoButton" to="." method="_on_no_button_pressed"]
+[connection signal="pressed" from="DialogControl/YesButton" to="." method="_on_yes_button_pressed"]

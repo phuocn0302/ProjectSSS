@@ -1,0 +1,589 @@
+[gd_scene load_steps=69 format=3 uid="uid://bqvomxuvx0srd"]
+
+[ext_resource type="Script" uid="uid://b682oomv2daac" path="res://src/entities/bosses/capy/capy_boss.gd" id="1_lc7ns"]
+[ext_resource type="Texture2D" uid="uid://hjh0m774qw4p" path="res://assets/texture/npc/bosses/boss_capybara/base_with_launcher.png" id="2_7xee8"]
+[ext_resource type="Texture2D" uid="uid://8wkr5neo2iq7" path="res://assets/texture/sfx/4x_white_particle.png" id="3_vyw8q"]
+[ext_resource type="Script" uid="uid://co2kl5qnx2yrs" path="res://src/commons/components/movements/idle_move_component.gd" id="4_ajorv"]
+[ext_resource type="Script" uid="uid://cauec7sioln5u" path="res://src/commons/warning_line.gd" id="5_0oyj3"]
+[ext_resource type="Script" uid="uid://s7docibhn2wy" path="res://src/commons/components/etc/health_component.gd" id="5_exahm"]
+[ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://src/commons/components/etc/hitbox_component.gd" id="6_ajorv"]
+[ext_resource type="Script" uid="uid://2akmfsdx7k6s" path="res://src/commons/components/component_container.gd" id="6_ium81"]
+[ext_resource type="Script" uid="uid://chv2lphkgpnes" path="res://src/commons/components/etc/hurtbox_component.gd" id="7_exahm"]
+[ext_resource type="Script" uid="uid://c3dex51h0lylc" path="res://src/commons/components/sfx/hit_flash_component.gd" id="8_emtw0"]
+[ext_resource type="Texture2D" uid="uid://cbmdtg4widyj3" path="res://assets/texture/npc/bosses/boss_capybara/raygun.png" id="9_coggl"]
+[ext_resource type="Script" uid="uid://bonurqbakdykh" path="res://src/entities/projectiles/spawners/pattern_proj_spawner.gd" id="10_8qm53"]
+[ext_resource type="Script" uid="uid://1hf68snymgbl" path="res://src/commons/components/sfx/ghost_trailing_component.gd" id="10_attqv"]
+[ext_resource type="Script" uid="uid://dbd157q18m2w2" path="res://src/commons/lasers/laser_emitter.gd" id="11_tv2n2"]
+[ext_resource type="Script" uid="uid://bgfjkax5hcagh" path="res://src/commons/lasers/laser_stats.gd" id="12_mikmi"]
+[ext_resource type="Script" uid="uid://cktu0h1knqsbd" path="res://src/entities/projectiles/spawners/projectile_spawner_container.gd" id="13_gdlwh"]
+[ext_resource type="Resource" uid="uid://btj1wpnlgy41t" path="res://src/entities/projectiles/resources/enemies/bullet.tres" id="13_k3tu0"]
+[ext_resource type="Script" uid="uid://bue745k8n3n7r" path="res://src/commons/components/sfx/screen_shake_component.gd" id="13_klcld"]
+[ext_resource type="Script" uid="uid://ch7r1mf7ar7uc" path="res://src/entities/projectiles/projectile_spawner.gd" id="14_frdsb"]
+[ext_resource type="Resource" uid="uid://bir702nqk15lx" path="res://src/entities/projectiles/resources/enemies/circle.tres" id="15_rcygr"]
+[ext_resource type="Script" uid="uid://duxclkhsalect" path="res://src/entities/projectiles/spawners/circle_proj_spawner.gd" id="16_xvc4h"]
+[ext_resource type="Resource" uid="uid://b3wai27flh2jf" path="res://src/entities/projectiles/resources/enemies/homing_missile.tres" id="17_oknix"]
+[ext_resource type="Script" uid="uid://dg0til6w02wfe" path="res://src/commons/state_machine/state_machine.gd" id="18_jb3gi"]
+[ext_resource type="Script" uid="uid://b6bsthxa2e0l" path="res://src/entities/bosses/capy/states/circle_shoot.gd" id="20_co413"]
+[ext_resource type="Script" uid="uid://c6uunht0obnm1" path="res://src/entities/bosses/capy/states/missile_shoot.gd" id="20_ks51w"]
+[ext_resource type="Script" uid="uid://cx14oxr84efy0" path="res://src/entities/enemies/common_states/enemy_entrance_state.gd" id="21_0oyj3"]
+[ext_resource type="Script" uid="uid://cp6vfj844mix6" path="res://src/entities/bosses/capy/states/bullet_hell_laser.gd" id="22_mmg25"]
+[ext_resource type="Script" uid="uid://bh83jb3700sfs" path="res://src/entities/bosses/boss_phase_manager.gd" id="22_oafah"]
+[ext_resource type="Script" uid="uid://dui1teeyokwtf" path="res://src/entities/bosses/capy/states/chase_laser.gd" id="23_ald4w"]
+[ext_resource type="Script" uid="uid://gyu240n2dhx2" path="res://src/entities/bosses/capy/states/die.gd" id="23_k3tu0"]
+[ext_resource type="Script" uid="uid://dd4yinx6w8in" path="res://src/entities/bosses/boss_phase_data.gd" id="23_klcld"]
+[ext_resource type="Resource" uid="uid://bsi8ewtont5qf" path="res://src/entities/bosses/capy/phase_datas/phase_1.tres" id="24_klcld"]
+[ext_resource type="Resource" uid="uid://d2qb6vwah7myn" path="res://src/entities/bosses/capy/phase_datas/phase_2.tres" id="25_cp7bw"]
+[ext_resource type="Script" uid="uid://cnxpy6y7chrty" path="res://src/entities/bosses/capy/states/sweep_laser.gd" id="25_kg4pj"]
+[ext_resource type="Script" uid="uid://wq47ysxbciuv" path="res://src/entities/enemies/common_states/enemy_idle_state.gd" id="26_ium81"]
+[ext_resource type="Resource" uid="uid://b1xuqsne0nrrt" path="res://src/entities/bosses/capy/phase_datas/phase_3.tres" id="26_j3h1l"]
+
+[sub_resource type="Shader" id="Shader_7xee8"]
+code = "shader_type canvas_item;
+
+// === Outline Controls ===
+uniform bool outline_enabled = false;
+uniform vec4 outline_color    : source_color = vec4(1.0);
+uniform float outline_size    : hint_range(0.0, 16.0, 0.1) = 1.0;
+uniform float alpha_threshold : hint_range(0.0, 1.0, 0.01) = 0.0;
+uniform int outline_samples   : hint_range(4, 8) = 4;
+
+// === Flash Controls ===
+uniform vec4 flash_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform float flash_strength : hint_range(0.0, 1.0, 0.1) = 0.0;
+
+// === Outline Sampling Directions ===
+const vec2[8] DIRS = vec2[8](
+	vec2(1.0, 0.0), vec2(0.0, 1.0),  vec2(-1.0, 0.0),  vec2(0.0, -1.0),
+	vec2(1.0, 1.0), vec2(-1.0, 1.0), vec2(-1.0, -1.0), vec2(1.0, -1.0)
+);
+
+void fragment() {
+	vec4 tex = texture(TEXTURE, UV);
+	float alpha = tex.a;
+
+	if (alpha <= 0.0 && outline_size <= 0.0) discard;
+
+	bool solid = alpha > alpha_threshold;
+	bool found_outline = false;
+
+	// Only check outline if enabled and current pixel is transparent
+	if (outline_enabled && !solid && outline_size > 0.0) {
+		vec2 offset = TEXTURE_PIXEL_SIZE * outline_size;
+		for (int i = 0; i < outline_samples; i++) {
+			if (texture(TEXTURE, UV + DIRS[i] * offset).a > alpha_threshold) {
+				found_outline = true;
+				break;
+			}
+		}
+	}
+
+	// Color decision
+	if (solid) {
+		COLOR = tex;
+	} else if (outline_enabled && found_outline) {
+		COLOR = outline_color;
+	} else {
+		discard;
+	}
+
+	// === Flash Effect ===
+	COLOR.rgb = mix(COLOR.rgb, flash_color.rgb, flash_strength);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ejrl6"]
+shader = SubResource("Shader_7xee8")
+shader_parameter/outline_enabled = true
+shader_parameter/outline_color = Color(1, 0, 0, 1)
+shader_parameter/outline_size = 1.0
+shader_parameter/alpha_threshold = 0.0
+shader_parameter/outline_samples = 4
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_strength = 0.0
+
+[sub_resource type="Shader" id="Shader_coggl"]
+code = "shader_type canvas_item;
+
+// === Outline Controls ===
+uniform bool outline_enabled = false;
+uniform vec4 outline_color    : source_color = vec4(1.0);
+uniform float outline_size    : hint_range(0.0, 16.0, 0.1) = 1.0;
+uniform float alpha_threshold : hint_range(0.0, 1.0, 0.01) = 0.0;
+uniform int outline_samples   : hint_range(4, 8) = 4;
+
+// === Flash Controls ===
+uniform vec4 flash_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform float flash_strength : hint_range(0.0, 1.0, 0.1) = 0.0;
+
+// === Outline Sampling Directions ===
+const vec2[8] DIRS = vec2[8](
+	vec2(1.0, 0.0), vec2(0.0, 1.0),  vec2(-1.0, 0.0),  vec2(0.0, -1.0),
+	vec2(1.0, 1.0), vec2(-1.0, 1.0), vec2(-1.0, -1.0), vec2(1.0, -1.0)
+);
+
+void fragment() {
+	vec4 tex = texture(TEXTURE, UV);
+	float alpha = tex.a;
+
+	if (alpha <= 0.0 && outline_size <= 0.0) discard;
+
+	bool solid = alpha > alpha_threshold;
+	bool found_outline = false;
+
+	// Only check outline if enabled and current pixel is transparent
+	if (outline_enabled && !solid && outline_size > 0.0) {
+		vec2 offset = TEXTURE_PIXEL_SIZE * outline_size;
+		for (int i = 0; i < outline_samples; i++) {
+			if (texture(TEXTURE, UV + DIRS[i] * offset).a > alpha_threshold) {
+				found_outline = true;
+				break;
+			}
+		}
+	}
+
+	// Color decision
+	if (solid) {
+		COLOR = tex;
+	} else if (outline_enabled && found_outline) {
+		COLOR = outline_color;
+	} else {
+		discard;
+	}
+
+	// === Flash Effect ===
+	COLOR.rgb = mix(COLOR.rgb, flash_color.rgb, flash_strength);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_svhwp"]
+shader = SubResource("Shader_coggl")
+shader_parameter/outline_enabled = true
+shader_parameter/outline_color = Color(1, 0, 0, 1)
+shader_parameter/outline_size = 1.0
+shader_parameter/alpha_threshold = 0.0
+shader_parameter/outline_samples = 4
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_strength = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bubw7"]
+atlas = ExtResource("9_coggl")
+region = Rect2(154, 0, 22, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_co413"]
+atlas = ExtResource("9_coggl")
+region = Rect2(132, 0, 22, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ks51w"]
+atlas = ExtResource("9_coggl")
+region = Rect2(110, 0, 22, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmg25"]
+atlas = ExtResource("9_coggl")
+region = Rect2(88, 0, 22, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ald4w"]
+atlas = ExtResource("9_coggl")
+region = Rect2(66, 0, 22, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n4vw2"]
+atlas = ExtResource("9_coggl")
+region = Rect2(44, 0, 22, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_attqv"]
+atlas = ExtResource("9_coggl")
+region = Rect2(22, 0, 22, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kg4pj"]
+atlas = ExtResource("9_coggl")
+region = Rect2(0, 0, 22, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ayj0t"]
+atlas = ExtResource("9_coggl")
+region = Rect2(0, 0, 22, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qm53"]
+atlas = ExtResource("9_coggl")
+region = Rect2(22, 0, 22, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tv2n2"]
+atlas = ExtResource("9_coggl")
+region = Rect2(44, 0, 22, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mikmi"]
+atlas = ExtResource("9_coggl")
+region = Rect2(66, 0, 22, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frdsb"]
+atlas = ExtResource("9_coggl")
+region = Rect2(88, 0, 22, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52pfg"]
+atlas = ExtResource("9_coggl")
+region = Rect2(110, 0, 22, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvc4h"]
+atlas = ExtResource("9_coggl")
+region = Rect2(132, 0, 22, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jb3gi"]
+atlas = ExtResource("9_coggl")
+region = Rect2(154, 0, 22, 58)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jb3gi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bubw7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_co413")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ks51w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mmg25")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ald4w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n4vw2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_attqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kg4pj")
+}],
+"loop": false,
+"name": &"back_to_gun",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayj0t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8qm53")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tv2n2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mikmi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frdsb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52pfg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xvc4h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jb3gi")
+}],
+"loop": false,
+"name": &"to_ray_gun",
+"speed": 15.0
+}]
+
+[sub_resource type="Curve" id="Curve_emtw0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.919831, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_64dyw"]
+curve = SubResource("Curve_emtw0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_coggl"]
+lifetime_randomness = 0.4
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(15, 1, 1)
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 70.0
+initial_velocity_max = 90.0
+gravity = Vector3(0, 0, 0)
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_64dyw")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_emtw0"]
+radius = 41.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_coggl"]
+size = Vector2(16, 42)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_svhwp"]
+size = Vector2(16, 42)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_exahm"]
+radius = 35.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_emtw0"]
+size = Vector2(10, 42)
+
+[sub_resource type="Curve2D" id="Curve2D_tv2n2"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -32, 104, 0, 0, 0, 0, 32, 104)
+}
+point_count = 2
+
+[sub_resource type="Resource" id="Resource_frdsb"]
+script = ExtResource("12_mikmi")
+collision_mask = 1
+direction = Vector2(0, 1)
+length = 320
+max_width = 12
+emit_time = 1.0
+cast_time = 0.2
+decay_time = 0.2
+outline_color = Color(1, 0, 0, 1)
+metadata/_custom_type_script = "uid://bgfjkax5hcagh"
+
+[sub_resource type="Resource" id="Resource_ium81"]
+script = ExtResource("12_mikmi")
+collision_mask = 1
+direction = Vector2(0, 1)
+length = 320
+max_width = 12
+emit_time = 0.5
+cast_time = 0.2
+decay_time = 0.2
+outline_color = Color(1, 0, 0, 1)
+metadata/_custom_type_script = "uid://bgfjkax5hcagh"
+
+[node name="CapyBoss" type="Node2D"]
+script = ExtResource("1_lc7ns")
+metadata/_custom_type_script = "uid://efllwjrpocom"
+
+[node name="Main" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ejrl6")
+texture = ExtResource("2_7xee8")
+
+[node name="Gun" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_svhwp")
+position = Vector2(0, 30)
+sprite_frames = SubResource("SpriteFrames_jb3gi")
+animation = &"to_ray_gun"
+
+[node name="MoveWarningLine" type="Line2D" parent="."]
+visible = false
+width = 24.0
+script = ExtResource("5_0oyj3")
+show_time = 0.3
+length = 180.0
+metadata/_custom_type_script = "uid://cauec7sioln5u"
+
+[node name="GunPosition" type="Marker2D" parent="."]
+position = Vector2(0, 30)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+show_behind_parent = true
+position = Vector2(-4, 6)
+amount = 10
+texture = ExtResource("3_vyw8q")
+process_material = SubResource("ParticleProcessMaterial_coggl")
+
+[node name="Components" type="Node2D" parent="."]
+script = ExtResource("6_ium81")
+metadata/_custom_type_script = "uid://2akmfsdx7k6s"
+
+[node name="HurtboxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("health_component", "entity")]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("7_exahm")
+health_component = NodePath("../HealthComponent")
+entity = NodePath("../..")
+metadata/_custom_type_script = "uid://chv2lphkgpnes"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/HurtboxComponent"]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_emtw0")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Components/HurtboxComponent"]
+position = Vector2(-38, 18.875)
+shape = SubResource("RectangleShape2D_coggl")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Components/HurtboxComponent"]
+position = Vector2(38, 19)
+shape = SubResource("RectangleShape2D_svhwp")
+
+[node name="HitboxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("entity")]
+collision_layer = 0
+script = ExtResource("6_ajorv")
+entity = NodePath("../..")
+metadata/_custom_type_script = "uid://dkij5hjdnu422"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/HitboxComponent"]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_exahm")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Components/HitboxComponent"]
+position = Vector2(-37, 18.875)
+shape = SubResource("RectangleShape2D_emtw0")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Components/HitboxComponent"]
+position = Vector2(37, 19)
+shape = SubResource("RectangleShape2D_emtw0")
+
+[node name="HealthComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
+script = ExtResource("5_exahm")
+max_health = 400.0
+queue_free_on_die = false
+entity = NodePath("../..")
+metadata/_custom_type_script = "uid://s7docibhn2wy"
+
+[node name="IdleMoveComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
+script = ExtResource("4_ajorv")
+angular_speed = 6.0
+circle_radius = 2.0
+active = false
+entity = NodePath("../..")
+metadata/_custom_type_script = "uid://co2kl5qnx2yrs"
+
+[node name="GunHitFlashComponent2" type="Node" parent="Components" node_paths=PackedStringArray("sprite", "entity")]
+script = ExtResource("8_emtw0")
+sprite = NodePath("../../Gun")
+entity = NodePath("../..")
+metadata/_custom_type_script = "uid://c3dex51h0lylc"
+
+[node name="MainHitFlashComponent" type="Node" parent="Components" node_paths=PackedStringArray("sprite", "health_component", "entity")]
+script = ExtResource("8_emtw0")
+sprite = NodePath("../../Main")
+health_component = NodePath("../HealthComponent")
+entity = NodePath("../..")
+metadata/_custom_type_script = "uid://c3dex51h0lylc"
+
+[node name="GhostTrailingComponent" type="Node" parent="Components" node_paths=PackedStringArray("sprite", "entity")]
+script = ExtResource("10_attqv")
+sprite = NodePath("../../Main")
+active = false
+entity = NodePath("../..")
+metadata/_custom_type_script = "uid://1hf68snymgbl"
+
+[node name="ScreenShakeComponent" type="Node" parent="Components"]
+script = ExtResource("13_klcld")
+metadata/_custom_type_script = "uid://bue745k8n3n7r"
+
+[node name="Spawners" type="Node2D" parent="."]
+script = ExtResource("13_gdlwh")
+metadata/_custom_type_script = "uid://cktu0h1knqsbd"
+
+[node name="PatternProjectileSpawner" type="Node2D" parent="Spawners"]
+position = Vector2(0, 37)
+script = ExtResource("10_8qm53")
+number_of_projectiles = 5
+travel_time = 1.0
+projectile_data = ExtResource("13_k3tu0")
+spawn_interval = 1.5
+active = false
+metadata/_custom_type_script = "uid://bonurqbakdykh"
+
+[node name="Path2D" type="Path2D" parent="Spawners/PatternProjectileSpawner"]
+position = Vector2(0, -37)
+curve = SubResource("Curve2D_tv2n2")
+
+[node name="CircleProjectileSpawner" type="Node2D" parent="Spawners"]
+script = ExtResource("16_xvc4h")
+number_of_projectile = 15
+rotate_pattern = true
+rotate_speed = 10.0
+projectile_data = ExtResource("15_rcygr")
+spawn_interval = 0.1
+active = false
+metadata/_custom_type_script = "uid://duxclkhsalect"
+
+[node name="ProjectileSpawner" type="Node2D" parent="Spawners"]
+position = Vector2(-38, 39)
+script = ExtResource("14_frdsb")
+type = 1
+projectile_data = ExtResource("17_oknix")
+projectile_direction = Vector2(0, 1)
+spawn_interval = 4.0
+active = false
+metadata/_custom_type_script = "uid://ch7r1mf7ar7uc"
+
+[node name="ProjectileSpawner2" type="Node2D" parent="Spawners"]
+position = Vector2(38, 39)
+script = ExtResource("14_frdsb")
+type = 1
+projectile_data = ExtResource("17_oknix")
+projectile_direction = Vector2(0, 1)
+spawn_interval = 4.0
+active = false
+metadata/_custom_type_script = "uid://ch7r1mf7ar7uc"
+
+[node name="LaserEmitter" type="Node2D" parent="Spawners"]
+position = Vector2(0, 66)
+script = ExtResource("11_tv2n2")
+laser_stats = SubResource("Resource_frdsb")
+metadata/_custom_type_script = "uid://dbd157q18m2w2"
+
+[node name="WarningLine" type="Line2D" parent="Spawners/LaserEmitter"]
+visible = false
+points = PackedVector2Array(0, 0, 0, 320)
+width = 2.0
+default_color = Color(1, 0, 0, 1)
+begin_cap_mode = 2
+
+[node name="BossPhaseManager" type="Node" parent="." node_paths=PackedStringArray("health_component", "state_machine")]
+script = ExtResource("22_oafah")
+health_component = NodePath("../Components/HealthComponent")
+state_machine = NodePath("../StateMachine")
+phase_datas = Array[ExtResource("23_klcld")]([ExtResource("24_klcld"), ExtResource("25_cp7bw"), ExtResource("26_j3h1l")])
+metadata/_custom_type_script = "uid://bh83jb3700sfs"
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("actor", "starting_state")]
+script = ExtResource("18_jb3gi")
+actor = NodePath("..")
+starting_state = NodePath("EnemyEntranceState")
+metadata/_custom_type_script = "uid://dg0til6w02wfe"
+
+[node name="EnemyEntranceState" type="Node" parent="StateMachine" node_paths=PackedStringArray("hurtbox_component", "next_state")]
+script = ExtResource("21_0oyj3")
+hurtbox_component = NodePath("../../Components/HurtboxComponent")
+next_state = NodePath("../Idle")
+metadata/_custom_type_script = "uid://cx14oxr84efy0"
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("26_ium81")
+idle_time = 0.5
+metadata/_custom_type_script = "uid://wq47ysxbciuv"
+
+[node name="Die" type="Node" parent="StateMachine" node_paths=PackedStringArray("component_container", "proj_spawner_container")]
+script = ExtResource("23_k3tu0")
+component_container = NodePath("../../Components")
+proj_spawner_container = NodePath("../../Spawners")
+metadata/_custom_type_script = "uid://btifskqmt4ya"
+
+[node name="CircleShoot" type="Node" parent="StateMachine"]
+script = ExtResource("20_co413")
+duration = 8.0
+burst_delay = 1.5
+metadata/_custom_type_script = "uid://cd033sfu46rh5"
+
+[node name="MissileShoot" type="Node" parent="StateMachine"]
+script = ExtResource("20_ks51w")
+duration = 5.0
+metadata/_custom_type_script = "uid://cd033sfu46rh5"
+
+[node name="BulletHellLaser" type="Node" parent="StateMachine"]
+script = ExtResource("22_mmg25")
+metadata/_custom_type_script = "uid://cd033sfu46rh5"
+
+[node name="ChaseLaser" type="Node" parent="StateMachine"]
+script = ExtResource("23_ald4w")
+number_of_shot = 6
+laser_stats = SubResource("Resource_ium81")
+metadata/_custom_type_script = "uid://cd033sfu46rh5"
+
+[node name="SweepLaser" type="Node" parent="StateMachine"]
+script = ExtResource("25_kg4pj")
+metadata/_custom_type_script = "uid://cd033sfu46rh5"
+
+[connection signal="hurt" from="Components/HurtboxComponent" to="Components/GunHitFlashComponent2" method="flash_no_args"]
+[connection signal="health_reached_zero" from="Components/HealthComponent" to="." method="_on_health_component_health_reached_zero"]

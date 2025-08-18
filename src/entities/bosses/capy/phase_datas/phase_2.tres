@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BossPhaseData" load_steps=2 format=3 uid="uid://d2qb6vwah7myn"]
+
+[ext_resource type="Script" uid="uid://dd4yinx6w8in" path="res://src/entities/bosses/boss_phase_data.gd" id="1_xwbpi"]
+
+[resource]
+script = ExtResource("1_xwbpi")
+health_percentage = 80.0
+states = Array[NodePath]([NodePath("../StateMachine/BulletHellLaser"), NodePath("../StateMachine/MissileShoot")])
+first_state = NodePath("../StateMachine/BulletHellLaser")
+metadata/_custom_type_script = "uid://dd4yinx6w8in"

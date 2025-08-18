@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmwuthyuie2ue"]
+
+[ext_resource type="Script" uid="uid://cnb828qquxat" path="res://src/commons/lasers/laser.gd" id="1_lrgxb"]
+
+[node name="Laser" type="Line2D"]
+joint_mode = 1
+begin_cap_mode = 2
+script = ExtResource("1_lrgxb")
+metadata/_custom_type_script = "uid://cnb828qquxat"

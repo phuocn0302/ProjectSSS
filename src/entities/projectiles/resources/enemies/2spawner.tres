@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="SpawnerProjectileData" load_steps=7 format=3 uid="uid://g5qufoff42o7"]
+
+[ext_resource type="PackedScene" uid="uid://bt10he0p0pvkk" path="res://src/particles/projectile_hit_particles.tscn" id="1_37i1x"]
+[ext_resource type="PackedScene" uid="uid://rj3hxypveqt8" path="res://src/particles/projectile_particles.tscn" id="2_ysksb"]
+[ext_resource type="Resource" uid="uid://btj1wpnlgy41t" path="res://src/entities/projectiles/resources/enemies/bullet.tres" id="3_3u1ub"]
+[ext_resource type="Script" uid="uid://7s38680k8fa5" path="res://src/entities/projectiles/types/spawner_projectile_data.gd" id="4_anm4f"]
+[ext_resource type="Texture2D" uid="uid://f3wgaxd603wp" path="res://assets/texture/projectiles/npc/round_bullet.png" id="5_uu5ac"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_krqmc"]
+radius = 2.0
+
+[resource]
+script = ExtResource("4_anm4f")
+spawn_type = 0
+projectile_to_spawn = ExtResource("3_3u1ub")
+spawn_direction = Vector2(1, 0)
+number_to_spawn = 2.0
+spawn_interval = 0.3
+rotate_pattern = false
+rotate_speed = 20.0
+texture = ExtResource("5_uu5ac")
+texture_rotate_with_dir = false
+collision_shape = SubResource("CircleShape2D_krqmc")
+shape_offset = Vector2(0, 0)
+collision_mask = 1
+speed = 70.0
+damage = 1.0
+life_time = 5.0
+vfx_color = Color(1, 0, 0, 1)
+on_hit_vfx = ExtResource("1_37i1x")
+use_particles = true
+particles = ExtResource("2_ysksb")
+metadata/_custom_type_script = "uid://7s38680k8fa5"
