@@ -27,6 +27,20 @@ godot {
     // NOTE: Make sure you read: https://godot-kotl.in/en/stable/user-guide/exporting/#android as not all jvm libraries are compatible with android!
     // IMPORTANT: Android export should to be considered from the start of development!
     isAndroidExportEnabled.set(true)
+
+    androidCompileSdkDir.set(
+        File("${System.getenv("ANDROID_SDK_ROOT")}/platforms/android-36")
+    )
+
+    d8ToolPath.set(
+        layout.file(
+            providers.provider {
+                File("${System.getenv("ANDROID_SDK_ROOT")}/build-tools/36.0.0/d8")
+            }
+        )
+    )
+
+    androidMinApi.set(22)
 }
 
 kotlin.sourceSets.main {
