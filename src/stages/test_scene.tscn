@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvk5r1s5euot6"]
+
+[ext_resource type="PackedScene" uid="uid://oalne3evw244" path="res://src/entities/player/player.tscn" id="1_wmpie"]
+[ext_resource type="PackedScene" uid="uid://bqvomxuvx0srd" path="res://src/entities/bosses/capy/capy_boss.tscn" id="2_15tlm"]
+
+[node name="TestScene" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_wmpie")]
+position = Vector2(145, 275)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="CapyBoss" parent="." instance=ExtResource("2_15tlm")]
+position = Vector2(82, 121)
