@@ -22,6 +22,8 @@ godot {
     // defines whether the script registration files should be generated hierarchically according to the classes package path or flattened into `registrationFileBaseDir`
     isRegistrationFileHierarchyEnabled.set(true)
 
+    // Add godot coroutine
+    isGodotCoroutinesEnabled.set(true)
     // ---------Android----------------
 
     // NOTE: Make sure you read: https://godot-kotl.in/en/stable/user-guide/exporting/#android as not all jvm libraries are compatible with android!
