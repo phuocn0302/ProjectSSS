@@ -3,14 +3,8 @@ package commons.components.etc
 
 import commons.components.Component
 import entities.Entity
-import godot.annotation.Export
-import godot.api.Node
-import godot.annotation.RegisterClass
-import godot.annotation.RegisterProperty
-import godot.annotation.RegisterSignal
-import godot.annotation.RegisterFunction
+import godot.annotation.*
 import godot.api.Node2D
-
 import godot.api.PackedScene
 import godot.core.signal0
 import godot.core.signal1
@@ -19,10 +13,10 @@ import godot.global.GD
 @RegisterClass
 class HealthComponent : Component() {
 
-    @RegisterSignal()
+    @RegisterSignal
     val healthDepleted by signal1<Double>()
 
-    @RegisterSignal()
+    @RegisterSignal
     val healthRestored by signal1<Double>()
 
     @RegisterSignal
@@ -74,12 +68,12 @@ class HealthComponent : Component() {
     fun die() {
         dieSfx?.let { sfxScene ->
             val sfx = sfxScene.instantiate() as Node2D
-            sfx.globalPosition = (owner as Entity).globalPosition
+            sfx.globalPosition = (entity as Entity).globalPosition
             getTree()?.currentScene?.addChild(sfx)
         }
 
         if (queueFreeOnDie) {
-            owner?.queueFree()
+            entity?.queueFree()
         }
     }
 }
