@@ -19,12 +19,6 @@ class HitboxComponent : ComponentArea2D() {
     var damage: Double = 1.0
 
     @RegisterProperty
-    var queueFreeOnContact: Boolean = false
-
-    @RegisterProperty
-    var queueFreeSfx: PackedScene? = null
-
-    @RegisterProperty
     var onHitSfx: PackedScene? = null
 
     @RegisterSignal
@@ -42,23 +36,11 @@ class HitboxComponent : ComponentArea2D() {
             area.takeDamage(damage)
             hit.emit()
 
-            val owner2D = owner as? Entity
-
             // On hit SFX
             onHitSfx?.let { sfxScene ->
                 val sfx = sfxScene.instantiate() as? Area2D ?: return@let
-                sfx.globalPosition = owner2D?.globalPosition ?: Vector2.ZERO
+                sfx.globalPosition = this.globalPosition
                 getTree()?.currentScene?.addChild(sfx)
-            }
-
-            // Queue-free on contact
-            if (queueFreeOnContact) {
-                queueFreeSfx?.let { sfxScene ->
-                    val sfx = sfxScene.instantiate() as? Area2D ?: return@let
-                    sfx.globalPosition = owner2D?.globalPosition ?: Vector2.ZERO
-                    getTree()?.currentScene?.addChild(sfx)
-                }
-                owner2D?.queueFree()
             }
         }
     }

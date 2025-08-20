@@ -45,7 +45,6 @@ class HealthComponent : Component() {
 
     @RegisterFunction
     override fun _ready() {
-        super._ready()
         currentHealth = maxHealth
     }
 
