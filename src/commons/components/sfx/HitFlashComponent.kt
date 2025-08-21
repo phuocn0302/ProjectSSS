@@ -5,15 +5,14 @@ import commons.components.etc.HealthComponent
 import commons.singletons.Utils
 import godot.annotation.Export
 import godot.annotation.RegisterClass
-import godot.annotation.RegisterProperty
 import godot.annotation.RegisterFunction
+import godot.annotation.RegisterProperty
 import godot.api.AnimatedSprite2D
 import godot.api.Node2D
-import godot.api.ShaderMaterial
+import godot.api.SceneTreeTimer
 import godot.api.Sprite2D
 import godot.core.connect
-import godot.coroutines.await
-import godot.coroutines.godotCoroutine
+
 
 @RegisterClass
 class HitFlashComponent : Component() {
@@ -32,8 +31,6 @@ class HitFlashComponent : Component() {
 
     @RegisterFunction
     override fun _ready() {
-        super._ready()
-
         require(sprite != null) { "Sprite must not be null" }
         require(sprite is Sprite2D || sprite is AnimatedSprite2D) { "Sprite must be Sprite2D or AnimatedSprite2D" }
 
@@ -48,15 +45,12 @@ class HitFlashComponent : Component() {
     }
 
     @RegisterFunction
-    fun flash() = godotCoroutine {
-        val mat = sprite?.material ?: return@godotCoroutine
+    fun flash() {
+        val mat = sprite?.material ?: return
         mat.set("shader_parameter/flash_strength", 0.5)
 
-
         val timer = Utils.createTimer(this@HitFlashComponent, flashTime)
-        timer?.timeout?.await()
-
-        mat.set("shader_parameter/flash_strength", 0.0)
+        timer?.timeout?.connect(this, HitFlashComponent::resetFlash)
     }
 
     @RegisterFunction
