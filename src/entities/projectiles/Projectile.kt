@@ -24,6 +24,7 @@ import godot.core.Transform2D
 import godot.core.VariantArray
 import godot.core.Vector2
 import godot.global.GD
+import particles.CPUProjectileParticles
 
 
 @RegisterClass
@@ -140,15 +141,14 @@ open class Projectile : PoolableEntity() {
         val data = projectileData ?: return
         if (data.particles == null) return
 
-//        if (particlesNode == null || !GD.isInstanceValid(particlesNode!!)) {
-//            particlesNode = getNodeOrNull("Particles") as? CPUParticles2D
-//            if (particlesNode == null) {
-//                particlesNode = data.particles!!.instantiate() as ProjectileParticles
-//                particlesNode!!.setName("Particles")
-//                (particlesNode as ProjectileParticles).projectile = this
-//                addChild(particlesNode!!)
-//            }
-//        }
+        if (particlesNode == null || !GD.isInstanceValid(particlesNode!!)) {
+            particlesNode = getNodeOrNull("Particles") as? CPUParticles2D
+            if (particlesNode == null) {
+                particlesNode = data.particles!!.instantiate() as CPUProjectileParticles
+                particlesNode!!.setName("Particles")
+                addChild(particlesNode!!)
+            }
+        }
 
         particlesNode?.modulate = data.vfxColor
     }
