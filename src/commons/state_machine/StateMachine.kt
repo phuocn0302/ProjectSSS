@@ -7,6 +7,8 @@ import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
 import godot.api.InputEvent
 import godot.api.Node
+import godot.core.Dictionary
+import godot.core.dictionaryOf
 
 @RegisterClass
 class StateMachine : Node() {
@@ -25,7 +27,7 @@ class StateMachine : Node() {
 
     @Export
     @RegisterProperty
-    var states: MutableMap<String, State> = mutableMapOf()
+    var states: Dictionary<String, State> = dictionaryOf()
 
     var nextStateRequested: State? = null
     var currentState: State? = null

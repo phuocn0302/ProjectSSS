@@ -13,7 +13,7 @@ abstract class State : Node() {
     lateinit var actor: Entity
 
     @RegisterFunction
-    fun setup(actor: Entity, stateMachine: StateMachine) {
+    open fun setup(actor: Entity, stateMachine: StateMachine) {
         this.actor = actor
         this.stateMachine = stateMachine
     }

@@ -23,7 +23,6 @@ class MovementBoundsComponent : Component() {
 
     @RegisterFunction
     override fun _ready() {
-        super._ready()
         require(entity != null)
     }
 
