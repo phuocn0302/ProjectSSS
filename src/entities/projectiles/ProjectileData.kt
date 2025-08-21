@@ -9,7 +9,7 @@ import godot.core.Vector2
 import godot.global.GD.load
 
 @RegisterClass
-class ProjectileData : Resource() {
+open class ProjectileData : Resource() {
 
     companion object {
         val PROJECTILE_HIT_PARTICLES = load<PackedScene>("res://src/particles/projectile_hit_particles.tscn")

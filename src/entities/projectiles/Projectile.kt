@@ -94,7 +94,7 @@ open class Projectile : PoolableEntity() {
         }
     }
 
-    private fun move(delta: Double) {
+    open fun move(delta: Double) {
         val data = projectileData ?: return
         globalRotation = direction.angle().toFloat()
         globalPosition += direction.normalized() * data.speed * delta
@@ -207,7 +207,7 @@ open class Projectile : PoolableEntity() {
 
     private fun onCollision(hits: VariantArray<Dictionary<Any?, Any?>>) {
         for (hit in hits) {
-            val collider = (hit as Dictionary<*, *>)["collider"]
+            val collider = hit["collider"]
             if (collider is HurtboxComponent) {
                 if (!collider.active) continue
                 collider.takeDamage(projectileData!!.damage)
