@@ -1,14 +1,15 @@
 package commons.components.movements
 
 import commons.components.Component
-import entities.Entity
 import godot.annotation.Export
 import godot.annotation.RegisterClass
-import godot.annotation.RegisterProperty
 import godot.annotation.RegisterFunction
+import godot.annotation.RegisterProperty
 import godot.core.Vector2
 import godot.global.GD
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 
 
 @RegisterClass
@@ -46,9 +47,7 @@ class IdleMoveComponent : Component() {
 
     @RegisterFunction
     override fun _ready() {
-        super._ready()
-
-        require(entity != null)
+        GD.assert(entity != null)
 
         direction = direction.normalized()
     }
@@ -71,7 +70,7 @@ class IdleMoveComponent : Component() {
         )
         val rotatedOffset = localOffset.rotated(direction.angle())
         val deltaOffset = rotatedOffset - prevOffset
-        entity?.globalPosition += deltaOffset
+        entity!!.globalPosition += deltaOffset
         prevOffset = rotatedOffset
     }
 
@@ -83,14 +82,14 @@ class IdleMoveComponent : Component() {
         )
         val rotatedOffset = localOffset.rotated(direction.angle())
         val deltaOffset = rotatedOffset - prevOffset
-        entity?.globalPosition +=  deltaOffset
+        entity!!.globalPosition += deltaOffset
         prevOffset = rotatedOffset
     }
 
     private fun oscillateMove() {
         val localOffset = direction * (oscRange * sin(t * oscSpeed))
         val deltaOffset = localOffset - prevOffset
-        entity?.globalPosition +=  deltaOffset
+        entity!!.globalPosition +=  deltaOffset
         prevOffset = localOffset
     }
 }

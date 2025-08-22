@@ -1,13 +1,12 @@
 package commons.components.movements
 
 import commons.components.Component
-import entities.Entity
 import godot.annotation.Export
 import godot.annotation.RegisterClass
-import godot.annotation.RegisterProperty
 import godot.annotation.RegisterFunction
-import godot.api.Node2D
+import godot.annotation.RegisterProperty
 import godot.core.Vector2
+import godot.global.GD
 import kotlin.math.sin
 
 @RegisterClass
@@ -38,9 +37,7 @@ class MoveComponent : Component() {
 
     @RegisterFunction
     override fun _ready() {
-        super._ready()
-
-        require(entity != null)
+        GD.assert(entity != null)
 
         startingPos = entity!!.globalPosition
         direction = direction.normalized()
@@ -55,7 +52,7 @@ class MoveComponent : Component() {
     }
 
     private fun straightMove(delta: Double) {
-        entity?.globalPosition += direction * speed * delta
+        entity!!.globalPosition += direction * speed * delta
     }
 
     private fun sinewaveMove(delta: Double) {
@@ -63,6 +60,6 @@ class MoveComponent : Component() {
         startingPos += direction * speed * delta
         val perp = Vector2(-direction.y, direction.x)
         val sineOffset = perp * (sin(sineT * sineFreq) * sineAmp)
-        entity?.globalPosition = startingPos + sineOffset
+        entity!!.globalPosition = startingPos + sineOffset
     }
 }

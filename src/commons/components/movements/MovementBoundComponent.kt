@@ -23,17 +23,16 @@ class MovementBoundsComponent : Component() {
 
     @RegisterFunction
     override fun _ready() {
-        require(entity != null)
+        GD.assert(entity != null)
     }
 
     @RegisterFunction
     override fun _physicsProcess(delta: Double) {
-        val entity = owner as Entity
-        val pos = entity.globalPosition
+        val pos = entity!!.globalPosition
 
         val clampedX = GD.clamp(pos.x, bounds[0].x, bounds[1].x)
         val clampedY = GD.clamp(pos.y, bounds[0].y, bounds[1].y)
 
-        entity.globalPosition = Vector2(clampedX, clampedY)
+        entity!!.globalPosition = Vector2(clampedX, clampedY)
     }
 }
