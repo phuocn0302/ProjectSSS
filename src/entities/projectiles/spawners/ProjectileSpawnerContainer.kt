@@ -7,22 +7,22 @@ import godot.core.variantArrayOf
 
 class ProjectileSpawnerContainer : Node2D() {
 
-    fun getSpawnersList() : VariantArray<ProjectileSpawner>? {
-        val arr = variantArrayOf<ProjectileSpawner>()
+	fun getSpawnersList() : VariantArray<ProjectileSpawner>? {
+		val arr = variantArrayOf<ProjectileSpawner>()
 
-        for (s in getChildren().filterIsInstance<ProjectileSpawner>()) {
-            arr.append(s)
-        }
+		for (s in getChildren().filterIsInstance<ProjectileSpawner>()) {
+			arr.append(s)
+		}
 
-        return arr
-    }
+		return arr
+	}
 
-    fun disableAllSpawner() {
-        val spawners = getSpawnersList()
-        spawners?.let {
-           for (s in spawners) {
-               s.active = false
-           }
-        }
-    }
+	fun disableAllSpawner() {
+		val spawners = getSpawnersList()
+		spawners?.let {
+		   for (s in spawners) {
+			   s.active = false
+		   }
+		}
+	}
 }
