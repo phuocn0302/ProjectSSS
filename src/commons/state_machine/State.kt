@@ -7,7 +7,7 @@ import godot.api.InputEvent
 import godot.api.Node
 
 @RegisterClass
-abstract class State : Node() {
+open class State : Node() {
 
     lateinit var stateMachine: StateMachine
     lateinit var actor: Entity
