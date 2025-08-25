@@ -18,7 +18,7 @@ class IFrameComponent : Component() {
 	@RegisterProperty
 	var hurtboxComponent: HurtboxComponent? = null
 
-    @Export
+	@Export
 	@RegisterProperty
 	var iframeDuration: Double = 0.3
 
