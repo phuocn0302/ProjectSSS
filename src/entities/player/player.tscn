@@ -185,6 +185,7 @@ entity = NodePath("../..")
 
 [node name="FrameFreezeComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
 script = ExtResource("13_j3ovn")
+freeze_duration = 0.1
 entity = NodePath("../..")
 
 [node name="GhostTrailingComponent" type="Node" parent="Components" node_paths=PackedStringArray("anim_sprite", "entity")]
@@ -241,7 +242,7 @@ spawner_data = SubResource("Resource_5qgjf")
 projectile_data = ExtResource("18_b2kln")
 active = false
 
-[connection signal="health_depleted" from="Components/HealthComponent" to="Components/FrameFreezeComponent" method="freeze"]
+[connection signal="hurt" from="Components/HurtboxComponent" to="Components/FrameFreezeComponent" method="freeze"]
 [connection signal="hurt" from="Components/HurtboxComponent" to="Components/ScreenShakeComponent" method="shake"]
 [connection signal="on_shoot_requested" from="InputHandler" to="ProjectileSpawner" method="spawn"]
 [connection signal="timeout" from="InputHandler/ShootCooldown" to="InputHandler" method="_on_shoot_cooldown_timeout"]

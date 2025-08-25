@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BossPhaseData" load_steps=2 format=3 uid="uid://bmfjhtsaywf8c"]
 
-[ext_resource type="Script" uid="uid://dd4yinx6w8in" path="res://src/entities/bosses/boss_phase_data.gd" id="1_hxnkc"]
+[ext_resource type="Script" uid="uid://cp0grn80x2ftm" path="res://src/entities/bosses/BossPhaseData.kt" id="1_hxnkc"]
 
 [resource]
 script = ExtResource("1_hxnkc")

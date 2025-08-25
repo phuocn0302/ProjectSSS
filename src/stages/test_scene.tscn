@@ -1,15 +1,39 @@
-[gd_scene load_steps=3 format=3 uid="uid://bvk5r1s5euot6"]
+[gd_scene load_steps=8 format=3 uid="uid://bvk5r1s5euot6"]
 
-[ext_resource type="PackedScene" uid="uid://oalne3evw244" path="res://src/entities/player/player.tscn" id="1_wmpie"]
-[ext_resource type="PackedScene" uid="uid://bqvomxuvx0srd" path="res://src/entities/bosses/capy/capy_boss.tscn" id="2_15tlm"]
+[ext_resource type="PackedScene" uid="uid://oalne3evw244" path="res://src/entities/player/player.tscn" id="1_qbl1b"]
+[ext_resource type="Script" uid="uid://v1fag0bbj8rh" path="res://gdj/entities/projectiles/ProjectileSpawner.gdj" id="2_xghp1"]
+[ext_resource type="Script" uid="uid://djtx5g7eebda4" path="res://gdj/entities/projectiles/spawners/CircleProjectileSpawnerData.gdj" id="3_crl01"]
+[ext_resource type="Resource" uid="uid://d2ebh38iei3wr" path="res://src/entities/projectiles/resources/player/base.tres" id="4_el7qm"]
+[ext_resource type="PackedScene" uid="uid://ckjlvrurfq6x2" path="res://src/entities/bosses/godot/godot_boss.tscn" id="5_crl01"]
+[ext_resource type="PackedScene" uid="uid://7fx33mvlv67i" path="res://src/entities/enemies/godot_enemy/godot_enemy.tscn" id="6_el7qm"]
+
+[sub_resource type="Resource" id="Resource_6krom"]
+script = ExtResource("3_crl01")
+number_of_projectiles = 10
+rotate_pattern = false
+rotate_speed = 20.0
+spawn_direction = Vector2(0, -1)
+spawn_interval = 0.5
+metadata/_custom_type_script = "uid://djtx5g7eebda4"
 
 [node name="TestScene" type="Node2D"]
-
-[node name="Player" parent="." instance=ExtResource("1_wmpie")]
-position = Vector2(145, 275)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 
-[node name="CapyBoss" parent="." instance=ExtResource("2_15tlm")]
-position = Vector2(82, 121)
+[node name="Player" parent="." instance=ExtResource("1_qbl1b")]
+position = Vector2(92, 242)
+
+[node name="ProjectileSpawner" type="Node2D" parent="."]
+position = Vector2(53, 52)
+script = ExtResource("2_xghp1")
+spawner_data = SubResource("Resource_6krom")
+projectile_data = ExtResource("4_el7qm")
+active = false
+metadata/_custom_type_script = "uid://v1fag0bbj8rh"
+
+[node name="GodotBoss" parent="." instance=ExtResource("5_crl01")]
+position = Vector2(57, -5)
+
+[node name="GodotEnemy" parent="." instance=ExtResource("6_el7qm")]
+position = Vector2(93, 149)

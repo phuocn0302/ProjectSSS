@@ -21,7 +21,6 @@ boot_splash/minimum_display_time=100
 [autoload]
 
 PauseManger="*res://src/commons/singletons/pause_manager.gd"
-Utils="*res://src/commons/singletons/utils.gd"
 
 [display]
 

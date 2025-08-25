@@ -1,0 +1,39 @@
+// THIS FILE IS GENERATED! DO NOT EDIT OR DELETE IT. EDIT OR DELETE THE ASSOCIATED SOURCE CODE FILE INSTEAD
+// Note: You can however freely move this file inside your godot project if you want. Keep in mind however, that if you rename the originating source code file, this file will be deleted and regenerated as a new file instead of being updated! Other modifications to the source file however, will result in this file being updated.
+
+registeredName = GodotBossDoublePunchAttackState
+fqName = entities.bosses.godot.states.GodotBossDoublePunchAttackState
+relativeSourcePath = src/entities/bosses/godot/states/DoublePunchAttack.kt
+baseType = Node
+supertypes = [
+    entities.bosses.godot.GodotBossState,
+	commons.state_machine.State,
+	godot.api.Node,
+	godot.api.Object,
+	godot.core.KtObject,
+	godot.common.interop.NativeWrapper,
+	godot.common.interop.NativePointer,
+	kotlin.Any
+]
+signals = [
+    
+]
+properties = [
+    follow_speed,
+	player_offset,
+	attack_delay,
+	punch_prepare_time,
+	punch_time,
+	arm_return_time,
+	punch_distance,
+	wind_up_offset
+]
+functions = [
+    enter,
+	exit,
+	process_frame,
+	attack,
+	setup,
+	process_physics,
+	process_input
+]
