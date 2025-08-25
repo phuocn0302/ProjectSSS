@@ -9,9 +9,6 @@ import godot.core.signal0
 @RegisterClass
 class GodotEnemy : Enemy() {
 
-    @RegisterSignal
-    val onDefeated by signal0()
-
     @RegisterFunction
     override fun _exitTree() {
         onDefeated.emit()
