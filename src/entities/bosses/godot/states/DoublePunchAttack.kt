@@ -8,9 +8,7 @@ import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
 import godot.api.SceneTreeTimer
 import godot.api.Tween
-import godot.core.Callable
 import godot.core.Vector2
-import godot.core.toGodotName
 import godot.coroutines.GodotDispatchers
 import godot.coroutines.await
 import godot.coroutines.godotCoroutine
@@ -33,7 +31,7 @@ class GodotBossDoublePunchAttackState : GodotBossState() {
 
     @Export
     @RegisterProperty
-    var punchPrepareTime: Double = 0.4
+    var windupTime: Double = 0.4
 
     @Export
     @RegisterProperty
@@ -88,21 +86,32 @@ class GodotBossDoublePunchAttackState : GodotBossState() {
 
     @RegisterFunction
     fun attack() = godotCoroutine(context = GodotDispatchers.MainThread) {
+        boss.leftArm.ghostTrailingComponent.active = true
+
         rotateRightArm()
-        rightTween?.finished?.await()
 
         windUpLeft()
         windUpRight()
-        rightTween?.finished?.await()
+
+        leftTween?.finished?.await()
 
         punchLeft()
         punchRight()
-        rightTween?.finished?.await()
+        leftTween?.finished?.await()
+
+        boss.leftArm.explode()
+        boss.rightArm.explode()
+
+        Utils.createTimer(this@GodotBossDoublePunchAttackState, 0.5)
+            ?.timeout
+            ?.await()
 
         goBackLeft()
         goBackRight()
-        rightTween?.finished?.await()
 
+        leftTween?.finished?.await()
+
+        boss.leftArm.ghostTrailingComponent.active = false
         stateMachine.changeState(states["ShootAtPlayer2"])
     }
 
@@ -134,41 +143,43 @@ class GodotBossDoublePunchAttackState : GodotBossState() {
         if (rightArmAttackPosIndex == 0) {
             boss.rightArm.scale = Vector2(1.0, -1.0)
         }
-        tween?.tweenProperty(boss.rightArm, "rotation", -Math.PI / 2, punchPrepareTime)
+        tween?.tweenProperty(boss.rightArm, "rotation", -Math.PI / 2, windupTime)
     }
 
     private fun windUpLeft() {
-        val preparePos = boss.leftArm.position + Vector2.UP * 30.0
-        boss.leftArm.ghostTrailingComponent.active = true
+        val windupPos = boss.leftArm.position + Vector2.UP * 30.0
+
         leftTween = createTween()
         leftTween?.setTrans(Tween.TransitionType.QUAD)?.setEase(Tween.EaseType.OUT)
-        leftTween?.tweenProperty(boss.leftArm, "position", preparePos, punchPrepareTime)
+
+        leftTween?.tweenProperty(boss.leftArm, "position", windupPos, windupTime)
     }
 
     private fun punchLeft() {
         val punchPos = boss.leftArm.position + Vector2.DOWN * punchDistance
         leftTween = createTween()
         leftTween?.setTrans(Tween.TransitionType.BACK)?.setEase(Tween.EaseType.IN)
+
         leftTween?.tweenProperty(boss.leftArm, "position", punchPos, punchTime)
-        leftTween?.tweenCallback(Callable(boss.leftArm, "explode".toGodotName()).bind(boss.leftArm.globalPosition))
     }
 
     private fun goBackLeft() {
         leftTween = createTween()
         leftTween?.tweenProperty(boss.leftArm, "global_position", boss.leftArmOrgPos.globalPosition, armReturnTime)
-        boss.leftArm.ghostTrailingComponent.active = false
     }
 
     private fun windUpRight() {
-        var prepareOffset = Vector2.RIGHT * windUpOffset
+        var offset = Vector2.RIGHT * windUpOffset
         if (rightArmAttackPosIndex == 1) {
-            prepareOffset = Vector2.LEFT * windUpOffset
+            offset = Vector2.LEFT * windUpOffset
         }
-        val preparePos = boss.rightArm.position + prepareOffset
-        boss.rightArm.ghostTrailingComponent.active = true
+
+        val windupOffset = boss.rightArm.position + offset
+
         rightTween = createTween()
         rightTween?.setTrans(Tween.TransitionType.QUAD)?.setEase(Tween.EaseType.OUT)
-        rightTween?.tweenProperty(boss.rightArm, "position", preparePos, punchPrepareTime)
+
+        rightTween?.tweenProperty(boss.rightArm, "position", windupOffset, windupTime)
     }
 
     private fun punchRight() {
@@ -176,16 +187,16 @@ class GodotBossDoublePunchAttackState : GodotBossState() {
         if (rightArmAttackPosIndex == 1) {
             punchOffset = Vector2.RIGHT * punchDistance
         }
+
         val punchPos = boss.rightArm.position + punchOffset
+
         rightTween = createTween()
         rightTween?.setTrans(Tween.TransitionType.BACK)?.setEase(Tween.EaseType.IN)
         rightTween?.tweenProperty(boss.rightArm, "position", punchPos, punchTime)
-        rightTween?.tweenCallback(Callable(boss.rightArm, "explode".toGodotName()).bind(boss.rightArm.globalPosition))
     }
 
     private fun goBackRight() {
         rightTween = createTween()
         rightTween?.tweenProperty(boss.rightArm, "global_position", boss.rightArmOrgPos.globalPosition, armReturnTime)
-        boss.rightArm.ghostTrailingComponent.active = false
     }
 }
