@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="ProjectileData" load_steps=11 format=3 uid="uid://4dpmvua60dgk"]
+[gd_resource type="Resource" load_steps=11 format=3 uid="uid://4dpmvua60dgk"]
 
 [ext_resource type="PackedScene" uid="uid://bt10he0p0pvkk" path="res://src/particles/projectile_hit_particles.tscn" id="1_e7aue"]
 [ext_resource type="PackedScene" uid="uid://rj3hxypveqt8" path="res://src/particles/projectile_particles.tscn" id="2_dkepm"]
-[ext_resource type="Script" uid="uid://bpmqwg4oj70ye" path="res://src/entities/projectiles/projectile_data.gd" id="3_7r2hl"]
+[ext_resource type="Script" uid="uid://dc18j24tvuowy" path="res://src/entities/projectiles/ProjectileData.kt" id="3_7r2hl"]
 [ext_resource type="Texture2D" uid="uid://bhdhav10bcbod" path="res://assets/texture/projectiles/npc/tri_sheet.png" id="4_hfbxe"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3bekc"]
@@ -58,4 +58,3 @@ vfx_color = Color(1, 0, 0, 1)
 on_hit_vfx = ExtResource("1_e7aue")
 use_particles = true
 particles = ExtResource("2_dkepm")
-metadata/_custom_type_script = "uid://bpmqwg4oj70ye"

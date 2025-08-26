@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=4 format=3 uid="uid://g87vwu1wy0vw"]
+
+[ext_resource type="Script" uid="uid://bm7im4vdq70il" path="res://gdj/entities/projectiles/ProjectileData.gdj" id="1_qokbm"]
+[ext_resource type="Texture2D" uid="uid://75yn8mqxcoke" path="res://assets/texture/projectiles/npc/diamond.png" id="2_706qm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f01f7"]
+radius = 3.0
+
+[resource]
+script = ExtResource("1_qokbm")
+texture = ExtResource("2_706qm")
+texture_rotate_with_dir = false
+collision_shape = SubResource("CircleShape2D_f01f7")
+shape_offset = Vector2(0, 0)
+collision_mask = 1
+speed = 200.0
+damage = 1.0
+life_time = 5.0
+vfx_color = Color(1, 0, 0, 1)
+use_particles = true
+metadata/_custom_type_script = "uid://bm7im4vdq70il"

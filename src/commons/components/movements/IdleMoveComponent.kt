@@ -50,6 +50,7 @@ class IdleMoveComponent : Component() {
         GD.assert(entity != null)
 
         direction = direction.normalized()
+        active = active
     }
 
     @RegisterFunction

@@ -1,34 +1,40 @@
-[gd_scene load_steps=54 format=3 uid="uid://ckjlvrurfq6x2"]
+[gd_scene load_steps=58 format=3 uid="uid://ckjlvrurfq6x2"]
 
 [ext_resource type="Script" uid="uid://dkmgrknipaokq" path="res://src/entities/bosses/godot/GodotBoss.kt" id="1_m4p5g"]
 [ext_resource type="Texture2D" uid="uid://dnf8hqs1b4rrd" path="res://assets/texture/npc/bosses/boss_godot/base_sheet.png" id="2_52t2c"]
 [ext_resource type="Texture2D" uid="uid://clq7vtr5sg8yu" path="res://assets/texture/sfx/3x_white_particle.png" id="3_52t2c"]
 [ext_resource type="Script" uid="uid://b875f1tfsn74d" path="res://gdj/entities/bosses/BossData.gdj" id="3_vni31"]
-[ext_resource type="Script" uid="uid://ci3oxflv7u2sa" path="res://src/commons/components/ComponentContainer.kt" id="5_bpu3v"]
+[ext_resource type="Script" uid="uid://bvby18eo8k1pe" path="res://gdj/commons/components/ComponentContainer.gdj" id="6_7mrnl"]
 [ext_resource type="PackedScene" uid="uid://dptehxrxtfpx3" path="res://src/entities/bosses/godot/godot_arm.tscn" id="8_ncdkc"]
 [ext_resource type="Script" uid="uid://d0gf87hveesrj" path="res://gdj/commons/components/etc/HurtboxComponent.gdj" id="8_vni31"]
 [ext_resource type="Script" uid="uid://k4bvu3ajrnp" path="res://gdj/commons/components/etc/HitboxComponent.gdj" id="9_w3lhe"]
 [ext_resource type="Script" uid="uid://dka2on5w1r0ov" path="res://gdj/commons/components/etc/HealthComponent.gdj" id="10_3bm5r"]
 [ext_resource type="Script" uid="uid://bdwpmg6b140ck" path="res://gdj/commons/components/sfx/HitFlashComponent.gdj" id="11_h1wsb"]
 [ext_resource type="Script" uid="uid://bd7jktcpbcp5e" path="res://gdj/commons/components/movements/IdleMoveComponent.gdj" id="12_8r58b"]
-[ext_resource type="Script" uid="uid://0qrihokcx62n" path="res://src/entities/projectiles/spawners/ProjectileSpawnerContainer.kt" id="12_sy6tn"]
 [ext_resource type="Script" uid="uid://bytw8l4aye7xe" path="res://src/entities/projectiles/ProjectileSpawner.kt" id="13_ayqat"]
 [ext_resource type="Script" uid="uid://u6r4u4ekrgs2" path="res://src/commons/state_machine/StateMachine.kt" id="13_fg3tp"]
 [ext_resource type="Script" uid="uid://e4nygxphqmag" path="res://gdj/commons/components/sfx/GhostTrailingComponent.gdj" id="13_ilov8"]
 [ext_resource type="Script" uid="uid://4xgu1637uok5" path="res://src/entities/bosses/godot/states/ShootAtPlayer.kt" id="14_0vgfa"]
 [ext_resource type="Script" uid="uid://7krj0ewwsxjv" path="res://gdj/commons/components/sfx/ScreenShakeComponent.gdj" id="14_7mrnl"]
+[ext_resource type="Script" uid="uid://cs3muaisgjrme" path="res://gdj/entities/projectiles/spawners/ProjectileSpawnerContainer.gdj" id="14_vni31"]
 [ext_resource type="Script" uid="uid://djtx5g7eebda4" path="res://gdj/entities/projectiles/spawners/CircleProjectileSpawnerData.gdj" id="15_vni31"]
-[ext_resource type="Resource" uid="uid://60787okqyn6a" path="res://src/entities/projectiles/resources/test_proj.tres" id="16_e8v5w"]
 [ext_resource type="Script" uid="uid://dbbwa0mc5o0p6" path="res://src/entities/bosses/godot/states/PunchAttack.kt" id="16_s0t23"]
+[ext_resource type="Resource" uid="uid://dbcbjk26q4sa8" path="res://src/entities/projectiles/resources/enemies/circle.tres" id="17_3bm5r"]
 [ext_resource type="Script" uid="uid://dgp2hqvqr2vps" path="res://src/entities/bosses/godot/states/DoublePunchAttack.kt" id="17_030pk"]
 [ext_resource type="Script" uid="uid://cnks6m2x54kaw" path="res://gdj/entities/projectiles/spawners/TargetProjectileSpawnerData.gdj" id="17_w3lhe"]
 [ext_resource type="Script" uid="uid://c3xy2vys6xpv8" path="res://src/entities/bosses/BossPhaseManager.kt" id="18_44c5p"]
 [ext_resource type="Script" uid="uid://dtceh6oeh88r6" path="res://gdj/entities/projectiles/spawners/PatternProjectileSpawnerData.gdj" id="19_3bm5r"]
+[ext_resource type="Resource" uid="uid://c8knnblqgk4x0" path="res://src/entities/projectiles/resources/enemies/bullet.tres" id="19_h1wsb"]
 [ext_resource type="Script" uid="uid://birnw4ld6bjh6" path="res://src/entities/bosses/godot/states/Phase2Transition.kt" id="19_irf51"]
 [ext_resource type="Script" uid="uid://c1fmcs4d55m2h" path="res://src/entities/enemies/common_states/EnemyEntranceState.kt" id="19_jfwlp"]
 [ext_resource type="Script" uid="uid://ct6lgw14mgxnw" path="res://src/entities/bosses/godot/states/ShootAtPlayer2.kt" id="19_xss0f"]
+[ext_resource type="Resource" uid="uid://g87vwu1wy0vw" path="res://src/entities/projectiles/resources/enemies/diamond.tres" id="21_3bm5r"]
 [ext_resource type="Script" uid="uid://dbb553efnt0bi" path="res://gdj/entities/bosses/BossPhaseData.gdj" id="21_w3lhe"]
 [ext_resource type="Script" uid="uid://cbxjhglhflsyl" path="res://src/entities/enemies/common_states/EnemyIdleState.kt" id="22_44c5p"]
+[ext_resource type="Resource" uid="uid://ccj7bkmidopfa" path="res://src/entities/bosses/godot/phase_datas/phase_1.tres" id="24_ilov8"]
+[ext_resource type="Resource" uid="uid://dybi4iibdpxn" path="res://src/entities/bosses/godot/phase_datas/phase_2.tres" id="25_7mrnl"]
+[ext_resource type="Resource" uid="uid://xvufx8fawf1f" path="res://src/entities/bosses/godot/phase_datas/phase_3.tres" id="26_etwsd"]
+[ext_resource type="Script" uid="uid://3rmgpmcl4do2" path="res://gdj/entities/bosses/godot/states/GodotBossDieState.gdj" id="35_7mrnl"]
 
 [sub_resource type="Resource" id="Resource_7mrnl"]
 script = ExtResource("3_vni31")
@@ -300,10 +306,10 @@ radius = 22.0227
 [sub_resource type="Resource" id="Resource_h1wsb"]
 script = ExtResource("15_vni31")
 number_of_projectiles = 10
-rotate_pattern = false
+rotate_pattern = true
 rotate_speed = 20.0
 spawn_direction = Vector2(0, -1)
-spawn_interval = 0.5
+spawn_interval = 1.0
 metadata/_custom_type_script = "uid://djtx5g7eebda4"
 
 [sub_resource type="Resource" id="Resource_8r58b"]
@@ -315,11 +321,11 @@ metadata/_custom_type_script = "uid://cnks6m2x54kaw"
 
 [sub_resource type="Resource" id="Resource_ilov8"]
 script = ExtResource("19_3bm5r")
-number_of_projectile = 50
+number_of_projectile = 30
 travel_time = 0.5
 pattern_node_path = NodePath("Path2D")
 spawn_direction = Vector2(0, -1)
-spawn_interval = 0.5
+spawn_interval = 2.0
 metadata/_custom_type_script = "uid://dtceh6oeh88r6"
 
 [sub_resource type="Curve2D" id="Curve2D_ayqat"]
@@ -328,26 +334,13 @@ _data = {
 }
 point_count = 19
 
-[sub_resource type="Resource" id="Resource_vni31"]
-script = ExtResource("21_w3lhe")
-health_percentage = 100.0
-states = Array[NodePath]([NodePath("../StateMachine/ShootAtPlayer1")])
-first_state = NodePath("")
-metadata/_custom_type_script = "uid://dbb553efnt0bi"
-
-[sub_resource type="Resource" id="Resource_w3lhe"]
-script = ExtResource("21_w3lhe")
-health_percentage = 90.0
-states = Array[NodePath]([NodePath("../StateMachine/PunchAttack")])
-first_state = NodePath("../StateMachine/Phase2Transition")
-metadata/_custom_type_script = "uid://dbb553efnt0bi"
-
 [node name="GodotBoss" type="Node2D"]
 script = ExtResource("1_m4p5g")
 boss_data = SubResource("Resource_7mrnl")
 metadata/_custom_type_script = "uid://ctt3brlmw3a0w"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_c2l74")
 sprite_frames = SubResource("SpriteFrames_uxonu")
 autoplay = "default"
@@ -395,7 +388,8 @@ material = SubResource("ShaderMaterial_lxydi")
 scale = Vector2(1, -1)
 
 [node name="Components" type="Node2D" parent="."]
-script = ExtResource("5_bpu3v")
+script = ExtResource("6_7mrnl")
+metadata/_custom_type_script = "uid://bvby18eo8k1pe"
 
 [node name="HurtboxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("health_component")]
 unique_name_in_owner = true
@@ -436,7 +430,12 @@ metadata/_custom_type_script = "uid://bdwpmg6b140ck"
 [node name="IdleMoveComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
 unique_name_in_owner = true
 script = ExtResource("12_8r58b")
+move_type = 1
+angular_speed = 4.0
+circle_radius = 3.0
+figure8_amplitude = 8.0
 entity = NodePath("../..")
+active = false
 metadata/_custom_type_script = "uid://bd7jktcpbcp5e"
 
 [node name="GhostTrailingComponent" type="Node" parent="Components" node_paths=PackedStringArray("anim_sprite", "entity")]
@@ -453,27 +452,28 @@ entity = NodePath("../..")
 metadata/_custom_type_script = "uid://7krj0ewwsxjv"
 
 [node name="Spawner" type="Node2D" parent="."]
-script = ExtResource("12_sy6tn")
+script = ExtResource("14_vni31")
+metadata/_custom_type_script = "uid://cs3muaisgjrme"
 
 [node name="CircleProjectileSpawner" type="Node2D" parent="Spawner"]
 unique_name_in_owner = true
 script = ExtResource("13_ayqat")
 spawner_data = SubResource("Resource_h1wsb")
-projectile_data = ExtResource("16_e8v5w")
+projectile_data = ExtResource("17_3bm5r")
 active = false
 
 [node name="TargetProjectileSpawner" type="Node2D" parent="Spawner"]
 unique_name_in_owner = true
 script = ExtResource("13_ayqat")
 spawner_data = SubResource("Resource_8r58b")
-projectile_data = ExtResource("16_e8v5w")
+projectile_data = ExtResource("19_h1wsb")
 active = false
 
 [node name="PatternProjectileSpawner" type="Node2D" parent="Spawner"]
 unique_name_in_owner = true
 script = ExtResource("13_ayqat")
 spawner_data = SubResource("Resource_ilov8")
-projectile_data = ExtResource("16_e8v5w")
+projectile_data = ExtResource("21_3bm5r")
 active = false
 
 [node name="Path2D" type="Path2D" parent="Spawner/PatternProjectileSpawner"]
@@ -486,11 +486,12 @@ unique_name_in_owner = true
 script = ExtResource("18_44c5p")
 health_component = NodePath("../Components/HealthComponent")
 state_machine = NodePath("../StateMachine")
-phase_data = Array[ExtResource("21_w3lhe")]([SubResource("Resource_vni31"), SubResource("Resource_w3lhe")])
+phase_data = Array[ExtResource("21_w3lhe")]([ExtResource("24_ilov8"), ExtResource("25_7mrnl"), ExtResource("26_etwsd")])
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("actor", "starting_state")]
 unique_name_in_owner = true
 script = ExtResource("13_fg3tp")
+actor = NodePath("..")
 starting_state = NodePath("EnemyEntranceState")
 
 [node name="EnemyEntranceState" type="Node" parent="StateMachine" node_paths=PackedStringArray("hurtbox_component", "next_state")]
@@ -517,6 +518,13 @@ script = ExtResource("16_s0t23")
 
 [node name="DoublePunchAttack" type="Node" parent="StateMachine"]
 script = ExtResource("17_030pk")
+
+[node name="Die" type="Node" parent="StateMachine" node_paths=PackedStringArray("component_container", "projectile_spawner_container")]
+unique_name_in_owner = true
+script = ExtResource("35_7mrnl")
+component_container = NodePath("../../Components")
+projectile_spawner_container = NodePath("../../Spawner")
+metadata/_custom_type_script = "uid://3rmgpmcl4do2"
 
 [editable path="Arms/RightArm"]
 [editable path="Arms/LeftArm"]

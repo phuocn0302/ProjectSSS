@@ -26,7 +26,7 @@ open class EnemyDieState : State() {
         getTree()
             ?.getNodesInGroup("projectile")
             ?.filterIsInstance<Projectile>()
-            ?.forEach { projectile -> projectile.deactivated }
+            ?.forEach { projectile -> projectile.deactivate() }
 
         getTree()
             ?.getNodesInGroup("warning_line")

@@ -17,7 +17,8 @@ supertypes = [
 	kotlin.Any
 ]
 signals = [
-    on_activated
+    on_activated,
+	on_destroy_completed
 ]
 properties = [
     active_position,

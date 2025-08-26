@@ -1,9 +1,10 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dox2cooo3i43b"]
+[gd_resource type="Resource" script_class="BossPhaseData" load_steps=2 format=3 uid="uid://xvufx8fawf1f"]
 
-[ext_resource type="Script" uid="uid://cp0grn80x2ftm" path="res://src/entities/bosses/BossPhaseData.kt" id="1_eeyr3"]
+[ext_resource type="Script" uid="uid://dbb553efnt0bi" path="res://gdj/entities/bosses/BossPhaseData.gdj" id="1_72nq1"]
 
 [resource]
-script = ExtResource("1_eeyr3")
+script = ExtResource("1_72nq1")
 health_percentage = 50.0
-states = Array[NodePath]([NodePath("../StateMachine/ShootAtPlayer2"), NodePath("../StateMachine/PunchAttack"), NodePath("../StateMachine/DoublePunchAttack")])
-first_state = NodePath("../StateMachine/ShootAtPlayer2")
+states = Array[NodePath]([NodePath("../StateMachine/DoublePunchAttack"), NodePath("../StateMachine/ShootAtPlayer2"), NodePath("../StateMachine/PunchAttack")])
+first_state = NodePath("../StateMachine/DoublePunchAttack")
+metadata/_custom_type_script = "uid://dbb553efnt0bi"

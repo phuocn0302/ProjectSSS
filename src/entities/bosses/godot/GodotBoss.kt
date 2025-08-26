@@ -15,6 +15,7 @@ import godot.annotation.Export
 import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
+import godot.api.AnimatedSprite2D
 import godot.api.GPUParticles2D
 import godot.api.Marker2D
 import godot.extension.getNodeAs
@@ -31,6 +32,7 @@ class GodotBoss : Enemy() {
 	lateinit var rightArmOrgPos: Marker2D
 	lateinit var leftArmOrgPos: Marker2D
 
+	lateinit var animatedSprite2D: AnimatedSprite2D
 	lateinit var eyeParticles: GPUParticles2D
 
 	lateinit var targetProjectileSpawner: ProjectileSpawner
@@ -56,6 +58,7 @@ class GodotBoss : Enemy() {
 		rightArmOrgPos = getNodeAs("%RightArmPos")!!
 		leftArmOrgPos = getNodeAs("%LeftArmPos")!!
 
+		animatedSprite2D = getNodeAs("AnimatedSprite2D")!!
 		eyeParticles = getNodeAs("%EyeParticles")!!
 
 		targetProjectileSpawner = getNodeAs("%TargetProjectileSpawner")!!
@@ -70,7 +73,7 @@ class GodotBoss : Enemy() {
 		bossPhaseManager = getNodeAs("%BossPhaseManager")!!
 		stateMachine = getNodeAs("%StateMachine")!!
 
-//        dieState = getNodeAs("%Die")!!
+		dieState = getNodeAs("%Die")!!
 
 		bossPhaseManager.setup()
 		stateMachine.setup(this)

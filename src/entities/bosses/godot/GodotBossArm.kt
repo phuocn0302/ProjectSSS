@@ -14,6 +14,7 @@ import godot.api.Tween
 import godot.core.Vector2
 import godot.core.connect
 import godot.core.signal0
+import godot.coroutines.GodotDispatchers
 import godot.coroutines.await
 import godot.coroutines.godotCoroutine
 import godot.extension.getNodeAs
@@ -30,6 +31,9 @@ class GodotBossArm : Entity() {
 
 	@RegisterSignal
 	val onActivated by signal0()
+
+	@RegisterSignal
+	val onDestroyCompleted by signal0()
 
 	@Export
 	@RegisterProperty
@@ -79,14 +83,14 @@ class GodotBossArm : Entity() {
 			this@GodotBossArm,
 			"global_position",
 			activePosition!!.globalPosition,
-			2.0
+			1.0
 		)
 
 		tween?.tweenProperty(
 			this@GodotBossArm,
 			"scale",
 			Vector2.ONE,
-			2.0
+			1.0
 		)
 
 		tween?.finished?.connect {
@@ -111,7 +115,7 @@ class GodotBossArm : Entity() {
 	}
 
 	@RegisterFunction
-	fun selfDestruct() = godotCoroutine {
+	fun selfDestruct() = godotCoroutine(context = GodotDispatchers.MainThread) {
 		hurtboxComponent.active = false
 		hitboxComponent.active = false
 		ghostTrailingComponent.active = false
@@ -130,5 +134,7 @@ class GodotBossArm : Entity() {
 
 		explode(this@GodotBossArm.globalPosition)
 		hide()
+
+		onDestroyCompleted.emit()
 	}
 }

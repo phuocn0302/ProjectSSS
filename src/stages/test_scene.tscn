@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bvk5r1s5euot6"]
+[gd_scene load_steps=7 format=3 uid="uid://bvk5r1s5euot6"]
 
 [ext_resource type="PackedScene" uid="uid://oalne3evw244" path="res://src/entities/player/player.tscn" id="1_qbl1b"]
 [ext_resource type="Script" uid="uid://v1fag0bbj8rh" path="res://gdj/entities/projectiles/ProjectileSpawner.gdj" id="2_xghp1"]
 [ext_resource type="Script" uid="uid://djtx5g7eebda4" path="res://gdj/entities/projectiles/spawners/CircleProjectileSpawnerData.gdj" id="3_crl01"]
 [ext_resource type="Resource" uid="uid://d2ebh38iei3wr" path="res://src/entities/projectiles/resources/player/base.tres" id="4_el7qm"]
 [ext_resource type="PackedScene" uid="uid://ckjlvrurfq6x2" path="res://src/entities/bosses/godot/godot_boss.tscn" id="5_crl01"]
-[ext_resource type="PackedScene" uid="uid://7fx33mvlv67i" path="res://src/entities/enemies/godot_enemy/godot_enemy.tscn" id="6_el7qm"]
 
 [sub_resource type="Resource" id="Resource_6krom"]
 script = ExtResource("3_crl01")
@@ -34,6 +33,3 @@ metadata/_custom_type_script = "uid://v1fag0bbj8rh"
 
 [node name="GodotBoss" parent="." instance=ExtResource("5_crl01")]
 position = Vector2(57, -5)
-
-[node name="GodotEnemy" parent="." instance=ExtResource("6_el7qm")]
-position = Vector2(93, 149)

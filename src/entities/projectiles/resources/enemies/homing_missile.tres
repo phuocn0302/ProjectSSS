@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="HomingProjectileData" load_steps=13 format=3 uid="uid://b3wai27flh2jf"]
+[gd_resource type="Resource" load_steps=13 format=3 uid="uid://b3wai27flh2jf"]
 
 [ext_resource type="PackedScene" uid="uid://c3rq577ok406m" path="res://src/particles/circle_explosion.tscn" id="1_yy4ts"]
 [ext_resource type="PackedScene" uid="uid://dutpnjw2uhfvb" path="res://src/particles/homing_projectile_particles.tscn" id="2_tno8j"]
-[ext_resource type="Script" uid="uid://cj1v18sw0p68j" path="res://src/entities/projectiles/types/homing_projectile_data.gd" id="3_k1gyf"]
+[ext_resource type="Script" uid="uid://cn7hvemuj38gs" path="res://src/entities/projectiles/types/HomingProjectileData.kt" id="3_k1gyf"]
 [ext_resource type="Texture2D" uid="uid://b3vy0ravaq21x" path="res://assets/texture/projectiles/npc/missile_sheet.png" id="4_fs0xj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l0kq8"]
@@ -75,4 +75,3 @@ vfx_color = Color(1, 0, 0, 1)
 on_hit_vfx = ExtResource("1_yy4ts")
 use_particles = true
 particles = ExtResource("2_tno8j")
-metadata/_custom_type_script = "uid://cj1v18sw0p68j"
