@@ -42,10 +42,6 @@ class LaserEmitter : Component2D() {
     @Export
     @RegisterProperty
     var emitInterval: Double = 3.0
-        set(value) {
-            field = value
-            activateEmitTimer()
-        }
 
     private var timer: Timer? = null
     private var laser: Laser? = null

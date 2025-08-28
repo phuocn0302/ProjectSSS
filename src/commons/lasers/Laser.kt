@@ -163,7 +163,7 @@ class Laser : Line2D() {
     }
 
     private fun setupParticles() {
-        if (particles != null) {
+        if (particles == null) {
             particles = GPUParticles2D()
             this.addChild(particles)
         }
@@ -190,12 +190,12 @@ class Laser : Line2D() {
     }
 
     private fun setupHitbox() {
-        if (hitboxComponent != null) {
+        if (hitboxComponent == null) {
             hitboxComponent = HitboxComponent()
-            this.addChild(hitboxCollision)
+            this.addChild(hitboxComponent)
         }
 
-        if (hitboxCollision != null) {
+        if (hitboxCollision == null) {
             hitboxCollision = CollisionShape2D()
             hitboxCollision!!.shape = RectangleShape2D()
 
