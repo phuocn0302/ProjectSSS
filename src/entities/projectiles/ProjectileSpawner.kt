@@ -91,11 +91,6 @@ open class ProjectileSpawner : Component2D() {
 		timer?.let {
 			it.waitTime = spawnerData.spawnInterval
 			it.autostart = true
-
-			if (it.isInsideTree()) {
-				it.stop()
-				it.start()
-			}
 		}
 	}
 }
