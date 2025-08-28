@@ -25,6 +25,13 @@ class HealthComponent : Component() {
     @Export
     @RegisterProperty
     var maxHealth: Double = 100.0
+        set(value) {
+            if (currentHealth == maxHealth) {
+                currentHealth = value
+            }
+
+            field = value
+        }
 
     @Export
     @RegisterProperty
