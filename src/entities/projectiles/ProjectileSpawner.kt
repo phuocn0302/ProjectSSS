@@ -9,6 +9,7 @@ import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
 import godot.api.Node
 import godot.api.Timer
+import godot.global.GD
 
 
 @RegisterClass
@@ -17,6 +18,10 @@ open class ProjectileSpawner : Component2D() {
 	@Export
 	@RegisterProperty
 	var spawnerData: ProjectileSpawnerData = ProjectileSpawnerData()
+		set(value) {
+			field = value
+			setupTimer()
+		}
 
 	@Export
 	@RegisterProperty
@@ -27,7 +32,7 @@ open class ProjectileSpawner : Component2D() {
 	var projectileData: ProjectileData = ProjectileData()
 
 	private var objectPool: ObjectPool = ObjectPool()
-	private var timer: Timer = Timer()
+	private var timer: Timer? = null
 
 	@RegisterFunction
 	override fun _ready() {
@@ -39,14 +44,21 @@ open class ProjectileSpawner : Component2D() {
 
 	@RegisterFunction
 	override fun activate() {
-		timer.start()
+		timer?.start()
 		super.activate()
 	}
 
 	@RegisterFunction
 	override fun deactivate() {
-		timer.stop()
+		timer?.stop()
 		super.deactivate()
+	}
+
+	@RegisterFunction
+	fun setInterval(amount: Double) {
+		val spawner = this.spawnerData
+		spawner.spawnInterval = amount
+		spawnerData = spawner
 	}
 
 	@RegisterFunction
@@ -64,14 +76,26 @@ open class ProjectileSpawner : Component2D() {
 	}
 
 	private fun setupTimer() {
-		timer.setName("SpawnInterval")
-		this.addChild(timer)
+		if (timer == null) {
+			timer = Timer()
 
-		timer.timeout.connect(this, ProjectileSpawner::spawn)
-		timer.processMode = Node.ProcessMode.PAUSABLE
-		timer.waitTime = spawnerData.spawnInterval
-		timer.autostart = true
-		timer.start()
+			timer!!.setName("SpawnInterval")
+			timer!!.timeout.connect(this, ProjectileSpawner::spawn)
+			timer!!.processMode = Node.ProcessMode.PAUSABLE
+
+			this.addChild(timer)
+		}
+
+		timer?.waitTime = spawnerData.spawnInterval
+
+		timer?.let {
+			it.waitTime = spawnerData.spawnInterval
+			it.autostart = true
+
+			if (it.isInsideTree()) {
+				it.stop()
+				it.start()
+			}
+		}
 	}
-
 }
