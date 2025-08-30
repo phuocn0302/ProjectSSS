@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=4 format=3 uid="uid://b2uuyfoieoa6n"]
+
+[ext_resource type="Script" uid="uid://bm7im4vdq70il" path="res://gdj/entities/projectiles/ProjectileData.gdj" id="1_kc578"]
+[ext_resource type="Texture2D" uid="uid://s3sydm7h3f7j" path="res://assets/texture/projectiles/npc/bullet_2.png" id="2_kc578"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8xswt"]
+size = Vector2(12, 4)
+
+[resource]
+script = ExtResource("1_kc578")
+texture = ExtResource("2_kc578")
+texture_rotate_with_dir = true
+collision_shape = SubResource("RectangleShape2D_8xswt")
+shape_offset = Vector2(0, 0)
+collision_mask = 1
+speed = 120.0
+damage = 1.0
+life_time = 10.0
+vfx_color = Color(1, 0, 0, 1)
+use_particles = true
+metadata/_custom_type_script = "uid://bm7im4vdq70il"

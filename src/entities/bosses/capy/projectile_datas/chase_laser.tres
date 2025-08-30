@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LaserData" load_steps=2 format=3 uid="uid://bmsb2q13vxuap"]
+
+[ext_resource type="Script" uid="uid://bttfc2ylhj3in" path="res://gdj/commons/lasers/LaserData.gdj" id="1_l2rux"]
+
+[resource]
+script = ExtResource("1_l2rux")
+collision_mask = 1
+direction = Vector2(0, 1)
+length = 320
+max_width = 12
+emit_time = 0.5
+cast_time = 0.1
+decay_time = 0.2
+outline_color = Color(1, 0, 0, 1)
+metadata/_custom_type_script = "uid://bttfc2ylhj3in"

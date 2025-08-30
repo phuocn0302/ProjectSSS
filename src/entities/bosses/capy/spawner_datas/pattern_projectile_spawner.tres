@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PatternProjectileSpawnerData" load_steps=2 format=3 uid="uid://dsrovjuibghhm"]
+
+[ext_resource type="Script" uid="uid://dtceh6oeh88r6" path="res://gdj/entities/projectiles/spawners/PatternProjectileSpawnerData.gdj" id="1_svyn2"]
+
+[resource]
+script = ExtResource("1_svyn2")
+number_of_projectile = 5
+travel_time = 1.0
+pattern_node_path = NodePath("Path2D")
+spawn_direction = Vector2(0, -1)
+spawn_interval = 1.0
+metadata/_custom_type_script = "uid://dtceh6oeh88r6"
