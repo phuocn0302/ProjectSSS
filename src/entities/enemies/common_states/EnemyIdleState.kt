@@ -7,6 +7,7 @@ import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
 import godot.core.connect
+import godot.core.toVariantArray
 import godot.core.variantArrayOf
 import godot.global.GD
 
@@ -21,7 +22,11 @@ open class EnemyIdleState : State() {
     @RegisterProperty
     var states = variantArrayOf<State>()
         set(value) {
-            field = value
+            val filtered = value.filterIsInstance<State>()
+            if (filtered.size != value.size) {
+                GD.pushWarning("[EnemyIdleState] Some entries in 'states' are not State instances and were ignored.")
+            }
+            field = filtered.toVariantArray()
             remainingState.clear()
         }
 
@@ -32,30 +37,31 @@ open class EnemyIdleState : State() {
     @RegisterFunction
     override fun enter() {
         val timer = Utils.createTimer(this, idleTime)
-        timer!!.timeout.connect {
+        timer?.timeout?.connect {
             stateMachine.changeState(getRandomState())
         }
     }
 
     private fun getRandomState(): State {
-        if (states.isEmpty()) {
+        val validStates = states.filterIsInstance<State>()
+        if (validStates.isEmpty()) {
+            GD.pushWarning("[EnemyIdleState] No valid states to transition to.")
             return this
         }
 
         if (remainingState.isEmpty()) {
-            remainingState = states.duplicate(false)
+            remainingState = validStates.toVariantArray()
         }
 
-
-        var candidates: List<State> = remainingState.filter { s ->
-            s != lastState || s != secondLastState
-        }
+        var candidates = remainingState
+            .filterIsInstance<State>()
+            .filter { it != lastState || it != secondLastState }
 
         if (candidates.isEmpty()) {
             candidates = if (remainingState.any { it != lastState }) {
-                remainingState.filter { it != lastState }
+                remainingState.filterIsInstance<State>().filter { it != lastState }
             } else {
-                remainingState.toList()
+                remainingState.filterIsInstance<State>()
             }
         }
 

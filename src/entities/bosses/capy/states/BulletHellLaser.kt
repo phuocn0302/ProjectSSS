@@ -9,9 +9,7 @@ import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
 import godot.api.SceneTreeTimer
-import godot.coroutines.GodotDispatchers
-import godot.coroutines.await
-import godot.coroutines.godotCoroutine
+import godot.core.connect
 import godot.global.GD
 
 @RegisterClass
@@ -28,7 +26,7 @@ class CapyBossBulletHellLaserState : CapyBossState() {
     private var timer: SceneTreeTimer? = null
 
     @RegisterFunction
-    override fun enter() = godotCoroutine(context = GodotDispatchers.MainThread) {
+    override fun enter() {
         with(boss) {
             idleMoveComponent.active = false
 
@@ -36,22 +34,14 @@ class CapyBossBulletHellLaserState : CapyBossState() {
 
             gun.play("to_ray_gun")
 
-            gun.animationFinished.await()
-
             setupCircleProjectileSpawner()
             setupLaserEmitter()
 
-            Utils.createTimer(this@CapyBossBulletHellLaserState, shootDelay)
-                ?.timeout
-                ?.await()
-
-            warningLine.hide()
-
-            Utils.createTimer(this@CapyBossBulletHellLaserState, 0.3)
-                ?.timeout
-                ?.await()
-
-            startShooting()
+            timer = Utils.createTimer(this@CapyBossBulletHellLaserState, shootDelay)
+            timer?.timeout
+                ?.connect {
+                    startShooting()
+                }
 
         }
     }
@@ -61,11 +51,12 @@ class CapyBossBulletHellLaserState : CapyBossState() {
         with(boss) {
             gun.play("back_to_gun")
 
+            warningLine.hide()
             laserEmitter.forceStopEmit()
             circleProjectileSpawner.active = false
             idleMoveComponent.active = true
 
-            createTween()
+            this.createTween()
                 ?.tweenProperty(
                     boss,
                     "global_position",

@@ -5,6 +5,7 @@ import godot.annotation.RegisterClass
 import godot.api.Node2D
 import godot.core.VariantArray
 import godot.core.variantArrayOf
+import godot.global.GD
 
 @RegisterClass
 class ProjectileSpawnerContainer : Node2D() {

@@ -6,5 +6,5 @@
 script = ExtResource("1_2v0e7")
 health_percentage = 100.0
 states = Array[NodePath]([NodePath("../StateMachine/MissileShoot"), NodePath("../StateMachine/CircleShoot")])
-first_state = NodePath("")
+first_state = NodePath("../StateMachine/BulletHellLaser")
 metadata/_custom_type_script = "uid://dbb553efnt0bi"

@@ -13,6 +13,11 @@ open class State : Node() {
     lateinit var actor: Entity
 
     @RegisterFunction
+    override fun _exitTree() {
+        exit()
+    }
+
+    @RegisterFunction
     open fun setup(actor: Entity, stateMachine: StateMachine) {
         this.actor = actor
         this.stateMachine = stateMachine

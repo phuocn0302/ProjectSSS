@@ -86,13 +86,11 @@ class BossPhaseManager : Node() {
                 if (currentPhaseIndex != i) {
                     currentPhaseIndex = i
 
-                    bossIdleState!!.states = getStatesNode(i)
+                    bossIdleState?.states = getStatesNode(i)
 
                     val firstStateNode = getNodeOrNull(phaseData[i].firstState)
 
-                    if (firstStateNode is State) {
-                        stateMachine!!.nextStateRequested = firstStateNode
-                    }
+                    stateMachine?.nextStateRequested = firstStateNode as State?
 
                     GD.print("Phase changed to ", i, " with states: ", bossIdleState!!.states)
                 }
@@ -100,7 +98,7 @@ class BossPhaseManager : Node() {
             }
     }
 
-    private fun getStatesNode(index: Int) : VariantArray<State> {
+    private fun getStatesNode(index: Int): VariantArray<State> {
         val states = variantArrayOf<State>()
 
         for (p in phaseData[index].states) {

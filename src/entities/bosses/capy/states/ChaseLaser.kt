@@ -65,7 +65,7 @@ class CapyBossChaseLaserState : CapyBossState() {
 
             shootTimer?.timeout?.disconnect(this@CapyBossChaseLaserState, CapyBossChaseLaserState::shoot)
 
-            createTween()
+            this.createTween()
                 ?.tweenProperty(boss, "global_position", defaultPosition, 0.5)
         }
     }

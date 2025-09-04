@@ -77,7 +77,7 @@ class CapyBossSweepLaserState : CapyBossState() {
     override fun exit() {
         boss.gun.play("back_to_gun")
 
-        moveTween = createTween()
+        moveTween = this.createTween()
         moveTween?.tweenProperty(boss, "global_position", boss.defaultPosition, 0.5)
     }
 
@@ -103,7 +103,7 @@ class CapyBossSweepLaserState : CapyBossState() {
                 moveWarningLine.hide()
                 shoot()
 
-                moveTween = createTween()
+                moveTween = this.createTween()
                 moveTween
                     ?.tweenProperty(boss, "global_position", edgeLocation[locationIndex], sweepTime)
                     ?.finished
@@ -142,7 +142,7 @@ class CapyBossSweepLaserState : CapyBossState() {
     }
 
     private fun moveToEdge() {
-        moveTween = createTween()
+        moveTween = this.createTween()
         moveTween?.let {
             it.setTrans(Tween.TransitionType.EXPO)
             it.setEase(Tween.EaseType.IN_OUT)

@@ -44,7 +44,7 @@
 
 [sub_resource type="Resource" id="Resource_caq6h"]
 script = ExtResource("2_std3o")
-max_health = 450.0
+max_health = 4.0
 metadata/_custom_type_script = "uid://b875f1tfsn74d"
 
 [sub_resource type="Shader" id="Shader_7xee8"]
@@ -399,6 +399,7 @@ metadata/_custom_type_script = "uid://bk0yet7nnuqhh"
 [node name="WarningLine" type="Line2D" parent="LaserEmitter"]
 unique_name_in_owner = true
 visible = false
+z_index = -4
 points = PackedVector2Array(0, 0, 0, 320)
 width = 2.0
 default_color = Color(1, 0, 0, 1)
