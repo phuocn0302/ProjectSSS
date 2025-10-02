@@ -44,7 +44,7 @@
 
 [sub_resource type="Resource" id="Resource_caq6h"]
 script = ExtResource("2_std3o")
-max_health = 4.0
+max_health = 250.0
 metadata/_custom_type_script = "uid://b875f1tfsn74d"
 
 [sub_resource type="Shader" id="Shader_7xee8"]
@@ -574,6 +574,7 @@ script = ExtResource("20_ks51w")
 
 [node name="BulletHellLaser" type="Node" parent="StateMachine"]
 script = ExtResource("22_mmg25")
+duration = 4.0
 
 [node name="ChaseLaser" type="Node" parent="StateMachine"]
 script = ExtResource("23_ald4w")
