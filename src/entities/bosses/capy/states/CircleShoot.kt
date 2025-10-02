@@ -1,6 +1,5 @@
 package entities.bosses.capy.states
 
-import commons.singletons.Utils
 import entities.bosses.capy.CapyBossState
 import entities.projectiles.ProjectileSpawner
 import entities.projectiles.spawners.CircleProjectileSpawnerData
@@ -8,7 +7,7 @@ import godot.annotation.Export
 import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
-import godot.api.SceneTreeTimer
+import godot.api.Tween
 import godot.core.variantArrayOf
 import godot.coroutines.GodotDispatchers
 import godot.coroutines.await
@@ -32,9 +31,9 @@ class CapyBossCircleShootState : CapyBossState() {
 
     private var missileSpawners = variantArrayOf<ProjectileSpawner>()
 
-    private var timer: SceneTreeTimer? = null
-    private var burstTimer: SceneTreeTimer? = null
-    private var burstDelayTimer: SceneTreeTimer? = null
+    private var durationTween: Tween? = null
+    private var burstTween: Tween? = null
+    private var burstDelayTween: Tween? = null
     private var missileSpawnerIndex: Int = 0
 
     @RegisterFunction
@@ -43,8 +42,12 @@ class CapyBossCircleShootState : CapyBossState() {
         setupCircleProjectileSpawner()
         missileSpawners = variantArrayOf(boss.leftMissileSpawner, boss.rightMissileSpawner)
 
-        timer = Utils.createTimer(this, duration)
-        timer?.timeout?.connect(this, CapyBossCircleShootState::onTimerTimeout)
+        durationTween = this.createTween()
+        durationTween
+            ?.tweenInterval(duration)
+            ?.let {
+                durationTween?.finished?.connect(this, CapyBossCircleShootState::onTimerTimeout)
+            }
 
         shoot()
     }
@@ -52,8 +55,9 @@ class CapyBossCircleShootState : CapyBossState() {
     @RegisterFunction
     override fun exit() {
         boss.circleProjectileSpawner.active = false
-        timer?.timeout?.disconnect(this, CapyBossCircleShootState::onTimerTimeout)
-        burstDelayTimer?.timeout?.disconnect(this@CapyBossCircleShootState, CapyBossCircleShootState::shoot)
+        durationTween?.kill()
+        burstTween?.kill()
+        burstDelayTween?.kill()
     }
 
     @RegisterFunction
@@ -64,8 +68,9 @@ class CapyBossCircleShootState : CapyBossState() {
         boss.circleProjectileSpawner.active = true
         (boss.circleProjectileSpawner.spawnerData as CircleProjectileSpawnerData).rotateSpeed *= -1
 
-        burstTimer = Utils.createTimer(this@CapyBossCircleShootState, burstTime)
-        burstTimer?.timeout?.await()
+        burstTween = this@CapyBossCircleShootState.createTween()
+        burstTween?.tweenInterval(burstTime)
+        burstTween?.finished?.await()
 
         if (!boss.circleProjectileSpawner.active) {
             return@godotCoroutine
@@ -73,8 +78,12 @@ class CapyBossCircleShootState : CapyBossState() {
 
         boss.circleProjectileSpawner.active = false
 
-        burstDelayTimer = Utils.createTimer(this@CapyBossCircleShootState, burstDelay)
-        burstDelayTimer?.timeout?.connect(this@CapyBossCircleShootState, CapyBossCircleShootState::shoot)
+        burstDelayTween = this@CapyBossCircleShootState.createTween()
+        burstDelayTween
+            ?.tweenInterval(burstDelay)
+            ?.let {
+                burstDelayTween?.finished?.connect(this@CapyBossCircleShootState, CapyBossCircleShootState::shoot)
+            }
 
     }
 

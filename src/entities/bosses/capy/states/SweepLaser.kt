@@ -1,7 +1,6 @@
 package entities.bosses.capy.states
 
 import commons.lasers.LaserData
-import commons.singletons.Utils
 import entities.bosses.capy.CapyBossState
 import entities.projectiles.spawners.CircleProjectileSpawnerData
 import godot.annotation.*
@@ -53,6 +52,8 @@ class CapyBossSweepLaserState : CapyBossState() {
     private var locationIndex: Int = 0
     private var sweepCounter: Int = 0
     private var moveTween: Tween? = null
+    private var delayTween: Tween? = null
+    private var endDelayTween: Tween? = null
 
     @RegisterFunction
     override fun enter() {
@@ -79,6 +80,9 @@ class CapyBossSweepLaserState : CapyBossState() {
 
         moveTween = this.createTween()
         moveTween?.tweenProperty(boss, "global_position", boss.defaultPosition, 0.5)
+        moveTween?.kill()
+        delayTween?.kill()
+        endDelayTween?.kill()
     }
 
     private fun attack() = godotCoroutine(context = GodotDispatchers.MainThread) {
@@ -96,9 +100,9 @@ class CapyBossSweepLaserState : CapyBossState() {
                 moveWarningLine.direction = boss.globalPosition.directionTo(edgeLocation[locationIndex])
                 moveWarningLine.show()
 
-                Utils.createTimer(this@CapyBossSweepLaserState, delayBeforeSweep)
-                    ?.timeout
-                    ?.await()
+                delayTween = this@CapyBossSweepLaserState.createTween()
+                delayTween?.tweenInterval(delayBeforeSweep)
+                delayTween?.finished?.await()
 
                 moveWarningLine.hide()
                 shoot()
@@ -123,9 +127,9 @@ class CapyBossSweepLaserState : CapyBossState() {
         }
 
 
-        Utils.createTimer(this@CapyBossSweepLaserState, delayBeforeSweep)
-            ?.timeout
-            ?.await()
+        endDelayTween = this@CapyBossSweepLaserState.createTween()
+        endDelayTween?.tweenInterval(delayBeforeSweep)
+        endDelayTween?.finished?.await()
 
         if (continueSweep && sweepCounter < maxNumberOfSweep) {
             sweep()

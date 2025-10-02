@@ -36,8 +36,9 @@ open class EnemyIdleState : State() {
 
     @RegisterFunction
     override fun enter() {
-        val timer = Utils.createTimer(this, idleTime)
-        timer?.timeout?.connect {
+        val idleTween = createTween()
+        idleTween?.tweenInterval(idleTime)
+        idleTween?.finished?.connect {
             stateMachine.changeState(getRandomState())
         }
     }

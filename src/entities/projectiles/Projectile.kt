@@ -14,7 +14,7 @@ import godot.api.Node
 import godot.api.Node2D
 import godot.api.PackedScene
 import godot.api.PhysicsShapeQueryParameters2D
-import godot.api.SceneTreeTimer
+import godot.api.Tween
 import godot.api.Shader
 import godot.api.ShaderMaterial
 import godot.api.Sprite2D
@@ -55,7 +55,7 @@ open class Projectile : PoolableEntity() {
     private var collisionQuery = PhysicsShapeQueryParameters2D()
     private var spriteNode: Node? = null
     private var particlesNode: CPUParticles2D? = null
-    private var lifetimeTimer: SceneTreeTimer? = null
+    private var lifetimeTween: Tween? = null
 
     @RegisterFunction
     override fun _ready() {
@@ -218,15 +218,13 @@ open class Projectile : PoolableEntity() {
 
     private fun startLifetimeTimer() {
         val data = projectileData ?: return
-        lifetimeTimer = Utils.createTimer(this,data.lifeTime, false)
-        lifetimeTimer?.timeout?.connect(this, Projectile::deactivate )
+        lifetimeTween = Utils.createTweenTimer(this, data.lifeTime)
+        lifetimeTween?.finished?.connect(this, Projectile::deactivate)
     }
 
     private fun resetTimer() {
-        if (lifetimeTimer != null) {
-            lifetimeTimer!!.timeout.disconnect(this, Projectile::deactivate )
-            lifetimeTimer = null
-        }
+        lifetimeTween?.kill()
+        lifetimeTween = null
     }
 
     private fun spawnSfx(vfx: PackedScene) {

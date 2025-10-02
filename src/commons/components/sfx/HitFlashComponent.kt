@@ -49,8 +49,9 @@ class HitFlashComponent : Component() {
         val mat = sprite?.material ?: return
         mat.set("shader_parameter/flash_strength", 0.5)
 
-        val timer = Utils.createTimer(this@HitFlashComponent, flashTime)
-        timer?.timeout?.connect(this, HitFlashComponent::resetFlash)
+        val tween = createTween()
+        tween?.tweenInterval(flashTime)
+        tween?.finished?.connect(this, HitFlashComponent::resetFlash)
     }
 
     @RegisterFunction

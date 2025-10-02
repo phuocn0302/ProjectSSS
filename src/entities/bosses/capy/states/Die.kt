@@ -26,9 +26,9 @@ class CapyBossDieState : EnemyDieState() {
 
         super.enter()
 
-        Utils.createTimer(this@CapyBossDieState, 3.0)
-            ?.timeout
-            ?.await()
+        val tween1 = createTween()
+        tween1?.tweenInterval(3.0)
+        tween1?.finished?.await()
 
         CIRCLE_EXPLOSION?.let {
             val vfx = it.instantiate() as Node2D
@@ -40,15 +40,15 @@ class CapyBossDieState : EnemyDieState() {
         boss.gun.hide()
         boss.mainSprite.hide()
 
-        Utils.createTimer(this@CapyBossDieState, 1.0)
-            ?.timeout
-            ?.await()
+        val tween2 = createTween()
+        tween2?.tweenInterval(1.0)
+        tween2?.finished?.await()
 
         boss.gpuParticles2D.emitting = false
 
-        Utils.createTimer(this@CapyBossDieState, 1.0)
-            ?.timeout
-            ?.await()
+        val tween3 = createTween()
+        tween3?.tweenInterval(1.0)
+        tween3?.finished?.await()
 
         boss.queueFree()
     }

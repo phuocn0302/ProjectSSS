@@ -1,14 +1,13 @@
 package entities.bosses.capy.states
 
 import commons.lasers.LaserData
-import commons.singletons.Utils
 import entities.bosses.capy.CapyBossState
 import entities.projectiles.spawners.CircleProjectileSpawnerData
 import godot.annotation.Export
 import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
-import godot.api.SceneTreeTimer
+import godot.api.Tween
 import godot.core.connect
 import godot.global.GD
 
@@ -23,7 +22,8 @@ class CapyBossBulletHellLaserState : CapyBossState() {
     @RegisterProperty
     var shootDelay: Double = 1.0
 
-    private var timer: SceneTreeTimer? = null
+    private var shootDelayTween: Tween? = null
+    private var durationTween: Tween? = null
 
     @RegisterFunction
     override fun enter() {
@@ -37,10 +37,13 @@ class CapyBossBulletHellLaserState : CapyBossState() {
             setupCircleProjectileSpawner()
             setupLaserEmitter()
 
-            timer = Utils.createTimer(this@CapyBossBulletHellLaserState, shootDelay)
-            timer?.timeout
-                ?.connect {
-                    startShooting()
+            shootDelayTween = this@CapyBossBulletHellLaserState.createTween()
+            shootDelayTween
+                ?.tweenInterval(shootDelay)
+                ?.let {
+                    shootDelayTween?.finished?.connect {
+                        startShooting()
+                    }
                 }
 
         }
@@ -64,6 +67,8 @@ class CapyBossBulletHellLaserState : CapyBossState() {
                     0.5
                 )
         }
+        shootDelayTween?.kill()
+        durationTween?.kill()
     }
 
     @RegisterFunction
@@ -82,8 +87,12 @@ class CapyBossBulletHellLaserState : CapyBossState() {
             laserEmitter.emitLaser()
             circleProjectileSpawner.active = true
 
-            timer = Utils.createTimer(this, duration)
-            timer?.timeout?.connect(this@CapyBossBulletHellLaserState, CapyBossBulletHellLaserState::onTimerTimeout)
+            durationTween = this@CapyBossBulletHellLaserState.createTween()
+            durationTween
+                ?.tweenInterval(duration)
+                ?.let {
+                    durationTween?.finished?.connect(this@CapyBossBulletHellLaserState, CapyBossBulletHellLaserState::onTimerTimeout)
+                }
         }
 
     }

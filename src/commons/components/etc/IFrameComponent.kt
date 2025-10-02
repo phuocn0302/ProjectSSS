@@ -3,7 +3,7 @@ package commons.components.etc
 import commons.components.Component
 import commons.singletons.Utils
 import godot.annotation.*
-import godot.api.SceneTreeTimer
+import godot.api.Tween
 import godot.core.connect
 import godot.core.signal0
 import godot.global.GD
@@ -22,7 +22,7 @@ class IFrameComponent : Component() {
 	@RegisterProperty
 	var iframeDuration: Double = 0.3
 
-	private var currentTimer: SceneTreeTimer? = null
+    private var currentTween: Tween? = null
 
 	@RegisterFunction
 	override fun _ready() {
@@ -37,8 +37,9 @@ class IFrameComponent : Component() {
 		onIframeActivated.emit()
 
 		val time = if (duration < 0) iframeDuration else duration
-		currentTimer = Utils.createTimer(this, time)
-		currentTimer?.timeout?.connect(this, IFrameComponent::onIFrameTimeout)
+        currentTween?.kill()
+        currentTween = Utils.createTweenTimer(this, time)
+        currentTween?.finished?.connect(this, IFrameComponent::onIFrameTimeout)
 	}
 
 	@RegisterFunction

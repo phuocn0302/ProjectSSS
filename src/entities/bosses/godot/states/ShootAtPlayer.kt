@@ -1,12 +1,11 @@
 package entities.bosses.godot.states
 
-import commons.singletons.Utils
 import entities.bosses.godot.GodotBossState
 import godot.annotation.Export
 import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
-import godot.api.SceneTreeTimer
+import godot.api.Tween
 
 @RegisterClass
 class GodotBossShootAtPlayerState : GodotBossState() {
@@ -15,21 +14,25 @@ class GodotBossShootAtPlayerState : GodotBossState() {
     @RegisterProperty
     var duration: Double = 2.0
 
-    private lateinit var timer: SceneTreeTimer
+    private var durationTween: Tween? = null
 
     @RegisterFunction
     override fun enter() {
         boss.targetProjectileSpawner.active = true
 
-        timer = Utils.createTimer(this, duration)!!
-        timer.timeout.connect(this, GodotBossShootAtPlayerState::changeState)
+        durationTween = createTween()
+        durationTween
+            ?.tweenInterval(duration)
+            ?.let {
+                durationTween?.finished?.connect(this, GodotBossShootAtPlayerState::changeState)
+            }
     }
 
     @RegisterFunction
     override fun exit() {
         boss.targetProjectileSpawner.active = false
 
-        timer.timeout.disconnect(this, GodotBossShootAtPlayerState::changeState)
+        durationTween?.kill()
     }
 
     @RegisterFunction

@@ -33,9 +33,9 @@ class GodotBossDieState : EnemyDieState() {
 
         boss.rightArm.onDestroyCompleted.await()
 
-        Utils.createTimer(this@GodotBossDieState, 1.0)
-            ?.timeout
-            ?.await()
+        val tween1 = createTween()
+        tween1?.tweenInterval(1.0)
+        tween1?.finished?.await()
 
         val vfx = CIRCLE_EXPLOSION!!.instantiate() as Node2D
         vfx.globalPosition = boss.globalPosition
@@ -43,15 +43,15 @@ class GodotBossDieState : EnemyDieState() {
 
         boss.animatedSprite2D.hide()
 
-        Utils.createTimer(this@GodotBossDieState, 1.0)
-            ?.timeout
-            ?.await()
+        val tween2 = createTween()
+        tween2?.tweenInterval(1.0)
+        tween2?.finished?.await()
 
         boss.eyeParticles.emitting = false
 
-        Utils.createTimer(this@GodotBossDieState, 1.0)
-            ?.timeout
-            ?.await()
+        val tween3 = createTween()
+        tween3?.tweenInterval(1.0)
+        tween3?.finished?.await()
 
         boss.queueFree()
     }

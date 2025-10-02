@@ -1,12 +1,12 @@
 package entities.bosses.capy.states
 
-import commons.singletons.Utils
 import entities.bosses.capy.CapyBossState
 import entities.projectiles.spawners.ProjectileSpawnerData
 import godot.annotation.Export
 import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
+import godot.api.Tween
 import godot.core.Vector2
 import godot.global.GD
 
@@ -20,6 +20,8 @@ class CapyBossMissileShootState : CapyBossState() {
     @Export
     @RegisterProperty
     var missileIntervalRange = Vector2(2, 3)
+
+    private var durationTween: Tween? = null
 
     @RegisterFunction
     override fun enter() {
@@ -42,13 +44,26 @@ class CapyBossMissileShootState : CapyBossState() {
             rightMissileSpawner.active = true
             patternProjectileSpawner.active = true
 
-            Utils.createTimer(this@CapyBossMissileShootState, duration)
-                ?.timeout
-                ?.connect(
-                    this@CapyBossMissileShootState,
-                    CapyBossMissileShootState::onTimerTimeout
-                )
+            durationTween = this@CapyBossMissileShootState.createTween()
+            durationTween
+                ?.tweenInterval(duration)
+                ?.let {
+                    durationTween?.finished?.connect(
+                        this@CapyBossMissileShootState,
+                        CapyBossMissileShootState::onTimerTimeout
+                    )
+                }
         }
+    }
+
+    @RegisterFunction
+    override fun exit() {
+        with(boss) {
+            leftMissileSpawner.active = false
+            rightMissileSpawner.active = false
+            patternProjectileSpawner.active = false
+        }
+        durationTween?.kill()
     }
 
     @RegisterFunction

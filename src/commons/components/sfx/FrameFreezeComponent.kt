@@ -9,6 +9,7 @@ import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
 import godot.api.Engine
 import godot.api.Node
+import godot.coroutines.GodotDispatchers
 import godot.coroutines.await
 import godot.coroutines.godotCoroutine
 
@@ -32,11 +33,11 @@ class FrameFreezeComponent : Component() {
 	}
 
 	@RegisterFunction
-	fun freeze() = godotCoroutine {
+    fun freeze() = godotCoroutine(context = GodotDispatchers.MainThread) {
 		Engine.timeScale = freezeAmount
 
-		val timer = Utils.createTimer(this@FrameFreezeComponent, freezeDuration)
-		timer?.timeout?.await()
+        val tween = Utils.createTweenTimer(this@FrameFreezeComponent, freezeDuration)
+        tween?.finished?.await()
 
 		Engine.timeScale = 1.0
 	}

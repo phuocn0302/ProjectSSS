@@ -29,8 +29,9 @@ class HomingProjectile : Projectile() {
             chaseDelay = pData.chaseDelay
         }
 
-        val timer = Utils.createTimer(this, chaseDelay)
-        timer?.timeout?.connect {
+        val delayTween = createTween()
+        delayTween?.tweenInterval(chaseDelay)
+        delayTween?.finished?.connect {
             isChasing = true
         }
     }

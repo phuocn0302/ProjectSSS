@@ -41,7 +41,7 @@ class Laser : Line2D() {
 
     private var castTween: Tween? = null
     private var decayTween: Tween? = null
-    private var emitTimer: SceneTreeTimer? = null
+    private var emitTween: Tween? = null
 
     private var isEmitting: Boolean = false
 
@@ -109,8 +109,8 @@ class Laser : Line2D() {
 
                 hitboxComponent?.active = true
 
-                emitTimer = Utils.createTimer(this@Laser, emitTime)
-                emitTimer?.timeout?.connect(this@Laser, Laser::onEmitTimerTimeout)
+                emitTween = Utils.createTweenTimer(this@Laser, emitTime)
+                emitTween?.finished?.connect(this@Laser, Laser::onEmitTimerTimeout)
             }
         }
     }
@@ -118,7 +118,7 @@ class Laser : Line2D() {
     @RegisterFunction
     fun stopCasting() {
         castTween?.stop()
-        emitTimer?.timeout?.disconnect(this, Laser::onEmitTimerTimeout)
+        emitTween?.kill()
 
         isEmitting = false
         hitboxComponent?.active = false

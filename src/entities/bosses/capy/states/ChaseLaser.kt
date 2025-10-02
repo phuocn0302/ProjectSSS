@@ -1,13 +1,12 @@
 package entities.bosses.capy.states
 
 import commons.lasers.LaserData
-import commons.singletons.Utils
 import entities.bosses.capy.CapyBossState
 import godot.annotation.Export
 import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
-import godot.api.SceneTreeTimer
+import godot.api.Tween
 import godot.core.connect
 import godot.global.GD
 
@@ -30,7 +29,9 @@ class CapyBossChaseLaserState : CapyBossState() {
     @RegisterProperty
     var laserData = LaserData()
 
-    private var shootTimer: SceneTreeTimer? = null
+    private var preShootTween: Tween? = null
+    private var shootTimerTween: Tween? = null
+    private var postLaserTween: Tween? = null
     private var isShooting: Boolean = false
     private var shotCounter: Int = 0
 
@@ -49,8 +50,24 @@ class CapyBossChaseLaserState : CapyBossState() {
 
             setupLaserEmitter()
 
-            shootTimer = Utils.createTimer(this@CapyBossChaseLaserState, chaseDuration)
-            shootTimer?.timeout?.connect(this@CapyBossChaseLaserState, CapyBossChaseLaserState::shoot)
+            isShooting = false
+
+            preShootTween = this@CapyBossChaseLaserState.createTween()
+            preShootTween
+                ?.tweenInterval(chaseDuration * 0.9)
+                ?.let {
+                    preShootTween?.finished?.connect {
+                        isShooting = true
+                        warningLine.hide()
+                    }
+                }
+
+            shootTimerTween = this@CapyBossChaseLaserState.createTween()
+            shootTimerTween
+                ?.tweenInterval(chaseDuration)
+                ?.let {
+                    shootTimerTween?.finished?.connect(this@CapyBossChaseLaserState, CapyBossChaseLaserState::shoot)
+                }
         }
     }
 
@@ -63,11 +80,12 @@ class CapyBossChaseLaserState : CapyBossState() {
             leftMissileSpawner.active = false
             rightMissileSpawner.active = false
 
-            shootTimer?.timeout?.disconnect(this@CapyBossChaseLaserState, CapyBossChaseLaserState::shoot)
-
             this.createTween()
                 ?.tweenProperty(boss, "global_position", defaultPosition, 0.5)
         }
+        preShootTween?.kill()
+        shootTimerTween?.kill()
+        postLaserTween?.kill()
     }
 
     @RegisterFunction
@@ -78,12 +96,7 @@ class CapyBossChaseLaserState : CapyBossState() {
                     warningLine.show()
                 }
 
-                shootTimer?.let {
-                    if (it.timeLeft < chaseDuration * 0.1) {
-                        isShooting = true
-                        warningLine.hide()
-                    }
-                }
+                // preShootTween handles switching to shooting state and hiding warning
 
                 val speed = if (isShooting) {
                     (moveSpeed / 8)
@@ -106,19 +119,38 @@ class CapyBossChaseLaserState : CapyBossState() {
             laserEmitter.emitLaser()
 
             val totalLaserTime = laserData.castTime + laserData.emitTime + laserData.decayTime
-            Utils.createTimer(this@CapyBossChaseLaserState, totalLaserTime)
-                ?.timeout
-                ?.connect {
-                    isShooting = false
-                    shotCounter++
+            postLaserTween = this@CapyBossChaseLaserState.createTween()
+            postLaserTween
+                ?.tweenInterval(totalLaserTime)
+                ?.let {
+                    postLaserTween?.finished?.connect {
+                        isShooting = false
+                        shotCounter++
 
-                    if (shotCounter >= numberOfShot) {
-                        stateMachine.changeState(states["Idle"])
-                        return@connect
+                        if (shotCounter >= numberOfShot) {
+                            stateMachine.changeState(states["Idle"])
+                            return@connect
+                        }
+
+                        isShooting = false
+
+                        preShootTween = this@CapyBossChaseLaserState.createTween()
+                        preShootTween
+                            ?.tweenInterval(chaseDuration * 0.9)
+                            ?.let {
+                                preShootTween?.finished?.connect {
+                                    isShooting = true
+                                    warningLine.hide()
+                                }
+                            }
+
+                        shootTimerTween = this@CapyBossChaseLaserState.createTween()
+                        shootTimerTween
+                            ?.tweenInterval(chaseDuration)
+                            ?.let {
+                                shootTimerTween?.finished?.connect(this@CapyBossChaseLaserState, CapyBossChaseLaserState::shoot)
+                            }
                     }
-
-                    shootTimer = Utils.createTimer(this@CapyBossChaseLaserState, chaseDuration)
-                    shootTimer?.timeout?.connect(this@CapyBossChaseLaserState, CapyBossChaseLaserState::shoot)
                 }
         }
     }

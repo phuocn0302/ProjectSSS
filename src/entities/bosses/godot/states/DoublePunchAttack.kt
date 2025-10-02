@@ -1,12 +1,10 @@
 package entities.bosses.godot.states
 
-import commons.singletons.Utils
 import entities.bosses.godot.GodotBossState
 import godot.annotation.Export
 import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
-import godot.api.SceneTreeTimer
 import godot.api.Tween
 import godot.core.Vector2
 import godot.coroutines.GodotDispatchers
@@ -50,17 +48,23 @@ class GodotBossDoublePunchAttackState : GodotBossState() {
     var windUpOffset: Double = 30.0
 
     private var rightArmAttackPosIndex: Int = 0
-    private lateinit var timer: SceneTreeTimer
+    private var attackDelayTween: Tween? = null
     private var leftTween: Tween? = null
     private var rightTween: Tween? = null
+    private var following: Boolean = false
 
 
     @RegisterFunction
     override fun enter() {
         boss.circleProjectileSpawner.active = true
         rightArmAttackPosIndex = GD.posmod(rightArmAttackPosIndex + 1, 2)
-        timer = Utils.createTimer(this, attackDelay)!!
-        timer.timeout.connect(this, GodotBossDoublePunchAttackState::attack)
+        following = true
+        attackDelayTween = createTween()
+        attackDelayTween
+            ?.tweenInterval(attackDelay)
+            ?.let {
+                attackDelayTween?.finished?.connect(this, GodotBossDoublePunchAttackState::attack)
+            }
 
         leftTween?.kill()
         rightTween?.kill()
@@ -71,7 +75,8 @@ class GodotBossDoublePunchAttackState : GodotBossState() {
         boss.circleProjectileSpawner.active = false
         boss.rightArm.rotation = 0.0F
         boss.rightArm.scale = Vector2.ONE
-        timer.timeout.disconnect(this, GodotBossDoublePunchAttackState::attack)
+        following = false
+        attackDelayTween?.kill()
 
         leftTween?.kill()
         rightTween?.kill()
@@ -79,7 +84,7 @@ class GodotBossDoublePunchAttackState : GodotBossState() {
 
     @RegisterFunction
     override fun processFrame(delta: Double) {
-        if (timer.timeLeft > 0) {
+        if (following) {
             followPlayer(delta)
         }
     }
@@ -102,9 +107,9 @@ class GodotBossDoublePunchAttackState : GodotBossState() {
         boss.leftArm.explode()
         boss.rightArm.explode()
 
-        Utils.createTimer(this@GodotBossDoublePunchAttackState, 0.5)
-            ?.timeout
-            ?.await()
+        val delayTween = createTween()
+        delayTween?.tweenInterval(0.5)
+        delayTween?.finished?.await()
 
         goBackLeft()
         goBackRight()
