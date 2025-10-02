@@ -5,6 +5,7 @@ import godot.annotation.RegisterFunction
 import godot.api.Node2D
 import godot.api.Node
 import godot.core.VariantArray
+import godot.global.GD
 
 @RegisterClass
 open class ComponentContainer : Node2D() {
@@ -24,9 +25,9 @@ open class ComponentContainer : Node2D() {
     fun disableAllComponents() {
         for (c in getComponentList()) {
             when (c) {
-                is Component -> c.active = false
-                is Component2D -> c.active = false
-                is ComponentArea2D -> c.active = false
+                is Component -> c.deactivate()
+                is Component2D -> c.deactivate()
+                is ComponentArea2D -> c.deactivate()
             }
         }
     }

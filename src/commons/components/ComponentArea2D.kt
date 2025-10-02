@@ -20,7 +20,7 @@ abstract class ComponentArea2D : Area2D() {
         get() = _active
         set(value) {
             _active = value
-            setActiveState(value)
+            if (_active) activate() else deactivate()
         }
 
     @RegisterFunction
@@ -39,18 +39,15 @@ abstract class ComponentArea2D : Area2D() {
         // Override in subclasses or connect signals
     }
 
-    private fun setActiveState(value: Boolean) {
-        monitorable = value
-        monitoring = value
-    }
-
     @RegisterFunction
     open fun activate() {
-        active = true
+        monitorable = true
+        monitoring = true
     }
 
     @RegisterFunction
     open fun deactivate() {
-        active = false
+        monitorable = false
+        monitoring = false
     }
 }
