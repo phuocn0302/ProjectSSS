@@ -209,7 +209,10 @@ open class Projectile : PoolableEntity() {
         for (hit in hits) {
             val collider = hit["collider"]
             if (collider is HurtboxComponent) {
-                if (!collider.active) continue
+                // Check if the hurtbox is active before processing collision
+                if (!collider.active) {
+                    continue
+                }
                 collider.takeDamage(projectileData!!.damage)
                 deactivate()
             }
