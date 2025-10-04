@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PatternProjectileSpawnerData" load_steps=2 format=3 uid="uid://co2lm3xy4n63w"]
+
+[ext_resource type="Script" uid="uid://dtceh6oeh88r6" path="res://gdj/entities/projectiles/spawners/PatternProjectileSpawnerData.gdj" id="1_umd6e"]
+
+[resource]
+script = ExtResource("1_umd6e")
+number_of_projectile = 30
+travel_time = 0.7
+pattern_node_path = NodePath("Path2D")
+spawn_direction = Vector2(0, -1)
+spawn_interval = 0.5
+metadata/_custom_type_script = "uid://dtceh6oeh88r6"

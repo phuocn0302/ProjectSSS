@@ -1,0 +1,78 @@
+[gd_resource type="Resource" script_class="HomingProjectileData" load_steps=13 format=3 uid="uid://c1ukvm2alod0v"]
+
+[ext_resource type="PackedScene" uid="uid://c3rq577ok406m" path="res://src/particles/circle_explosion.tscn" id="1_ir8pq"]
+[ext_resource type="PackedScene" uid="uid://dutpnjw2uhfvb" path="res://src/particles/homing_projectile_particles.tscn" id="2_cdvgt"]
+[ext_resource type="Script" uid="uid://6a8nyghjiyib" path="res://gdj/entities/projectiles/types/HomingProjectileData.gdj" id="3_p060q"]
+[ext_resource type="Texture2D" uid="uid://b3vy0ravaq21x" path="res://assets/texture/projectiles/npc/missile_sheet.png" id="4_7o0ro"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ulutm"]
+size = Vector2(10, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1jqm"]
+atlas = ExtResource("4_7o0ro")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5j351"]
+atlas = ExtResource("4_7o0ro")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4o7ao"]
+atlas = ExtResource("4_7o0ro")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85msy"]
+atlas = ExtResource("4_7o0ro")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4y32e"]
+atlas = ExtResource("4_7o0ro")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxul7"]
+atlas = ExtResource("4_7o0ro")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8dmdf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d1jqm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5j351")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4o7ao")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85msy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4y32e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fxul7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 16.0
+}]
+
+[resource]
+script = ExtResource("3_p060q")
+target_group = "player"
+rotate_speed = 90.0
+chase_delay = 0.5
+sprite_frames = SubResource("SpriteFrames_8dmdf")
+texture_rotate_with_dir = false
+collision_shape = SubResource("RectangleShape2D_ulutm")
+shape_offset = Vector2(3, 0)
+collision_mask = 1
+speed = 70.0
+damage = 1.0
+life_time = 5.0
+vfx_color = Color(1, 0, 0, 1)
+on_hit_vfx = ExtResource("1_ir8pq")
+use_particles = true
+particles = ExtResource("2_cdvgt")
+metadata/_custom_type_script = "uid://6a8nyghjiyib"

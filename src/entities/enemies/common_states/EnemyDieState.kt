@@ -37,6 +37,7 @@ open class EnemyDieState : State() {
 
         projectileSpawnerContainer?.disableAllSpawner()
 
+        stateMachine.currentState?.exit()
         stateMachine.getChildren().filterIsInstance<State>().forEach { state ->
             if (state != this) {
                 state.queueFree()

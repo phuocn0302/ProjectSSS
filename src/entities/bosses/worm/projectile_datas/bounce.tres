@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=4 format=3 uid="uid://b44jvw1sf0nmu"]
+
+[ext_resource type="Script" uid="uid://bm7im4vdq70il" path="res://gdj/entities/projectiles/ProjectileData.gdj" id="1_sdbsc"]
+[ext_resource type="Texture2D" uid="uid://beum0m4l3cbaf" path="res://assets/texture/projectiles/npc/godot.png" id="2_sdbsc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f01f7"]
+radius = 12.0
+
+[resource]
+script = ExtResource("1_sdbsc")
+texture = ExtResource("2_sdbsc")
+texture_rotate_with_dir = true
+collision_shape = SubResource("CircleShape2D_f01f7")
+shape_offset = Vector2(0, 0)
+collision_mask = 1
+speed = 200.0
+damage = 1.0
+life_time = 3.0
+vfx_color = Color(1, 0, 0, 1)
+use_particles = true
+metadata/_custom_type_script = "uid://bm7im4vdq70il"

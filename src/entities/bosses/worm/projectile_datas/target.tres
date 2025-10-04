@@ -1,0 +1,53 @@
+[gd_resource type="Resource" script_class="SpawnerProjectileData" load_steps=10 format=3 uid="uid://cf6o0vs2plcw2"]
+
+[ext_resource type="Script" uid="uid://bm7im4vdq70il" path="res://gdj/entities/projectiles/ProjectileData.gdj" id="1_dnrpn"]
+[ext_resource type="Texture2D" uid="uid://bxvabngipk5ie" path="res://assets/texture/projectiles/npc/bullet_1.png" id="2_fxexi"]
+[ext_resource type="Script" uid="uid://djtx5g7eebda4" path="res://gdj/entities/projectiles/spawners/CircleProjectileSpawnerData.gdj" id="3_ja86t"]
+[ext_resource type="Script" uid="uid://cr2xwyd7sf4r8" path="res://gdj/entities/projectiles/types/SpawnerProjectileData.gdj" id="4_wu1xr"]
+[ext_resource type="Texture2D" uid="uid://f3wgaxd603wp" path="res://assets/texture/projectiles/npc/round_bullet.png" id="5_y24hn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vkkkt"]
+radius = 3.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vgcob"]
+radius = 2.0
+
+[sub_resource type="Resource" id="Resource_uqowq"]
+script = ExtResource("1_dnrpn")
+texture = ExtResource("2_fxexi")
+texture_rotate_with_dir = true
+collision_shape = SubResource("CircleShape2D_vgcob")
+shape_offset = Vector2(0, 0)
+collision_mask = 1
+speed = 120.0
+damage = 1.0
+life_time = 10.0
+vfx_color = Color(1, 0, 0, 1)
+use_particles = true
+metadata/_custom_type_script = "uid://bm7im4vdq70il"
+
+[sub_resource type="Resource" id="Resource_q0r11"]
+script = ExtResource("3_ja86t")
+number_of_projectiles = 2
+rotate_pattern = false
+rotate_speed = 20.0
+spawn_direction = Vector2(1, 0)
+spawn_interval = 0.5
+metadata/_custom_type_script = "uid://djtx5g7eebda4"
+
+[resource]
+script = ExtResource("4_wu1xr")
+projectile_spawner_data = SubResource("Resource_q0r11")
+projectile_type = 0
+projectile_data = SubResource("Resource_uqowq")
+texture = ExtResource("5_y24hn")
+texture_rotate_with_dir = false
+collision_shape = SubResource("CircleShape2D_vkkkt")
+shape_offset = Vector2(0, 0)
+collision_mask = 1
+speed = 100.0
+damage = 1.0
+life_time = 5.0
+vfx_color = Color(1, 0, 0, 1)
+use_particles = true
+metadata/_custom_type_script = "uid://cr2xwyd7sf4r8"

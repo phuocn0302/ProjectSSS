@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bvk5r1s5euot6"]
 
 [ext_resource type="PackedScene" uid="uid://oalne3evw244" path="res://src/entities/player/player.tscn" id="1_qbl1b"]
-[ext_resource type="PackedScene" uid="uid://bqvomxuvx0srd" path="res://src/entities/bosses/capy/capy_boss.tscn" id="2_hoglp"]
+[ext_resource type="PackedScene" uid="uid://dlkqlab5u0ccw" path="res://src/entities/bosses/worm/worm_boss.tscn" id="2_hoglp"]
 
 [node name="TestScene" type="Node2D"]
 
@@ -11,5 +11,5 @@ anchor_mode = 0
 [node name="Player" parent="." instance=ExtResource("1_qbl1b")]
 position = Vector2(92, 242)
 
-[node name="CapyBoss" parent="." instance=ExtResource("2_hoglp")]
-position = Vector2(128, 9)
+[node name="WormBoss" parent="." instance=ExtResource("2_hoglp")]
+position = Vector2(93, -59)
