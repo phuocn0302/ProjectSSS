@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cjcln02nsqn7k"]
 
-[ext_resource type="Script" uid="uid://tfjso1ftch0u" path="res://src/utils/scenes/ui/stage_retry.gd" id="1_gi1iw"]
+[ext_resource type="Script" uid="uid://bvhds26i7dgyb" path="res://src/utils/scenes/ui/StageRetry.kt" id="1_gi1iw"]
 [ext_resource type="Texture2D" uid="uid://nirtsbb8flm2" path="res://assets/texture/ui/dialog/try_again.png" id="2_28j0g"]
 [ext_resource type="Texture2D" uid="uid://r6ilnjuvjiix" path="res://assets/texture/ui/dialog/no_button.png" id="3_grdp6"]
 [ext_resource type="Texture2D" uid="uid://cx3m20gph5kgf" path="res://assets/texture/ui/dialog/no_button_hover.png" id="4_o76y0"]
@@ -19,12 +19,14 @@ grow_vertical = 2
 script = ExtResource("1_gi1iw")
 
 [node name="BG" type="ColorRect" parent="."]
+unique_name_in_owner = true
 layout_mode = 0
 offset_right = 180.0
 offset_bottom = 320.0
 color = Color(0, 0, 0, 0.784314)
 
 [node name="YouDied" type="Label" parent="."]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 32.0
 offset_top = 129.0
@@ -38,16 +40,19 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="DialogControl" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
 offset_right = 32.0
 offset_bottom = 40.0
 
 [node name="TryAgain" type="Sprite2D" parent="DialogControl"]
+unique_name_in_owner = true
 position = Vector2(90, 222)
 texture = ExtResource("2_28j0g")
 
 [node name="NoButton" type="TextureButton" parent="DialogControl"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -61,6 +66,7 @@ texture_normal = ExtResource("3_grdp6")
 texture_focused = ExtResource("4_o76y0")
 
 [node name="YesButton" type="TextureButton" parent="DialogControl"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
