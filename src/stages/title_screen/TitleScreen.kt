@@ -51,7 +51,9 @@ class TitleScreenManager : Node2D() {
                 getTree()?.currentScene?.addChild(ins)
 
                 ins?.treeExited?.connect {
-                    startButton.grabFocus()
+                    if (startButton.isInsideTree()) {
+                        startButton.grabFocus()
+                    }
                 }
             }
         }
@@ -62,7 +64,9 @@ class TitleScreenManager : Node2D() {
                 getTree()?.currentScene?.addChild(ins)
 
                 ins?.treeExited?.connect {
-                    quitButtons.grabFocus()
+                    if (quitButtons.isInsideTree()) {
+                        quitButtons.grabFocus()
+                    }
                 }
             }
         }
@@ -77,7 +81,9 @@ class TitleScreenManager : Node2D() {
             buttonsDefaultLocation[b] = b.position
 
             b.mouseEntered.connect {
-                b.grabFocus()
+                if (b.isInsideTree()) {
+                    b.grabFocus()
+                }
                 hoverButton(b)
             }
 
@@ -94,7 +100,9 @@ class TitleScreenManager : Node2D() {
             }
         }
 
-        startButton.grabFocus()
+        if (startButton.isInsideTree()) {
+            startButton.grabFocus()
+        }
     }
 
     private fun hoverButton(button: TextureButton) {
