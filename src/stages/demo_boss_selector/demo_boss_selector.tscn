@@ -1,18 +1,18 @@
 [gd_scene load_steps=8 format=3 uid="uid://dr0hj25a3exdq"]
 
-[ext_resource type="Script" uid="uid://b578c28ub7e1o" path="res://src/stages/demo_boss_selector/demo_boss_selector.gd" id="1_uxeac"]
-[ext_resource type="Script" uid="uid://cv8e7txkgwr01" path="res://src/stages/demo_boss_selector/boss_entry_data.gd" id="2_wju0y"]
-[ext_resource type="Resource" uid="uid://dxwj2dnak3ny6" path="res://src/stages/demo_boss_selector/resources/godot_boss_entry.tres" id="3_h0vkj"]
-[ext_resource type="Resource" uid="uid://cfxmmq3gvq4ga" path="res://src/stages/demo_boss_selector/resources/capy_boss_entry.tres" id="4_w2ruo"]
+[ext_resource type="Script" uid="uid://bj0xg3o41xdat" path="res://src/stages/demo_boss_selector/DemoBossSelector.kt" id="1_uxeac"]
+[ext_resource type="Script" uid="uid://dfg8rhj1lwadr" path="res://gdj/stages/demo_boss_selector/BossEntryData.gdj" id="2_gd2o4"]
+[ext_resource type="Resource" uid="uid://c1o0tbbci8oto" path="res://src/stages/demo_boss_selector/resources/godot_boss_entry.tres" id="3_h0vkj"]
+[ext_resource type="Resource" uid="uid://dl0e47kpw5qhj" path="res://src/stages/demo_boss_selector/resources/capy_boss_entry.tres" id="4_w2ruo"]
 [ext_resource type="Texture2D" uid="uid://c1u6q6oj1vaar" path="res://assets/texture/ui/dialog/return_button.png" id="5_h0vkj"]
-[ext_resource type="Resource" uid="uid://bl1mm7pp0uocj" path="res://src/stages/demo_boss_selector/resources/worm_boss_entry.tres" id="5_w2ruo"]
+[ext_resource type="Resource" uid="uid://d2qm4qxedpih0" path="res://src/stages/demo_boss_selector/resources/worm_boss_entry.tres" id="5_w2ruo"]
 [ext_resource type="Texture2D" uid="uid://djrgdi181neaa" path="res://assets/texture/ui/dialog/return_button_hover.png" id="6_w2ruo"]
 
 [node name="DemoBossSelector" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_uxeac")
-bosses_data = Array[ExtResource("2_wju0y")]([ExtResource("3_h0vkj"), ExtResource("4_w2ruo"), ExtResource("5_w2ruo")])
+bosses_data = Array[ExtResource("2_gd2o4")]([ExtResource("3_h0vkj"), ExtResource("4_w2ruo"), ExtResource("5_w2ruo")])
 
 [node name="BG" type="ColorRect" parent="."]
 layout_mode = 0
@@ -71,5 +71,5 @@ texture_normal = ExtResource("5_h0vkj")
 texture_hover = ExtResource("6_w2ruo")
 texture_focused = ExtResource("6_w2ruo")
 
-[connection signal="pressed" from="DissmissButton" to="." method="_on_return_button_pressed"]
-[connection signal="pressed" from="ButtonControl/ReturnButton" to="." method="_on_return_button_pressed"]
+[connection signal="pressed" from="DissmissButton" to="." method="on_return_button_pressed"]
+[connection signal="pressed" from="ButtonControl/ReturnButton" to="." method="on_return_button_pressed"]

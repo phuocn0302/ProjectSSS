@@ -100,4 +100,12 @@ class GodotBoss : Enemy() {
 	fun onHealthReachZero() {
 		stateMachine.changeState(dieState)
 	}
+
+    override fun getMaxHealth(): Double {
+        return bossData.maxHealth
+    }
+
+    override fun getHealthComp(): HealthComponent {
+        return healthComponent
+    }
 }

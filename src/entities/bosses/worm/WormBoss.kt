@@ -16,7 +16,6 @@ import godot.annotation.Export
 import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
-import godot.api.AnimatedSprite2D
 import godot.api.Marker2D
 import godot.api.PackedScene
 import godot.api.GPUParticles2D
@@ -167,6 +166,14 @@ class WormBoss : Enemy() {
     fun onHealthReachedZero() {
         val dieState = stateMachine.getNodeOrNull("Die") as? State
         if (dieState != null) stateMachine.changeState(dieState)
+    }
+
+    override fun getMaxHealth(): Double {
+        return bossData.maxHealth
+    }
+
+    override fun getHealthComp(): HealthComponent {
+        return healthComponent
     }
 }
 

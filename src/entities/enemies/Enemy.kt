@@ -1,5 +1,6 @@
 package entities.enemies
 
+import commons.components.etc.HealthComponent
 import entities.Entity
 import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
@@ -7,7 +8,7 @@ import godot.annotation.RegisterSignal
 import godot.core.signal0
 
 @RegisterClass
-open class Enemy : Entity() {
+abstract class  Enemy : Entity() {
 
     @RegisterSignal
     val onDefeated by signal0()
@@ -16,4 +17,7 @@ open class Enemy : Entity() {
     override fun _enterTree() {
         addToGroup("enemy")
     }
+
+    abstract fun getMaxHealth() : Double
+    abstract fun getHealthComp() : HealthComponent
 }

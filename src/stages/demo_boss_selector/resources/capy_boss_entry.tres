@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="BossEntryData" load_steps=4 format=3 uid="uid://cfxmmq3gvq4ga"]
+[gd_resource type="Resource" script_class="BossEntryData" load_steps=4 format=3 uid="uid://dl0e47kpw5qhj"]
 
 [ext_resource type="Texture2D" uid="uid://cnvpqxn61n477" path="res://assets/texture/ui/demo_stage_selector/boss_mugshot/capy_boss_mugshot.png" id="1_hkxch"]
 [ext_resource type="PackedScene" uid="uid://bqvomxuvx0srd" path="res://src/entities/bosses/capy/capy_boss.tscn" id="2_1lgy6"]
-[ext_resource type="Script" uid="uid://cv8e7txkgwr01" path="res://src/stages/demo_boss_selector/boss_entry_data.gd" id="2_onet7"]
+[ext_resource type="Script" uid="uid://dfg8rhj1lwadr" path="res://gdj/stages/demo_boss_selector/BossEntryData.gdj" id="3_bjwtb"]
 
 [resource]
-script = ExtResource("2_onet7")
+script = ExtResource("3_bjwtb")
 boss_name = "Capy"
 boss_mugshot = ExtResource("1_hkxch")
 boss_scene = ExtResource("2_1lgy6")
-metadata/_custom_type_script = "uid://cv8e7txkgwr01"
+metadata/_custom_type_script = "uid://dfg8rhj1lwadr"
