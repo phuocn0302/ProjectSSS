@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://oalne3evw244"]
+[gd_scene load_steps=34 format=3 uid="uid://oalne3evw244"]
 
 [ext_resource type="Script" uid="uid://bypn1eokfsceh" path="res://src/entities/player/Player.kt" id="1_sglur"]
 [ext_resource type="Texture2D" uid="uid://chdkmvgxhhpxt" path="res://assets/texture/player/player.png" id="1_symyc"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://bg7b5pq6cvl1r" path="res://src/commons/components/sfx/ScreenShakeComponent.kt" id="12_we0b7"]
 [ext_resource type="Script" uid="uid://bn3c3ksmnxg2d" path="res://src/commons/components/sfx/FrameFreezeComponent.kt" id="13_j3ovn"]
 [ext_resource type="Script" uid="uid://mh8doivgngue" path="res://src/commons/components/sfx/GhostTrailingComponent.kt" id="14_afbqv"]
+[ext_resource type="Script" uid="uid://dbnruyuvp00yo" path="res://gdj/entities/player/MobileInputHandler.gdj" id="15_fjj3i"]
 [ext_resource type="Script" uid="uid://bytw8l4aye7xe" path="res://src/entities/projectiles/ProjectileSpawner.kt" id="15_gx6sm"]
 [ext_resource type="Script" uid="uid://lth7bnkygj37" path="res://src/commons/components/etc/IFrameComponent.kt" id="17_3wlsy"]
 [ext_resource type="Resource" uid="uid://d2ebh38iei3wr" path="res://src/entities/projectiles/resources/player/base.tres" id="18_b2kln"]
@@ -146,7 +147,7 @@ radius = 5.09902
 [sub_resource type="Resource" id="Resource_5qgjf"]
 script = ExtResource("19_a31ob")
 spawn_direction = Vector2(0, -1)
-spawn_interval = 0.5
+spawn_interval = 0.2
 metadata/_custom_type_script = "uid://bxumbkfx8bf08"
 
 [node name="Player" type="Node2D" groups=["player"]]
@@ -208,12 +209,20 @@ entity = NodePath("../..")
 script = ExtResource("12_we0b7")
 entity = NodePath("../..")
 
+[node name="ShootCooldown" type="Timer" parent="."]
+unique_name_in_owner = true
+
 [node name="InputHandler" type="Node" parent="." node_paths=PackedStringArray("shoot_cooldown_timer", "dash_cooldown_timer")]
+unique_name_in_owner = true
 script = ExtResource("3_qiwj3")
-shoot_cooldown_timer = NodePath("ShootCooldown")
+shoot_cooldown_timer = NodePath("../ShootCooldown")
 dash_cooldown_timer = NodePath("../StateMachine/Dash/DashCooldownTimer")
 
-[node name="ShootCooldown" type="Timer" parent="InputHandler"]
+[node name="MobileInputHandler" type="Node" parent="." node_paths=PackedStringArray("dash_cooldown_timer")]
+unique_name_in_owner = true
+script = ExtResource("15_fjj3i")
+dash_cooldown_timer = NodePath("../StateMachine/Dash/DashCooldownTimer")
+metadata/_custom_type_script = "uid://dbnruyuvp00yo"
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("actor", "starting_state")]
 script = ExtResource("2_abrql")
@@ -236,6 +245,7 @@ one_shot = true
 one_shot = true
 
 [node name="ProjectileSpawner" type="Node2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(0, -7)
 script = ExtResource("15_gx6sm")
 spawner_data = SubResource("Resource_5qgjf")
@@ -244,8 +254,8 @@ active = false
 
 [connection signal="hurt" from="Components/HurtboxComponent" to="Components/FrameFreezeComponent" method="freeze"]
 [connection signal="hurt" from="Components/HurtboxComponent" to="Components/ScreenShakeComponent" method="shake"]
+[connection signal="timeout" from="ShootCooldown" to="InputHandler" method="_on_shoot_cooldown_timeout"]
 [connection signal="on_shoot_requested" from="InputHandler" to="ProjectileSpawner" method="spawn"]
-[connection signal="timeout" from="InputHandler/ShootCooldown" to="InputHandler" method="_on_shoot_cooldown_timeout"]
 [connection signal="on_dash_ended" from="StateMachine/Dash" to="Components/GhostTrailingComponent" method="deactivate"]
 [connection signal="on_dash_ended" from="StateMachine/Dash" to="Components/IFrameComponent" method="start_i_frame" binds= [0.5]]
 [connection signal="on_dashed" from="StateMachine/Dash" to="Components/HurtboxComponent" method="deactivate"]

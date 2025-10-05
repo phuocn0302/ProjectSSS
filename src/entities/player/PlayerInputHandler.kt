@@ -55,7 +55,7 @@ class PlayerInputHandler : Node() {
 
     @RegisterFunction
     override fun _input(event: InputEvent?) {
-        if (event == null) {
+        if (event == null || player == null) {
             return
         }
 
