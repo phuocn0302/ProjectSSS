@@ -22,18 +22,19 @@ abstract class Component : Node() {
     var active: Boolean
         get() = _active
         set(value) {
-            _active = value
-            if (_active) activate() else deactivate()
+            if (value) activate() else deactivate()
         }
 
     @RegisterFunction
     open fun activate() {
+        _active = true
         setProcess(true)
         setPhysicsProcess(true)
     }
 
     @RegisterFunction
     open fun deactivate() {
+        _active = false
         setProcess(false)
         setPhysicsProcess(false)
     }

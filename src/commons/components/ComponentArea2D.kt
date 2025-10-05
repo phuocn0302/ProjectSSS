@@ -20,8 +20,7 @@ abstract class ComponentArea2D : Area2D() {
     var active: Boolean
         get() = _active
         set(value) {
-            _active = value
-            if (_active) activate() else deactivate()
+            if (value) activate() else deactivate()
         }
 
     @RegisterFunction
@@ -42,6 +41,8 @@ abstract class ComponentArea2D : Area2D() {
 
     @RegisterFunction
     open fun activate() {
+        _active = true
+
         monitorable = true
         monitoring = true
 
@@ -54,6 +55,8 @@ abstract class ComponentArea2D : Area2D() {
 
     @RegisterFunction
     open fun deactivate() {
+        _active = false
+
         monitorable = false
         monitoring = false
 

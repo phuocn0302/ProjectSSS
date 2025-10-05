@@ -14,7 +14,9 @@ open class State : Node() {
 
     @RegisterFunction
     override fun _exitTree() {
-        exit()
+        if (stateMachine.active) {
+            exit()
+        }
     }
 
     @RegisterFunction
