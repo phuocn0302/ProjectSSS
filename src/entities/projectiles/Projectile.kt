@@ -24,6 +24,7 @@ import godot.core.Transform2D
 import godot.core.VariantArray
 import godot.core.Vector2
 import godot.global.GD
+import godot.global.GD.load
 import particles.CPUProjectileParticles
 
 
@@ -90,8 +91,8 @@ open class Projectile : PoolableEntity() {
         if (!isVisibleProjectile) return
 
         val data = projectileData ?: return
-        if (data.onHitVfx != null && !vfxSpawned) {
-            spawnSfx(data.onHitVfx!!)
+        if (!vfxSpawned) {
+            spawnSfx(data.onHitVfx ?: ProjectileData.PROJECTILE_HIT_PARTICLES!!)
         }
     }
 
@@ -139,7 +140,9 @@ open class Projectile : PoolableEntity() {
 
     private fun setParticles() {
         val data = projectileData ?: return
-        if (data.particles == null) return
+        if (data.particles == null) {
+            data.particles = ProjectileData.PROJECTILE_PARTICLES
+        }
 
         if (particlesNode == null || !GD.isInstanceValid(particlesNode!!)) {
             particlesNode = getNodeOrNull("Particles") as? CPUParticles2D

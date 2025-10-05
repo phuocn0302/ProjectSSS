@@ -1,7 +1,5 @@
-[gd_resource type="Resource" load_steps=8 format=3 uid="uid://g5qufoff42o7"]
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://g5qufoff42o7"]
 
-[ext_resource type="PackedScene" uid="uid://bt10he0p0pvkk" path="res://src/particles/projectile_hit_particles.tscn" id="1_37i1x"]
-[ext_resource type="PackedScene" uid="uid://rj3hxypveqt8" path="res://src/particles/projectile_particles.tscn" id="2_ysksb"]
 [ext_resource type="Script" uid="uid://djtx5g7eebda4" path="res://gdj/entities/projectiles/spawners/CircleProjectileSpawnerData.gdj" id="3_j6iy3"]
 [ext_resource type="Script" uid="uid://608ihru5bk5e" path="res://src/entities/projectiles/types/SpawnerProjectileData.kt" id="4_anm4f"]
 [ext_resource type="Texture2D" uid="uid://f3wgaxd603wp" path="res://assets/texture/projectiles/npc/round_bullet.png" id="5_uu5ac"]
@@ -31,6 +29,4 @@ speed = 70.0
 damage = 1.0
 life_time = 5.0
 vfx_color = Color(1, 0, 0, 1)
-on_hit_vfx = ExtResource("1_37i1x")
 use_particles = true
-particles = ExtResource("2_ysksb")
