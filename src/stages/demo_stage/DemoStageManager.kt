@@ -1,5 +1,6 @@
 package stages.demo_stage
 
+import utils.scenes.ui.PauseManager
 import commons.singletons.Utils
 import entities.enemies.Enemy
 import entities.player.Player
@@ -44,6 +45,7 @@ class DemoStageManager : Node2D() {
     @RegisterProperty
     var enemySpawnPos = variantArrayOf<Vector2>()
 
+    private lateinit var pauseManager: PauseManager
     private lateinit var inputHint: Label
     private lateinit var enemySpawnTimer: Timer
     private lateinit var bossHealthBar: ProgressBar
@@ -72,7 +74,10 @@ class DemoStageManager : Node2D() {
         bossHealthBar.visible = false
         player.treeExited.connect(Callable(this, "onPlayerDie".toGodotName()))
 
-        // PauseManger.is_in_stage = true // TODO: Implement PauseManager
+        pauseManager = PauseManager()
+        this.addChild(pauseManager)
+
+        pauseManager.isInStage = true
     }
 
     @RegisterFunction
