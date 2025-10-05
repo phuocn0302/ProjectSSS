@@ -85,6 +85,12 @@ class GodotBoss : Enemy() {
 		healthComponent.healthReachedZero.connect(this, GodotBoss::onHealthReachZero)
 	}
 
+
+    @RegisterFunction
+    override fun _exitTree() {
+        onDefeated.emit()
+    }
+
 	@RegisterFunction
 	override fun _process(delta: Double) {
 		getTree()?.getFirstNodeInGroup("player")?.let { player = it as Player }
