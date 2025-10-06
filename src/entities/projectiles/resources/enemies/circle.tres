@@ -1,25 +1,21 @@
-[gd_resource type="Resource" script_class="ProjectileData" load_steps=6 format=3 uid="uid://bir702nqk15lx"]
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=4 format=3 uid="uid://dbcbjk26q4sa8"]
 
-[ext_resource type="PackedScene" uid="uid://bt10he0p0pvkk" path="res://src/particles/projectile_hit_particles.tscn" id="1_kdfjk"]
-[ext_resource type="PackedScene" uid="uid://rj3hxypveqt8" path="res://src/particles/projectile_particles.tscn" id="2_51cgu"]
-[ext_resource type="Script" uid="uid://bpmqwg4oj70ye" path="res://src/entities/projectiles/projectile_data.gd" id="3_xahkp"]
+[ext_resource type="Script" uid="uid://bm7im4vdq70il" path="res://gdj/entities/projectiles/ProjectileData.gdj" id="1_c8v08"]
 [ext_resource type="Texture2D" uid="uid://f3wgaxd603wp" path="res://assets/texture/projectiles/npc/round_bullet.png" id="4_30gak"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_rqkvk"]
-radius = 2.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_sxqkn"]
+radius = 3.0
 
 [resource]
-script = ExtResource("3_xahkp")
+script = ExtResource("1_c8v08")
 texture = ExtResource("4_30gak")
 texture_rotate_with_dir = false
-collision_shape = SubResource("CircleShape2D_rqkvk")
+collision_shape = SubResource("CircleShape2D_sxqkn")
 shape_offset = Vector2(0, 0)
 collision_mask = 1
 speed = 100.0
 damage = 1.0
 life_time = 10.0
 vfx_color = Color(1, 0, 0, 1)
-on_hit_vfx = ExtResource("1_kdfjk")
 use_particles = true
-particles = ExtResource("2_51cgu")
-metadata/_custom_type_script = "uid://bpmqwg4oj70ye"
+metadata/_custom_type_script = "uid://bm7im4vdq70il"

@@ -1,24 +1,38 @@
-[gd_scene load_steps=29 format=3 uid="uid://oalne3evw244"]
+[gd_scene load_steps=34 format=3 uid="uid://oalne3evw244"]
 
-[ext_resource type="Script" uid="uid://8bghf13kjjsj" path="res://src/entities/player/player.gd" id="1_sglur"]
+[ext_resource type="Script" uid="uid://bypn1eokfsceh" path="res://src/entities/player/Player.kt" id="1_sglur"]
 [ext_resource type="Texture2D" uid="uid://chdkmvgxhhpxt" path="res://assets/texture/player/player.png" id="1_symyc"]
 [ext_resource type="Material" uid="uid://c8p6hbdqamn7e" path="res://src/shaders/entity_mat.tres" id="1_yqrof"]
-[ext_resource type="Script" uid="uid://dg0til6w02wfe" path="res://src/commons/state_machine/state_machine.gd" id="2_abrql"]
-[ext_resource type="Script" uid="uid://dw1jqpnd6whbj" path="res://src/entities/player/player_input_handler.gd" id="3_qiwj3"]
-[ext_resource type="Script" uid="uid://cv6fopcv2mvlb" path="res://src/entities/player/states/idle_state.gd" id="4_fkugw"]
-[ext_resource type="Script" uid="uid://byhucwtlm0ibc" path="res://src/entities/player/states/move_state.gd" id="5_8fjmc"]
-[ext_resource type="Script" uid="uid://bw60t7nux1n3i" path="res://src/entities/player/states/dash_state.gd" id="6_8fjmc"]
-[ext_resource type="Script" uid="uid://chv2lphkgpnes" path="res://src/commons/components/etc/hurtbox_component.gd" id="9_bectd"]
-[ext_resource type="Script" uid="uid://s7docibhn2wy" path="res://src/commons/components/etc/health_component.gd" id="9_wvtmh"]
+[ext_resource type="Script" uid="uid://u6r4u4ekrgs2" path="res://src/commons/state_machine/StateMachine.kt" id="2_abrql"]
+[ext_resource type="Script" uid="uid://cj0lwadeu5mxn" path="res://gdj/entities/player/PlayerData.gdj" id="3_5qgjf"]
+[ext_resource type="Script" uid="uid://cpso6c2ds8tgf" path="res://src/entities/player/PlayerInputHandler.kt" id="3_qiwj3"]
+[ext_resource type="Script" uid="uid://b0ldh8wpd8vxs" path="res://src/entities/player/states/IdleState.kt" id="4_fkugw"]
+[ext_resource type="Script" uid="uid://biuqq02a3vt06" path="res://src/entities/player/states/MoveState.kt" id="5_8fjmc"]
+[ext_resource type="Script" uid="uid://bh4po35ugcd0a" path="res://src/entities/player/states/DashState.kt" id="6_8fjmc"]
+[ext_resource type="Script" uid="uid://d0gf87hveesrj" path="res://gdj/commons/components/etc/HurtboxComponent.gdj" id="9_bectd"]
+[ext_resource type="Script" uid="uid://cuxob5vyvkk4m" path="res://src/commons/components/etc/HealthComponent.kt" id="9_wvtmh"]
 [ext_resource type="PackedScene" uid="uid://dfl00xfc5e7kj" path="res://src/particles/explode_particles.tscn" id="10_j3ovn"]
-[ext_resource type="Script" uid="uid://c3dex51h0lylc" path="res://src/commons/components/sfx/hit_flash_component.gd" id="11_7thud"]
-[ext_resource type="Script" uid="uid://km3cwucdktmb" path="res://src/commons/components/movements/movement_bound_component.gd" id="11_b2kln"]
-[ext_resource type="Script" uid="uid://bue745k8n3n7r" path="res://src/commons/components/sfx/screen_shake_component.gd" id="12_we0b7"]
-[ext_resource type="Script" uid="uid://bn8rssbc5dw31" path="res://src/commons/components/sfx/frame_freeze_component.gd" id="13_j3ovn"]
-[ext_resource type="Script" uid="uid://1hf68snymgbl" path="res://src/commons/components/sfx/ghost_trailing_component.gd" id="14_afbqv"]
-[ext_resource type="Script" uid="uid://ch7r1mf7ar7uc" path="res://src/entities/projectiles/projectile_spawner.gd" id="15_gx6sm"]
-[ext_resource type="Script" uid="uid://8jap68kirkbv" path="res://src/commons/components/etc/iframe_component.gd" id="17_3wlsy"]
-[ext_resource type="Resource" uid="uid://d20y1i8w5tvfe" path="res://src/entities/projectiles/resources/player/base.tres" id="18_b2kln"]
+[ext_resource type="Script" uid="uid://tpl3rw1xolie" path="res://src/commons/components/sfx/HitFlashComponent.kt" id="11_7thud"]
+[ext_resource type="Script" uid="uid://fxed77hnyj3r" path="res://src/commons/components/movements/MovementBoundComponent.kt" id="11_b2kln"]
+[ext_resource type="Script" uid="uid://bg7b5pq6cvl1r" path="res://src/commons/components/sfx/ScreenShakeComponent.kt" id="12_we0b7"]
+[ext_resource type="Script" uid="uid://bn3c3ksmnxg2d" path="res://src/commons/components/sfx/FrameFreezeComponent.kt" id="13_j3ovn"]
+[ext_resource type="Script" uid="uid://mh8doivgngue" path="res://src/commons/components/sfx/GhostTrailingComponent.kt" id="14_afbqv"]
+[ext_resource type="Script" uid="uid://dbnruyuvp00yo" path="res://gdj/entities/player/MobileInputHandler.gdj" id="15_fjj3i"]
+[ext_resource type="Script" uid="uid://bytw8l4aye7xe" path="res://src/entities/projectiles/ProjectileSpawner.kt" id="15_gx6sm"]
+[ext_resource type="Script" uid="uid://lth7bnkygj37" path="res://src/commons/components/etc/IFrameComponent.kt" id="17_3wlsy"]
+[ext_resource type="Resource" uid="uid://d2ebh38iei3wr" path="res://src/entities/projectiles/resources/player/base.tres" id="18_b2kln"]
+[ext_resource type="Script" uid="uid://bxumbkfx8bf08" path="res://gdj/entities/projectiles/spawners/ProjectileSpawnerData.gdj" id="19_a31ob"]
+
+[sub_resource type="Resource" id="Resource_fjj3i"]
+script = ExtResource("3_5qgjf")
+max_move_speed = 150.0
+min_move_speed = 50.0
+move_accel = 2000.0
+dash_speed = 400.0
+dash_time = 0.1
+dash_cooldown = 0.4
+shoot_interval = 0.2
+metadata/_custom_type_script = "uid://cj0lwadeu5mxn"
 
 [sub_resource type="Shader" id="Shader_yqrof"]
 code = "shader_type canvas_item;
@@ -130,12 +144,17 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_wvtmh"]
 radius = 5.09902
 
+[sub_resource type="Resource" id="Resource_5qgjf"]
+script = ExtResource("19_a31ob")
+spawn_direction = Vector2(0, -1)
+spawn_interval = 0.2
+metadata/_custom_type_script = "uid://bxumbkfx8bf08"
+
 [node name="Player" type="Node2D" groups=["player"]]
 z_index = 100
 material = ExtResource("1_yqrof")
 script = ExtResource("1_sglur")
-dash_speed = 400.0
-dash_cooldown = 0.6
+player_data = SubResource("Resource_fjj3i")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_3wlsy")
@@ -150,14 +169,11 @@ frame_progress = 0.640853
 script = ExtResource("9_wvtmh")
 die_sfx = ExtResource("10_j3ovn")
 entity = NodePath("../..")
-metadata/_custom_type_script = "uid://s7docibhn2wy"
 
-[node name="HurtboxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("health_component", "entity")]
+[node name="HurtboxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("health_component")]
 collision_mask = 0
 script = ExtResource("9_bectd")
 health_component = NodePath("../HealthComponent")
-entity = NodePath("../..")
-metadata/_custom_type_script = "uid://chv2lphkgpnes"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Components/HurtboxComponent"]
 shape = SubResource("CircleShape2D_wvtmh")
@@ -167,48 +183,51 @@ script = ExtResource("11_7thud")
 sprite = NodePath("../../AnimatedSprite2D")
 health_component = NodePath("../HealthComponent")
 entity = NodePath("../..")
-metadata/_custom_type_script = "uid://c3dex51h0lylc"
 
 [node name="FrameFreezeComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
 script = ExtResource("13_j3ovn")
+freeze_duration = 0.1
 entity = NodePath("../..")
-metadata/_custom_type_script = "uid://bn8rssbc5dw31"
 
 [node name="GhostTrailingComponent" type="Node" parent="Components" node_paths=PackedStringArray("anim_sprite", "entity")]
 script = ExtResource("14_afbqv")
 ghost_spawn_interval = 0.01
 anim_sprite = NodePath("../../AnimatedSprite2D")
-active = false
 entity = NodePath("../..")
-metadata/_custom_type_script = "uid://1hf68snymgbl"
+active = false
 
 [node name="IFrameComponent" type="Node" parent="Components" node_paths=PackedStringArray("hurtbox_component", "entity")]
 script = ExtResource("17_3wlsy")
 hurtbox_component = NodePath("../HurtboxComponent")
-iframe_duration = 1.0
 entity = NodePath("../..")
-metadata/_custom_type_script = "uid://8jap68kirkbv"
 
 [node name="MovementBoundsComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
 script = ExtResource("11_b2kln")
 entity = NodePath("../..")
-metadata/_custom_type_script = "uid://km3cwucdktmb"
 
 [node name="ScreenShakeComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
 script = ExtResource("12_we0b7")
 entity = NodePath("../..")
-metadata/_custom_type_script = "uid://bue745k8n3n7r"
 
-[node name="InputHandler" type="Node" parent="."]
+[node name="ShootCooldown" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="InputHandler" type="Node" parent="." node_paths=PackedStringArray("shoot_cooldown_timer", "dash_cooldown_timer")]
+unique_name_in_owner = true
 script = ExtResource("3_qiwj3")
+shoot_cooldown_timer = NodePath("../ShootCooldown")
+dash_cooldown_timer = NodePath("../StateMachine/Dash/DashCooldownTimer")
 
-[node name="ShootCooldown" type="Timer" parent="InputHandler"]
+[node name="MobileInputHandler" type="Node" parent="." node_paths=PackedStringArray("dash_cooldown_timer")]
+unique_name_in_owner = true
+script = ExtResource("15_fjj3i")
+dash_cooldown_timer = NodePath("../StateMachine/Dash/DashCooldownTimer")
+metadata/_custom_type_script = "uid://dbnruyuvp00yo"
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("actor", "starting_state")]
 script = ExtResource("2_abrql")
 actor = NodePath("..")
 starting_state = NodePath("Idle")
-metadata/_custom_type_script = "uid://dg0til6w02wfe"
 
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("4_fkugw")
@@ -226,18 +245,18 @@ one_shot = true
 one_shot = true
 
 [node name="ProjectileSpawner" type="Node2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(0, -7)
 script = ExtResource("15_gx6sm")
+spawner_data = SubResource("Resource_5qgjf")
 projectile_data = ExtResource("18_b2kln")
 active = false
-metadata/_custom_type_script = "uid://ch7r1mf7ar7uc"
 
-[connection signal="health_depleted" from="Components/HealthComponent" to="Components/FrameFreezeComponent" method="freeze"]
+[connection signal="hurt" from="Components/HurtboxComponent" to="Components/FrameFreezeComponent" method="freeze"]
 [connection signal="hurt" from="Components/HurtboxComponent" to="Components/ScreenShakeComponent" method="shake"]
-[connection signal="shoot_requested" from="InputHandler" to="ProjectileSpawner" method="spawn"]
-[connection signal="timeout" from="InputHandler/ShootCooldown" to="InputHandler" method="_on_shoot_cooldown_timeout"]
-[connection signal="end_dashed" from="StateMachine/Dash" to="Components/GhostTrailingComponent" method="deactivate"]
-[connection signal="end_dashed" from="StateMachine/Dash" to="Components/IFrameComponent" method="start_iframe" binds= [0.5]]
-[connection signal="just_dashed" from="StateMachine/Dash" to="Components/HurtboxComponent" method="deactivate"]
-[connection signal="just_dashed" from="StateMachine/Dash" to="Components/GhostTrailingComponent" method="activate"]
-[connection signal="timeout" from="StateMachine/Dash/DashTimer" to="StateMachine/Dash" method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="ShootCooldown" to="InputHandler" method="_on_shoot_cooldown_timeout"]
+[connection signal="on_shoot_requested" from="InputHandler" to="ProjectileSpawner" method="spawn"]
+[connection signal="on_dash_ended" from="StateMachine/Dash" to="Components/GhostTrailingComponent" method="deactivate"]
+[connection signal="on_dash_ended" from="StateMachine/Dash" to="Components/IFrameComponent" method="start_i_frame" binds= [0.5]]
+[connection signal="on_dashed" from="StateMachine/Dash" to="Components/HurtboxComponent" method="deactivate"]
+[connection signal="on_dashed" from="StateMachine/Dash" to="Components/GhostTrailingComponent" method="activate"]

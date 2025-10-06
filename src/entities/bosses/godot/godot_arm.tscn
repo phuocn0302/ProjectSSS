@@ -1,12 +1,12 @@
 [gd_scene load_steps=18 format=3 uid="uid://dptehxrxtfpx3"]
 
-[ext_resource type="Script" uid="uid://d80inedj64w" path="res://src/entities/bosses/godot/godot_arm.gd" id="1_7th0q"]
+[ext_resource type="Script" uid="uid://cju6mfu24h253" path="res://src/entities/bosses/godot/GodotBossArm.kt" id="1_7th0q"]
 [ext_resource type="Texture2D" uid="uid://crwjrqqrb5lxs" path="res://assets/texture/npc/bosses/boss_godot/arm.png" id="3_r7kdd"]
-[ext_resource type="Script" uid="uid://chv2lphkgpnes" path="res://src/commons/components/etc/hurtbox_component.gd" id="4_0p2h0"]
-[ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://src/commons/components/etc/hitbox_component.gd" id="5_64dyw"]
-[ext_resource type="Script" uid="uid://co2kl5qnx2yrs" path="res://src/commons/components/movements/idle_move_component.gd" id="6_ts7ta"]
-[ext_resource type="Script" uid="uid://1hf68snymgbl" path="res://src/commons/components/sfx/ghost_trailing_component.gd" id="8_0p2h0"]
-[ext_resource type="Script" uid="uid://c3dex51h0lylc" path="res://src/commons/components/sfx/hit_flash_component.gd" id="8_64dyw"]
+[ext_resource type="Script" uid="uid://chsuvyscxd1l5" path="res://src/commons/components/etc/HurtboxComponent.kt" id="4_0p2h0"]
+[ext_resource type="Script" uid="uid://o66i5m677qg1" path="res://src/commons/components/etc/HitboxComponent.kt" id="5_64dyw"]
+[ext_resource type="Script" uid="uid://bie8myqej3ret" path="res://src/commons/components/movements/IdleMoveComponent.kt" id="6_ts7ta"]
+[ext_resource type="Script" uid="uid://mh8doivgngue" path="res://src/commons/components/sfx/GhostTrailingComponent.kt" id="8_0p2h0"]
+[ext_resource type="Script" uid="uid://tpl3rw1xolie" path="res://src/commons/components/sfx/HitFlashComponent.kt" id="8_64dyw"]
 [ext_resource type="Texture2D" uid="uid://8wkr5neo2iq7" path="res://assets/texture/sfx/4x_white_particle.png" id="8_r7kdd"]
 
 [sub_resource type="Shader" id="Shader_7th0q"]
@@ -166,41 +166,39 @@ scale_curve = SubResource("CurveTexture_64dyw")
 [node name="GodotArm" type="Node2D"]
 material = SubResource("ShaderMaterial_r7kdd")
 script = ExtResource("1_7th0q")
-metadata/_custom_type_script = "uid://djnp2yh5h2uih"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_0p2h0")
 rotation = 1.5708
 texture = ExtResource("3_r7kdd")
 
-[node name="HurtboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("entity")]
+[node name="HurtboxComponent" type="Area2D" parent="."]
+unique_name_in_owner = true
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("4_0p2h0")
-entity = NodePath("..")
-metadata/_custom_type_script = "uid://chv2lphkgpnes"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("RectangleShape2D_akxlh")
 
-[node name="HitboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("entity")]
+[node name="HitboxComponent" type="Area2D" parent="."]
+unique_name_in_owner = true
 collision_layer = 0
 script = ExtResource("5_64dyw")
-entity = NodePath("..")
-metadata/_custom_type_script = "uid://dkij5hjdnu422"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 shape = SubResource("RectangleShape2D_bemkk")
 
 [node name="IdleMoveComponent" type="Node" parent="." node_paths=PackedStringArray("entity")]
+unique_name_in_owner = true
 script = ExtResource("6_ts7ta")
 direction = Vector2(1, 0)
 angular_speed = 6.0
 circle_radius = 3.0
 entity = NodePath("..")
-metadata/_custom_type_script = "uid://co2kl5qnx2yrs"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
 modulate = Color(1, 0, 0, 1)
 show_behind_parent = true
 amount = 15
@@ -208,19 +206,20 @@ texture = ExtResource("8_r7kdd")
 process_material = SubResource("ParticleProcessMaterial_56ue7")
 
 [node name="GhostTrailingComponent" type="Node" parent="." node_paths=PackedStringArray("sprite", "entity")]
+unique_name_in_owner = true
 script = ExtResource("8_0p2h0")
 sprite = NodePath("../Sprite2D")
-active = false
 entity = NodePath("..")
-metadata/_custom_type_script = "uid://1hf68snymgbl"
+active = false
 
 [node name="HitFlashComponent" type="Node" parent="." node_paths=PackedStringArray("sprite", "entity")]
+unique_name_in_owner = true
 script = ExtResource("8_64dyw")
 sprite = NodePath("../Sprite2D")
 entity = NodePath("..")
-metadata/_custom_type_script = "uid://c3dex51h0lylc"
 
 [node name="ExplodePos" type="Marker2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(0, 27)
 
 [connection signal="hurt" from="HurtboxComponent" to="HitFlashComponent" method="flash_no_args"]

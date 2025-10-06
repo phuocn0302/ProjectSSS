@@ -1,0 +1,57 @@
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=9 format=3 uid="uid://bp2jaatasy1wm"]
+
+[ext_resource type="Script" uid="uid://bm7im4vdq70il" path="res://gdj/entities/projectiles/ProjectileData.gdj" id="1_f5cdr"]
+[ext_resource type="Texture2D" uid="uid://bhdhav10bcbod" path="res://assets/texture/projectiles/npc/tri_sheet.png" id="2_f5cdr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f01f7"]
+radius = 3.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ib4u4"]
+atlas = ExtResource("2_f5cdr")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17oj4"]
+atlas = ExtResource("2_f5cdr")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s4wug"]
+atlas = ExtResource("2_f5cdr")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7y8ar"]
+atlas = ExtResource("2_f5cdr")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_68up1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ib4u4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17oj4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s4wug")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7y8ar")
+}],
+"loop": true,
+"name": &"default",
+"speed": 16.0
+}]
+
+[resource]
+script = ExtResource("1_f5cdr")
+sprite_frames = SubResource("SpriteFrames_68up1")
+texture_rotate_with_dir = false
+collision_shape = SubResource("CircleShape2D_f01f7")
+shape_offset = Vector2(0, 0)
+collision_mask = 1
+speed = 150.0
+damage = 1.0
+life_time = 5.0
+vfx_color = Color(1, 0, 0, 1)
+use_particles = true
+metadata/_custom_type_script = "uid://bm7im4vdq70il"

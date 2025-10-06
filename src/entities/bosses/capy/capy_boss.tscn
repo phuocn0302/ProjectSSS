@@ -1,41 +1,51 @@
-[gd_scene load_steps=69 format=3 uid="uid://bqvomxuvx0srd"]
+[gd_scene load_steps=74 format=3 uid="uid://bqvomxuvx0srd"]
 
-[ext_resource type="Script" uid="uid://b682oomv2daac" path="res://src/entities/bosses/capy/capy_boss.gd" id="1_lc7ns"]
+[ext_resource type="Script" uid="uid://cyxphn2uxicum" path="res://src/entities/bosses/capy/CapyBoss.kt" id="1_lc7ns"]
 [ext_resource type="Texture2D" uid="uid://hjh0m774qw4p" path="res://assets/texture/npc/bosses/boss_capybara/base_with_launcher.png" id="2_7xee8"]
+[ext_resource type="Script" uid="uid://b875f1tfsn74d" path="res://gdj/entities/bosses/BossData.gdj" id="2_std3o"]
 [ext_resource type="Texture2D" uid="uid://8wkr5neo2iq7" path="res://assets/texture/sfx/4x_white_particle.png" id="3_vyw8q"]
-[ext_resource type="Script" uid="uid://co2kl5qnx2yrs" path="res://src/commons/components/movements/idle_move_component.gd" id="4_ajorv"]
-[ext_resource type="Script" uid="uid://cauec7sioln5u" path="res://src/commons/warning_line.gd" id="5_0oyj3"]
-[ext_resource type="Script" uid="uid://s7docibhn2wy" path="res://src/commons/components/etc/health_component.gd" id="5_exahm"]
-[ext_resource type="Script" uid="uid://dkij5hjdnu422" path="res://src/commons/components/etc/hitbox_component.gd" id="6_ajorv"]
-[ext_resource type="Script" uid="uid://2akmfsdx7k6s" path="res://src/commons/components/component_container.gd" id="6_ium81"]
-[ext_resource type="Script" uid="uid://chv2lphkgpnes" path="res://src/commons/components/etc/hurtbox_component.gd" id="7_exahm"]
-[ext_resource type="Script" uid="uid://c3dex51h0lylc" path="res://src/commons/components/sfx/hit_flash_component.gd" id="8_emtw0"]
+[ext_resource type="Script" uid="uid://b1uiuvojm5ug4" path="res://gdj/commons/MoveWarningLine.gdj" id="4_7y7dm"]
+[ext_resource type="Texture2D" uid="uid://dkv0bj0bxbdn6" path="res://assets/texture/sfx/line/med_move_warning_line.png" id="5_53yye"]
+[ext_resource type="Script" uid="uid://bvby18eo8k1pe" path="res://gdj/commons/components/ComponentContainer.gdj" id="6_b3kna"]
+[ext_resource type="Script" uid="uid://k4bvu3ajrnp" path="res://gdj/commons/components/etc/HitboxComponent.gdj" id="7_f5uom"]
+[ext_resource type="Script" uid="uid://d0gf87hveesrj" path="res://gdj/commons/components/etc/HurtboxComponent.gdj" id="8_s6glf"]
+[ext_resource type="Script" uid="uid://dka2on5w1r0ov" path="res://gdj/commons/components/etc/HealthComponent.gdj" id="9_8jmsh"]
 [ext_resource type="Texture2D" uid="uid://cbmdtg4widyj3" path="res://assets/texture/npc/bosses/boss_capybara/raygun.png" id="9_coggl"]
-[ext_resource type="Script" uid="uid://bonurqbakdykh" path="res://src/entities/projectiles/spawners/pattern_proj_spawner.gd" id="10_8qm53"]
-[ext_resource type="Script" uid="uid://1hf68snymgbl" path="res://src/commons/components/sfx/ghost_trailing_component.gd" id="10_attqv"]
-[ext_resource type="Script" uid="uid://dbd157q18m2w2" path="res://src/commons/lasers/laser_emitter.gd" id="11_tv2n2"]
-[ext_resource type="Script" uid="uid://bgfjkax5hcagh" path="res://src/commons/lasers/laser_stats.gd" id="12_mikmi"]
-[ext_resource type="Script" uid="uid://cktu0h1knqsbd" path="res://src/entities/projectiles/spawners/projectile_spawner_container.gd" id="13_gdlwh"]
-[ext_resource type="Resource" uid="uid://btj1wpnlgy41t" path="res://src/entities/projectiles/resources/enemies/bullet.tres" id="13_k3tu0"]
-[ext_resource type="Script" uid="uid://bue745k8n3n7r" path="res://src/commons/components/sfx/screen_shake_component.gd" id="13_klcld"]
-[ext_resource type="Script" uid="uid://ch7r1mf7ar7uc" path="res://src/entities/projectiles/projectile_spawner.gd" id="14_frdsb"]
-[ext_resource type="Resource" uid="uid://bir702nqk15lx" path="res://src/entities/projectiles/resources/enemies/circle.tres" id="15_rcygr"]
-[ext_resource type="Script" uid="uid://duxclkhsalect" path="res://src/entities/projectiles/spawners/circle_proj_spawner.gd" id="16_xvc4h"]
-[ext_resource type="Resource" uid="uid://b3wai27flh2jf" path="res://src/entities/projectiles/resources/enemies/homing_missile.tres" id="17_oknix"]
-[ext_resource type="Script" uid="uid://dg0til6w02wfe" path="res://src/commons/state_machine/state_machine.gd" id="18_jb3gi"]
-[ext_resource type="Script" uid="uid://b6bsthxa2e0l" path="res://src/entities/bosses/capy/states/circle_shoot.gd" id="20_co413"]
-[ext_resource type="Script" uid="uid://c6uunht0obnm1" path="res://src/entities/bosses/capy/states/missile_shoot.gd" id="20_ks51w"]
-[ext_resource type="Script" uid="uid://cx14oxr84efy0" path="res://src/entities/enemies/common_states/enemy_entrance_state.gd" id="21_0oyj3"]
-[ext_resource type="Script" uid="uid://cp6vfj844mix6" path="res://src/entities/bosses/capy/states/bullet_hell_laser.gd" id="22_mmg25"]
-[ext_resource type="Script" uid="uid://bh83jb3700sfs" path="res://src/entities/bosses/boss_phase_manager.gd" id="22_oafah"]
-[ext_resource type="Script" uid="uid://dui1teeyokwtf" path="res://src/entities/bosses/capy/states/chase_laser.gd" id="23_ald4w"]
-[ext_resource type="Script" uid="uid://gyu240n2dhx2" path="res://src/entities/bosses/capy/states/die.gd" id="23_k3tu0"]
-[ext_resource type="Script" uid="uid://dd4yinx6w8in" path="res://src/entities/bosses/boss_phase_data.gd" id="23_klcld"]
-[ext_resource type="Resource" uid="uid://bsi8ewtont5qf" path="res://src/entities/bosses/capy/phase_datas/phase_1.tres" id="24_klcld"]
-[ext_resource type="Resource" uid="uid://d2qb6vwah7myn" path="res://src/entities/bosses/capy/phase_datas/phase_2.tres" id="25_cp7bw"]
-[ext_resource type="Script" uid="uid://cnxpy6y7chrty" path="res://src/entities/bosses/capy/states/sweep_laser.gd" id="25_kg4pj"]
-[ext_resource type="Script" uid="uid://wq47ysxbciuv" path="res://src/entities/enemies/common_states/enemy_idle_state.gd" id="26_ium81"]
-[ext_resource type="Resource" uid="uid://b1xuqsne0nrrt" path="res://src/entities/bosses/capy/phase_datas/phase_3.tres" id="26_j3h1l"]
+[ext_resource type="Script" uid="uid://bd7jktcpbcp5e" path="res://gdj/commons/components/movements/IdleMoveComponent.gdj" id="10_iqymn"]
+[ext_resource type="Script" uid="uid://bdwpmg6b140ck" path="res://gdj/commons/components/sfx/HitFlashComponent.gdj" id="11_3p17q"]
+[ext_resource type="Script" uid="uid://e4nygxphqmag" path="res://gdj/commons/components/sfx/GhostTrailingComponent.gdj" id="12_nhr7p"]
+[ext_resource type="Script" uid="uid://7krj0ewwsxjv" path="res://gdj/commons/components/sfx/ScreenShakeComponent.gdj" id="13_h2fi0"]
+[ext_resource type="Script" uid="uid://cs3muaisgjrme" path="res://gdj/entities/projectiles/spawners/ProjectileSpawnerContainer.gdj" id="14_s6glf"]
+[ext_resource type="Script" uid="uid://v1fag0bbj8rh" path="res://gdj/entities/projectiles/ProjectileSpawner.gdj" id="15_8jmsh"]
+[ext_resource type="Script" uid="uid://bk0yet7nnuqhh" path="res://gdj/commons/lasers/LaserEmitter.gdj" id="17_3p17q"]
+[ext_resource type="Resource" uid="uid://dsrovjuibghhm" path="res://src/entities/bosses/capy/spawner_datas/pattern_projectile_spawner.tres" id="17_jgyei"]
+[ext_resource type="Resource" uid="uid://b115dil312tuu" path="res://src/entities/bosses/capy/projectile_datas/pattern_projectile.tres" id="18_jgyei"]
+[ext_resource type="Script" uid="uid://btwj00casi1ap" path="res://gdj/entities/bosses/BossPhaseManager.gdj" id="18_nhr7p"]
+[ext_resource type="Script" uid="uid://dbb553efnt0bi" path="res://gdj/entities/bosses/BossPhaseData.gdj" id="19_h2fi0"]
+[ext_resource type="Resource" uid="uid://ea1dgoi01rfk" path="res://src/entities/bosses/capy/spawner_datas/circle_projectile_spawner.tres" id="19_mv07n"]
+[ext_resource type="Resource" uid="uid://b2uuyfoieoa6n" path="res://src/entities/bosses/capy/projectile_datas/circle_projectile.tres" id="20_8xswt"]
+[ext_resource type="Script" uid="uid://c8vhw3ob5xwry" path="res://src/entities/bosses/capy/states/CircleShoot.kt" id="20_co413"]
+[ext_resource type="Script" uid="uid://qbuorc7m0gh7" path="res://src/entities/bosses/capy/states/MissileShoot.kt" id="20_ks51w"]
+[ext_resource type="Script" uid="uid://c1fmcs4d55m2h" path="res://src/entities/enemies/common_states/EnemyEntranceState.kt" id="21_0oyj3"]
+[ext_resource type="Resource" uid="uid://dlmpfpu237equ" path="res://src/entities/bosses/capy/spawner_datas/left_missile_spawner.tres" id="21_8xswt"]
+[ext_resource type="Script" uid="uid://ds0uwai1gv2kc" path="res://gdj/commons/state_machine/StateMachine.gdj" id="22_dlpbs"]
+[ext_resource type="Script" uid="uid://blbxls104oqbn" path="res://src/entities/bosses/capy/states/BulletHellLaser.kt" id="22_mmg25"]
+[ext_resource type="Resource" uid="uid://crjhx1ef81tkh" path="res://src/entities/bosses/capy/projectile_datas/missile.tres" id="22_std3o"]
+[ext_resource type="Script" uid="uid://bttfc2ylhj3in" path="res://gdj/commons/lasers/LaserData.gdj" id="23_8xswt"]
+[ext_resource type="Script" uid="uid://c5wb6rlufl07" path="res://src/entities/bosses/capy/states/ChaseLaser.kt" id="23_ald4w"]
+[ext_resource type="Resource" uid="uid://xv4rwd3vcc3o" path="res://src/entities/bosses/capy/spawner_datas/right_missile_spawner.tres.tres" id="23_std3o"]
+[ext_resource type="Resource" uid="uid://bnurtsqp7454h" path="res://src/entities/bosses/capy/phase_datas/phase_1.tres" id="24_klcld"]
+[ext_resource type="Resource" uid="uid://mdahl57hby4d" path="res://src/entities/bosses/capy/phase_datas/phase_2.tres" id="25_cp7bw"]
+[ext_resource type="Script" uid="uid://dejnvw0ias8j7" path="res://src/entities/bosses/capy/states/SweepLaser.kt" id="25_kg4pj"]
+[ext_resource type="Script" uid="uid://cbxjhglhflsyl" path="res://src/entities/enemies/common_states/EnemyIdleState.kt" id="26_ium81"]
+[ext_resource type="Resource" uid="uid://c3is5imqhbcn7" path="res://src/entities/bosses/capy/phase_datas/phase_3.tres" id="26_j3h1l"]
+[ext_resource type="Script" uid="uid://c3vt030ho330j" path="res://gdj/entities/bosses/capy/states/CapyBossDieState.gdj" id="33_mv07n"]
+[ext_resource type="Resource" uid="uid://bmsb2q13vxuap" path="res://src/entities/bosses/capy/projectile_datas/chase_laser.tres" id="39_8xswt"]
+
+[sub_resource type="Resource" id="Resource_caq6h"]
+script = ExtResource("2_std3o")
+max_health = 250.0
+metadata/_custom_type_script = "uid://b875f1tfsn74d"
 
 [sub_resource type="Shader" id="Shader_7xee8"]
 code = "shader_type canvas_item;
@@ -310,6 +320,24 @@ gravity = Vector3(0, 0, 0)
 scale_max = 3.0
 scale_curve = SubResource("CurveTexture_64dyw")
 
+[sub_resource type="Resource" id="Resource_6fufx"]
+script = ExtResource("23_8xswt")
+collision_mask = 1
+direction = Vector2(0, 1)
+length = 320
+max_width = 12
+emit_time = 1.0
+cast_time = 0.2
+decay_time = 0.2
+outline_color = Color(1, 0, 0, 1)
+metadata/_custom_type_script = "uid://bttfc2ylhj3in"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_exahm"]
+radius = 35.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_emtw0"]
+size = Vector2(10, 42)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_emtw0"]
 radius = 41.0
 
@@ -319,68 +347,40 @@ size = Vector2(16, 42)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_svhwp"]
 size = Vector2(16, 42)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_exahm"]
-radius = 35.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_emtw0"]
-size = Vector2(10, 42)
-
 [sub_resource type="Curve2D" id="Curve2D_tv2n2"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -32, 104, 0, 0, 0, 0, 32, 104)
 }
 point_count = 2
 
-[sub_resource type="Resource" id="Resource_frdsb"]
-script = ExtResource("12_mikmi")
-collision_mask = 1
-direction = Vector2(0, 1)
-length = 320
-max_width = 12
-emit_time = 1.0
-cast_time = 0.2
-decay_time = 0.2
-outline_color = Color(1, 0, 0, 1)
-metadata/_custom_type_script = "uid://bgfjkax5hcagh"
-
-[sub_resource type="Resource" id="Resource_ium81"]
-script = ExtResource("12_mikmi")
-collision_mask = 1
-direction = Vector2(0, 1)
-length = 320
-max_width = 12
-emit_time = 0.5
-cast_time = 0.2
-decay_time = 0.2
-outline_color = Color(1, 0, 0, 1)
-metadata/_custom_type_script = "uid://bgfjkax5hcagh"
-
 [node name="CapyBoss" type="Node2D"]
 script = ExtResource("1_lc7ns")
-metadata/_custom_type_script = "uid://efllwjrpocom"
+boss_data = SubResource("Resource_caq6h")
 
 [node name="Main" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_ejrl6")
 texture = ExtResource("2_7xee8")
 
 [node name="Gun" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_svhwp")
 position = Vector2(0, 30)
 sprite_frames = SubResource("SpriteFrames_jb3gi")
 animation = &"to_ray_gun"
 
 [node name="MoveWarningLine" type="Line2D" parent="."]
-visible = false
+unique_name_in_owner = true
 width = 24.0
-script = ExtResource("5_0oyj3")
-show_time = 0.3
-length = 180.0
-metadata/_custom_type_script = "uid://cauec7sioln5u"
+script = ExtResource("4_7y7dm")
+line_texture = ExtResource("5_53yye")
+metadata/_custom_type_script = "uid://b1uiuvojm5ug4"
 
 [node name="GunPosition" type="Marker2D" parent="."]
 position = Vector2(0, 30)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
 modulate = Color(1, 0, 0, 1)
 show_behind_parent = true
 position = Vector2(-4, 6)
@@ -388,35 +388,32 @@ amount = 10
 texture = ExtResource("3_vyw8q")
 process_material = SubResource("ParticleProcessMaterial_coggl")
 
+[node name="LaserEmitter" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 66)
+script = ExtResource("17_3p17q")
+laser_data = SubResource("Resource_6fufx")
+active = false
+metadata/_custom_type_script = "uid://bk0yet7nnuqhh"
+
+[node name="WarningLine" type="Line2D" parent="LaserEmitter"]
+unique_name_in_owner = true
+visible = false
+z_index = -4
+points = PackedVector2Array(0, 0, 0, 320)
+width = 2.0
+default_color = Color(1, 0, 0, 1)
+begin_cap_mode = 2
+
 [node name="Components" type="Node2D" parent="."]
-script = ExtResource("6_ium81")
-metadata/_custom_type_script = "uid://2akmfsdx7k6s"
+script = ExtResource("6_b3kna")
+metadata/_custom_type_script = "uid://bvby18eo8k1pe"
 
-[node name="HurtboxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("health_component", "entity")]
-collision_layer = 16
-collision_mask = 0
-script = ExtResource("7_exahm")
-health_component = NodePath("../HealthComponent")
-entity = NodePath("../..")
-metadata/_custom_type_script = "uid://chv2lphkgpnes"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/HurtboxComponent"]
-position = Vector2(0, -4)
-shape = SubResource("CircleShape2D_emtw0")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Components/HurtboxComponent"]
-position = Vector2(-38, 18.875)
-shape = SubResource("RectangleShape2D_coggl")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Components/HurtboxComponent"]
-position = Vector2(38, 19)
-shape = SubResource("RectangleShape2D_svhwp")
-
-[node name="HitboxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("entity")]
+[node name="HitboxComponent" type="Area2D" parent="Components"]
+unique_name_in_owner = true
 collision_layer = 0
-script = ExtResource("6_ajorv")
-entity = NodePath("../..")
-metadata/_custom_type_script = "uid://dkij5hjdnu422"
+script = ExtResource("7_f5uom")
+metadata/_custom_type_script = "uid://k4bvu3ajrnp"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Components/HitboxComponent"]
 position = Vector2(0, -4)
@@ -430,160 +427,159 @@ shape = SubResource("RectangleShape2D_emtw0")
 position = Vector2(37, 19)
 shape = SubResource("RectangleShape2D_emtw0")
 
+[node name="HurtboxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("health_component")]
+unique_name_in_owner = true
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("8_s6glf")
+health_component = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://d0gf87hveesrj"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/HurtboxComponent"]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_emtw0")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Components/HurtboxComponent"]
+position = Vector2(-38, 18.875)
+shape = SubResource("RectangleShape2D_coggl")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Components/HurtboxComponent"]
+position = Vector2(38, 19)
+shape = SubResource("RectangleShape2D_svhwp")
+
 [node name="HealthComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
-script = ExtResource("5_exahm")
+unique_name_in_owner = true
+script = ExtResource("9_8jmsh")
 max_health = 400.0
 queue_free_on_die = false
 entity = NodePath("../..")
-metadata/_custom_type_script = "uid://s7docibhn2wy"
+metadata/_custom_type_script = "uid://dka2on5w1r0ov"
 
 [node name="IdleMoveComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
-script = ExtResource("4_ajorv")
+unique_name_in_owner = true
+script = ExtResource("10_iqymn")
 angular_speed = 6.0
 circle_radius = 2.0
+entity = NodePath("../..")
 active = false
-entity = NodePath("../..")
-metadata/_custom_type_script = "uid://co2kl5qnx2yrs"
-
-[node name="GunHitFlashComponent2" type="Node" parent="Components" node_paths=PackedStringArray("sprite", "entity")]
-script = ExtResource("8_emtw0")
-sprite = NodePath("../../Gun")
-entity = NodePath("../..")
-metadata/_custom_type_script = "uid://c3dex51h0lylc"
+metadata/_custom_type_script = "uid://bd7jktcpbcp5e"
 
 [node name="MainHitFlashComponent" type="Node" parent="Components" node_paths=PackedStringArray("sprite", "health_component", "entity")]
-script = ExtResource("8_emtw0")
+unique_name_in_owner = true
+script = ExtResource("11_3p17q")
 sprite = NodePath("../../Main")
 health_component = NodePath("../HealthComponent")
 entity = NodePath("../..")
-metadata/_custom_type_script = "uid://c3dex51h0lylc"
+metadata/_custom_type_script = "uid://bdwpmg6b140ck"
+
+[node name="GunHitFlashComponent" type="Node" parent="Components" node_paths=PackedStringArray("sprite", "health_component")]
+unique_name_in_owner = true
+script = ExtResource("11_3p17q")
+sprite = NodePath("../../Gun")
+health_component = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://bdwpmg6b140ck"
 
 [node name="GhostTrailingComponent" type="Node" parent="Components" node_paths=PackedStringArray("sprite", "entity")]
-script = ExtResource("10_attqv")
+unique_name_in_owner = true
+script = ExtResource("12_nhr7p")
 sprite = NodePath("../../Main")
-active = false
 entity = NodePath("../..")
-metadata/_custom_type_script = "uid://1hf68snymgbl"
+metadata/_custom_type_script = "uid://e4nygxphqmag"
 
-[node name="ScreenShakeComponent" type="Node" parent="Components"]
-script = ExtResource("13_klcld")
-metadata/_custom_type_script = "uid://bue745k8n3n7r"
+[node name="ScreenShakeComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
+unique_name_in_owner = true
+script = ExtResource("13_h2fi0")
+entity = NodePath("../..")
+metadata/_custom_type_script = "uid://7krj0ewwsxjv"
 
 [node name="Spawners" type="Node2D" parent="."]
-script = ExtResource("13_gdlwh")
-metadata/_custom_type_script = "uid://cktu0h1knqsbd"
+script = ExtResource("14_s6glf")
+metadata/_custom_type_script = "uid://cs3muaisgjrme"
 
 [node name="PatternProjectileSpawner" type="Node2D" parent="Spawners"]
-position = Vector2(0, 37)
-script = ExtResource("10_8qm53")
-number_of_projectiles = 5
-travel_time = 1.0
-projectile_data = ExtResource("13_k3tu0")
-spawn_interval = 1.5
+unique_name_in_owner = true
+position = Vector2(0, 38)
+script = ExtResource("15_8jmsh")
+spawner_data = ExtResource("17_jgyei")
+projectile_data = ExtResource("18_jgyei")
 active = false
-metadata/_custom_type_script = "uid://bonurqbakdykh"
+metadata/_custom_type_script = "uid://v1fag0bbj8rh"
 
 [node name="Path2D" type="Path2D" parent="Spawners/PatternProjectileSpawner"]
-position = Vector2(0, -37)
 curve = SubResource("Curve2D_tv2n2")
 
 [node name="CircleProjectileSpawner" type="Node2D" parent="Spawners"]
-script = ExtResource("16_xvc4h")
-number_of_projectile = 15
-rotate_pattern = true
-rotate_speed = 10.0
-projectile_data = ExtResource("15_rcygr")
-spawn_interval = 0.1
+unique_name_in_owner = true
+script = ExtResource("15_8jmsh")
+spawner_data = ExtResource("19_mv07n")
+projectile_data = ExtResource("20_8xswt")
 active = false
-metadata/_custom_type_script = "uid://duxclkhsalect"
+metadata/_custom_type_script = "uid://v1fag0bbj8rh"
 
-[node name="ProjectileSpawner" type="Node2D" parent="Spawners"]
-position = Vector2(-38, 39)
-script = ExtResource("14_frdsb")
-type = 1
-projectile_data = ExtResource("17_oknix")
-projectile_direction = Vector2(0, 1)
-spawn_interval = 4.0
+[node name="LeftMissileSpawner" type="Node2D" parent="Spawners"]
+unique_name_in_owner = true
+position = Vector2(-37, 40)
+script = ExtResource("15_8jmsh")
+spawner_data = ExtResource("21_8xswt")
+projectile_type = 1
+projectile_data = ExtResource("22_std3o")
 active = false
-metadata/_custom_type_script = "uid://ch7r1mf7ar7uc"
+metadata/_custom_type_script = "uid://v1fag0bbj8rh"
 
-[node name="ProjectileSpawner2" type="Node2D" parent="Spawners"]
-position = Vector2(38, 39)
-script = ExtResource("14_frdsb")
-type = 1
-projectile_data = ExtResource("17_oknix")
-projectile_direction = Vector2(0, 1)
-spawn_interval = 4.0
+[node name="RightMissileSpawner" type="Node2D" parent="Spawners"]
+unique_name_in_owner = true
+position = Vector2(38, 40)
+script = ExtResource("15_8jmsh")
+spawner_data = ExtResource("23_std3o")
+projectile_type = 1
+projectile_data = ExtResource("22_std3o")
 active = false
-metadata/_custom_type_script = "uid://ch7r1mf7ar7uc"
-
-[node name="LaserEmitter" type="Node2D" parent="Spawners"]
-position = Vector2(0, 66)
-script = ExtResource("11_tv2n2")
-laser_stats = SubResource("Resource_frdsb")
-metadata/_custom_type_script = "uid://dbd157q18m2w2"
-
-[node name="WarningLine" type="Line2D" parent="Spawners/LaserEmitter"]
-visible = false
-points = PackedVector2Array(0, 0, 0, 320)
-width = 2.0
-default_color = Color(1, 0, 0, 1)
-begin_cap_mode = 2
+metadata/_custom_type_script = "uid://v1fag0bbj8rh"
 
 [node name="BossPhaseManager" type="Node" parent="." node_paths=PackedStringArray("health_component", "state_machine")]
-script = ExtResource("22_oafah")
+unique_name_in_owner = true
+script = ExtResource("18_nhr7p")
 health_component = NodePath("../Components/HealthComponent")
 state_machine = NodePath("../StateMachine")
-phase_datas = Array[ExtResource("23_klcld")]([ExtResource("24_klcld"), ExtResource("25_cp7bw"), ExtResource("26_j3h1l")])
-metadata/_custom_type_script = "uid://bh83jb3700sfs"
+phase_data = Array[ExtResource("19_h2fi0")]([ExtResource("24_klcld"), ExtResource("25_cp7bw"), ExtResource("26_j3h1l")])
+metadata/_custom_type_script = "uid://btwj00casi1ap"
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("actor", "starting_state")]
-script = ExtResource("18_jb3gi")
+unique_name_in_owner = true
+script = ExtResource("22_dlpbs")
 actor = NodePath("..")
 starting_state = NodePath("EnemyEntranceState")
-metadata/_custom_type_script = "uid://dg0til6w02wfe"
 
 [node name="EnemyEntranceState" type="Node" parent="StateMachine" node_paths=PackedStringArray("hurtbox_component", "next_state")]
+unique_name_in_owner = true
 script = ExtResource("21_0oyj3")
 hurtbox_component = NodePath("../../Components/HurtboxComponent")
 next_state = NodePath("../Idle")
-metadata/_custom_type_script = "uid://cx14oxr84efy0"
+
+[node name="Die" type="Node" parent="StateMachine" node_paths=PackedStringArray("component_container", "projectile_spawner_container")]
+unique_name_in_owner = true
+script = ExtResource("33_mv07n")
+component_container = NodePath("../../Components")
+projectile_spawner_container = NodePath("../../Spawners")
+metadata/_custom_type_script = "uid://c3vt030ho330j"
 
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("26_ium81")
-idle_time = 0.5
-metadata/_custom_type_script = "uid://wq47ysxbciuv"
-
-[node name="Die" type="Node" parent="StateMachine" node_paths=PackedStringArray("component_container", "proj_spawner_container")]
-script = ExtResource("23_k3tu0")
-component_container = NodePath("../../Components")
-proj_spawner_container = NodePath("../../Spawners")
-metadata/_custom_type_script = "uid://btifskqmt4ya"
 
 [node name="CircleShoot" type="Node" parent="StateMachine"]
 script = ExtResource("20_co413")
-duration = 8.0
-burst_delay = 1.5
-metadata/_custom_type_script = "uid://cd033sfu46rh5"
 
 [node name="MissileShoot" type="Node" parent="StateMachine"]
 script = ExtResource("20_ks51w")
-duration = 5.0
-metadata/_custom_type_script = "uid://cd033sfu46rh5"
 
 [node name="BulletHellLaser" type="Node" parent="StateMachine"]
 script = ExtResource("22_mmg25")
-metadata/_custom_type_script = "uid://cd033sfu46rh5"
+duration = 4.0
 
 [node name="ChaseLaser" type="Node" parent="StateMachine"]
 script = ExtResource("23_ald4w")
 number_of_shot = 6
-laser_stats = SubResource("Resource_ium81")
-metadata/_custom_type_script = "uid://cd033sfu46rh5"
+laser_data = ExtResource("39_8xswt")
 
 [node name="SweepLaser" type="Node" parent="StateMachine"]
 script = ExtResource("25_kg4pj")
-metadata/_custom_type_script = "uid://cd033sfu46rh5"
-
-[connection signal="hurt" from="Components/HurtboxComponent" to="Components/GunHitFlashComponent2" method="flash_no_args"]
-[connection signal="health_reached_zero" from="Components/HealthComponent" to="." method="_on_health_component_health_reached_zero"]

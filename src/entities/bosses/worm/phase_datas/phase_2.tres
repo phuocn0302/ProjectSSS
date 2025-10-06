@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="BossPhaseData" load_steps=2 format=3 uid="uid://3j15lulqw8or"]
+[gd_resource type="Resource" script_class="BossPhaseData" load_steps=2 format=3 uid="uid://btg0gqrc25358"]
 
-[ext_resource type="Script" uid="uid://dd4yinx6w8in" path="res://src/entities/bosses/boss_phase_data.gd" id="1_8teeh"]
+[ext_resource type="Script" uid="uid://dbb553efnt0bi" path="res://gdj/entities/bosses/BossPhaseData.gdj" id="1_qp7o8"]
 
 [resource]
-script = ExtResource("1_8teeh")
+script = ExtResource("1_qp7o8")
 health_percentage = 20.0
 states = Array[NodePath]([NodePath("../StateMachine/FreeRam"), NodePath("../StateMachine/Ram"), NodePath("../StateMachine/SProjShoot")])
 first_state = NodePath("../StateMachine/FreeRam")
-metadata/_custom_type_script = "uid://dd4yinx6w8in"
+metadata/_custom_type_script = "uid://dbb553efnt0bi"

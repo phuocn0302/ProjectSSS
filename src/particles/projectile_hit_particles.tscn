@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bt10he0p0pvkk"]
 
-[ext_resource type="Script" uid="uid://81gsn5yquwxa" path="res://src/particles/oneshot_particles.gd" id="1_5jr23"]
+[ext_resource type="Script" uid="uid://hol518pdopet" path="res://src/particles/OneshotParticles.kt" id="1_5jr23"]
 [ext_resource type="Texture2D" uid="uid://jdk55klnlxrm" path="res://assets/texture/sfx/dot_particle.png" id="2_7kmxh"]
 
 [sub_resource type="Curve" id="Curve_nfddx"]

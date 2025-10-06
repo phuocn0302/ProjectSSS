@@ -1,7 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://c3rf03lph6xe7"]
+[gd_scene load_steps=22 format=3 uid="uid://c3rf03lph6xe7"]
 
-[ext_resource type="Script" uid="uid://dv4blyo2v1bd8" path="res://src/stages/title_screen/title_screen_manager.gd" id="1_yctb5"]
+[ext_resource type="Script" uid="uid://bqgwq8ppa5id2" path="res://gdj/stages/title_screen/TitleScreenManager.gdj" id="1_jobga"]
+[ext_resource type="PackedScene" uid="uid://cn2osbb230q8y" path="res://src/utils/scenes/ui/quit_game_confirm.tscn" id="2_5yodc"]
 [ext_resource type="PackedScene" uid="uid://1npoa32dabp" path="res://src/particles/screen_star.tscn" id="2_681iy"]
+[ext_resource type="PackedScene" uid="uid://dr0hj25a3exdq" path="res://src/stages/demo_boss_selector/demo_boss_selector.tscn" id="3_5yodc"]
 [ext_resource type="Texture2D" uid="uid://c6pqmg0ubah61" path="res://assets/texture/ui/title_screen/blackhole.png" id="3_60mme"]
 [ext_resource type="Shader" uid="uid://n4chem2otws2" path="res://src/shaders/entity_shader.gdshader" id="4_pjo5j"]
 [ext_resource type="Texture2D" uid="uid://l2qk3nei5leu" path="res://assets/texture/ui/title_screen/title.png" id="5_5mxqx"]
@@ -77,7 +79,7 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
-"method": &"_setup_button"
+"method": &"setup_button"
 }]
 }
 tracks/4/type = "value"
@@ -130,12 +132,16 @@ scale_max = 5.0
 scale_curve = SubResource("CurveTexture_64dyw")
 
 [node name="TitleScreen" type="Node2D"]
-script = ExtResource("1_yctb5")
+script = ExtResource("1_jobga")
+quit_game_confirmation_dialog = ExtResource("2_5yodc")
+demo_boss_selector_screen = ExtResource("3_5yodc")
+metadata/_custom_type_script = "uid://bqgwq8ppa5id2"
 
 [node name="Star" parent="." instance=ExtResource("2_681iy")]
 preprocess = 2.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_60mme")
 }
@@ -158,6 +164,7 @@ position = Vector2(38, -3)
 process_material = SubResource("ParticleProcessMaterial_681iy")
 
 [node name="Buttons" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -199,7 +206,3 @@ disabled = true
 texture_normal = ExtResource("10_rf16a")
 texture_focused = ExtResource("11_gn4uv")
 metadata/_edit_use_anchors_ = true
-
-[connection signal="pressed" from="Buttons/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="Buttons/OptionsButton" to="." method="_on_options_button_pressed"]
-[connection signal="pressed" from="Buttons/QuitButton" to="." method="_on_quit_button_pressed"]

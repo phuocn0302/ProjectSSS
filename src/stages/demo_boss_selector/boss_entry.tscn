@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cpxcwww4w2u5i"]
 
-[ext_resource type="Script" uid="uid://nfu6qfvexk3r" path="res://src/stages/demo_boss_selector/boss_entry.gd" id="1_7ijsv"]
+[ext_resource type="Script" uid="uid://dquocbuxp72ah" path="res://src/stages/demo_boss_selector/BossEntry.kt" id="1_7ijsv"]
 [ext_resource type="Texture2D" uid="uid://m75aobe7g51b" path="res://assets/texture/ui/demo_stage_selector/boss_entry.png" id="1_j4idr"]
 [ext_resource type="Texture2D" uid="uid://d22lrgifptqxe" path="res://assets/texture/ui/demo_stage_selector/boss_entry_hover.png" id="2_3xef8"]
 [ext_resource type="FontFile" uid="uid://dd7cq4p1wglng" path="res://assets/font/monogram.ttf" id="3_3xef8"]
@@ -14,10 +14,12 @@ texture_focused = ExtResource("2_3xef8")
 script = ExtResource("1_7ijsv")
 
 [node name="BossMugshot" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(110, 20)
 texture = ExtResource("3_hrilw")
 
 [node name="BossName" type="Label" parent="."]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 5.0
 offset_top = 5.0
