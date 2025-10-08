@@ -26,5 +26,9 @@ class GodotEnemy : Enemy() {
         return healthComponent ?: HealthComponent()
     }
 
+    override fun getScorePoint(): Int {
+        return 100
+    }
+
 
 }

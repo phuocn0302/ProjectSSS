@@ -4,8 +4,8 @@
 
 [resource]
 shader = ExtResource("1_07tvy")
-shader_parameter/outline_enabled = false
-shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_enabled = true
+shader_parameter/outline_color = Color(1, 0, 0, 1)
 shader_parameter/outline_size = 1.0
 shader_parameter/alpha_threshold = 0.0
 shader_parameter/outline_samples = 4

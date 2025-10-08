@@ -1,0 +1,189 @@
+[gd_scene load_steps=23 format=3 uid="uid://dsw1h3kypkuvs"]
+
+[ext_resource type="PackedScene" uid="uid://bqar27ptqt5xu" path="res://src/entities/enemies/generic_enemy.tscn" id="1_4bli8"]
+[ext_resource type="Texture2D" uid="uid://b7k0h1lu7la1g" path="res://assets/texture/npc/enemies/capy_enemy.png" id="2_7kdc5"]
+[ext_resource type="Script" uid="uid://v1fag0bbj8rh" path="res://gdj/entities/projectiles/ProjectileSpawner.gdj" id="3_adttj"]
+[ext_resource type="Script" uid="uid://bxumbkfx8bf08" path="res://gdj/entities/projectiles/spawners/ProjectileSpawnerData.gdj" id="4_axumc"]
+[ext_resource type="PackedScene" uid="uid://c3rq577ok406m" path="res://src/particles/circle_explosion.tscn" id="5_6tqrp"]
+[ext_resource type="PackedScene" uid="uid://dutpnjw2uhfvb" path="res://src/particles/homing_projectile_particles.tscn" id="6_qbrj2"]
+[ext_resource type="Script" uid="uid://6a8nyghjiyib" path="res://gdj/entities/projectiles/types/HomingProjectileData.gdj" id="7_68nqw"]
+[ext_resource type="Texture2D" uid="uid://b3vy0ravaq21x" path="res://assets/texture/projectiles/npc/missile_sheet.png" id="8_3eswg"]
+
+[sub_resource type="Shader" id="Shader_bd48y"]
+code = "shader_type canvas_item;
+
+// === Outline Controls ===
+uniform bool outline_enabled = false;
+uniform vec4 outline_color    : source_color = vec4(1.0);
+uniform float outline_size    : hint_range(0.0, 16.0, 0.1) = 1.0;
+uniform float alpha_threshold : hint_range(0.0, 1.0, 0.01) = 0.0;
+uniform int outline_samples   : hint_range(4, 8) = 4;
+
+// === Flash Controls ===
+uniform vec4 flash_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform float flash_strength : hint_range(0.0, 1.0, 0.1) = 0.0;
+
+// === Outline Sampling Directions ===
+const vec2[8] DIRS = vec2[8](
+	vec2(1.0, 0.0), vec2(0.0, 1.0),  vec2(-1.0, 0.0),  vec2(0.0, -1.0),
+	vec2(1.0, 1.0), vec2(-1.0, 1.0), vec2(-1.0, -1.0), vec2(1.0, -1.0)
+);
+
+void fragment() {
+	vec4 tex = texture(TEXTURE, UV);
+	float alpha = tex.a;
+
+	if (alpha <= 0.0 && outline_size <= 0.0) discard;
+
+	bool solid = alpha > alpha_threshold;
+	bool found_outline = false;
+
+	// Only check outline if enabled and current pixel is transparent
+	if (outline_enabled && !solid && outline_size > 0.0) {
+		vec2 offset = TEXTURE_PIXEL_SIZE * outline_size;
+		for (int i = 0; i < outline_samples; i++) {
+			if (texture(TEXTURE, UV + DIRS[i] * offset).a > alpha_threshold) {
+				found_outline = true;
+				break;
+			}
+		}
+	}
+
+	// Color decision
+	if (solid) {
+		COLOR = tex;
+	} else if (outline_enabled && found_outline) {
+		COLOR = outline_color;
+	} else {
+		discard;
+	}
+
+	// === Flash Effect ===
+	COLOR.rgb = mix(COLOR.rgb, flash_color.rgb, flash_strength);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_adttj"]
+resource_local_to_scene = true
+shader = SubResource("Shader_bd48y")
+shader_parameter/outline_enabled = true
+shader_parameter/outline_color = Color(1, 0, 0, 1)
+shader_parameter/outline_size = 1.0
+shader_parameter/alpha_threshold = 0.0
+shader_parameter/outline_samples = 4
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_strength = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o8p8n"]
+radius = 14.0357
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5in1y"]
+radius = 23.0
+
+[sub_resource type="Resource" id="Resource_pb57p"]
+script = ExtResource("4_axumc")
+spawn_direction = Vector2(0, 1)
+spawn_interval = 2.0
+metadata/_custom_type_script = "uid://bxumbkfx8bf08"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r643o"]
+size = Vector2(10, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0a11k"]
+atlas = ExtResource("8_3eswg")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8nqm"]
+atlas = ExtResource("8_3eswg")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7q3lr"]
+atlas = ExtResource("8_3eswg")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iya54"]
+atlas = ExtResource("8_3eswg")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3xm8y"]
+atlas = ExtResource("8_3eswg")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8l78g"]
+atlas = ExtResource("8_3eswg")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bmjkw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0a11k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b8nqm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7q3lr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iya54")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3xm8y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8l78g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 16.0
+}]
+
+[sub_resource type="Resource" id="Resource_w1x6g"]
+script = ExtResource("7_68nqw")
+target_group = "player"
+rotate_speed = 90.0
+chase_delay = 0.5
+sprite_frames = SubResource("SpriteFrames_bmjkw")
+texture_rotate_with_dir = true
+collision_shape = SubResource("RectangleShape2D_r643o")
+shape_offset = Vector2(3, 0)
+collision_mask = 1
+speed = 70.0
+damage = 1.0
+life_time = 5.0
+vfx_color = Color(1, 0, 0, 1)
+on_hit_vfx = ExtResource("5_6tqrp")
+use_particles = true
+particles = ExtResource("6_qbrj2")
+metadata/_custom_type_script = "uid://6a8nyghjiyib"
+
+[node name="GenericEnemy" instance=ExtResource("1_4bli8")]
+
+[node name="Sprite2D" parent="." index="0"]
+material = SubResource("ShaderMaterial_adttj")
+rotation = 0.0
+texture = ExtResource("2_7kdc5")
+
+[node name="MoveComponent" parent="." index="2"]
+move_type = 2
+speed = 60.0
+strafe_direction = Vector2(1, 0.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0"]
+shape = SubResource("CircleShape2D_o8p8n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" index="0"]
+shape = SubResource("CircleShape2D_5in1y")
+
+[node name="HealthComponent" parent="." index="5"]
+max_health = 8.0
+die_sfx = ExtResource("5_6tqrp")
+
+[node name="ProjectileSpawner" type="Node2D" parent="." index="7"]
+position = Vector2(0, 17)
+script = ExtResource("3_adttj")
+spawner_data = SubResource("Resource_pb57p")
+projectile_type = 1
+projectile_data = SubResource("Resource_w1x6g")
+metadata/_custom_type_script = "uid://v1fag0bbj8rh"

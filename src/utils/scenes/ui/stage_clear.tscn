@@ -1,0 +1,102 @@
+[gd_scene load_steps=8 format=3 uid="uid://deta61ic1mvib"]
+
+[ext_resource type="FontFile" uid="uid://dd7cq4p1wglng" path="res://assets/font/monogram.ttf" id="1_1v0wn"]
+[ext_resource type="Script" uid="uid://vmm8l6u2gf80" path="res://gdj/utils/scenes/ui/StageClear.gdj" id="1_a8iys"]
+[ext_resource type="Texture2D" uid="uid://cklownx3hrha8" path="res://assets/texture/ui/dialog/frame.png" id="2_yil1f"]
+[ext_resource type="Texture2D" uid="uid://r6ilnjuvjiix" path="res://assets/texture/ui/dialog/no_button.png" id="3_a8iys"]
+[ext_resource type="Texture2D" uid="uid://cx3m20gph5kgf" path="res://assets/texture/ui/dialog/no_button_hover.png" id="4_vamdf"]
+[ext_resource type="Texture2D" uid="uid://c3hgka1l7csrc" path="res://assets/texture/ui/dialog/yes_button.png" id="5_ocn2h"]
+[ext_resource type="Texture2D" uid="uid://ddbm6i08o8n5g" path="res://assets/texture/ui/dialog/yes_button_hover.png" id="6_1uqaa"]
+
+[node name="StageClear" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a8iys")
+metadata/_custom_type_script = "uid://vmm8l6u2gf80"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 180.0
+offset_bottom = 320.0
+color = Color(0, 0, 0, 1)
+
+[node name="StageClearLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 37.0
+offset_top = 111.0
+offset_right = 143.0
+offset_bottom = 134.0
+theme_override_fonts/font = ExtResource("1_1v0wn")
+text = "STAGE CLEARED!"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 28.0
+offset_top = 128.0
+offset_right = 147.0
+offset_bottom = 150.0
+theme_override_fonts/font = ExtResource("1_1v0wn")
+text = "Score: 100"
+horizontal_alignment = 1
+
+[node name="DialogControl" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 32.0
+offset_bottom = 40.0
+
+[node name="Frame" type="Sprite2D" parent="DialogControl"]
+unique_name_in_owner = true
+position = Vector2(90, 227)
+texture = ExtResource("2_yil1f")
+
+[node name="NoButton" type="TextureButton" parent="DialogControl"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 45.0
+offset_top = 187.0
+offset_right = 81.0
+offset_bottom = 207.0
+grow_vertical = 0
+texture_normal = ExtResource("3_a8iys")
+texture_focused = ExtResource("4_vamdf")
+
+[node name="YesButton" type="TextureButton" parent="DialogControl"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 67.0
+offset_top = 187.0
+offset_right = 103.0
+offset_bottom = 207.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("5_ocn2h")
+texture_focused = ExtResource("6_1uqaa")
+
+[node name="NextStageLabel" type="Label" parent="DialogControl"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 45.0
+offset_top = 209.0
+offset_right = 136.0
+offset_bottom = 232.0
+theme_override_fonts/font = ExtResource("1_1v0wn")
+text = "Next Stage?"
+horizontal_alignment = 1

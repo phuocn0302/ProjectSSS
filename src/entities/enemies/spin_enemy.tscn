@@ -1,0 +1,109 @@
+[gd_scene load_steps=16 format=3 uid="uid://c3r221u0fps10"]
+
+[ext_resource type="PackedScene" uid="uid://bqar27ptqt5xu" path="res://src/entities/enemies/generic_enemy.tscn" id="1_1fobo"]
+[ext_resource type="Texture2D" uid="uid://cowt7ou6hugol" path="res://assets/texture/npc/enemies/spin_enemy.png" id="2_7h87a"]
+[ext_resource type="PackedScene" uid="uid://c3rq577ok406m" path="res://src/particles/circle_explosion.tscn" id="3_27r4x"]
+[ext_resource type="Script" uid="uid://v1fag0bbj8rh" path="res://gdj/entities/projectiles/ProjectileSpawner.gdj" id="4_34xdf"]
+[ext_resource type="Script" uid="uid://djtx5g7eebda4" path="res://gdj/entities/projectiles/spawners/CircleProjectileSpawnerData.gdj" id="5_3syv0"]
+[ext_resource type="Script" uid="uid://bm7im4vdq70il" path="res://gdj/entities/projectiles/ProjectileData.gdj" id="6_3syv0"]
+[ext_resource type="Texture2D" uid="uid://75yn8mqxcoke" path="res://assets/texture/projectiles/npc/diamond.png" id="7_3syv0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_msyyt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gtbf7"]
+radius = 16.0
+
+[sub_resource type="Animation" id="Animation_3syv0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.5708]
+}
+
+[sub_resource type="Animation" id="Animation_34xdf"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.5708, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_00umo"]
+_data = {
+&"RESET": SubResource("Animation_3syv0"),
+&"idle": SubResource("Animation_34xdf")
+}
+
+[sub_resource type="Resource" id="Resource_6j5v1"]
+script = ExtResource("5_3syv0")
+number_of_projectiles = 2
+rotate_pattern = true
+rotate_speed = 20.0
+spawn_direction = Vector2(0, -1)
+spawn_interval = 0.5
+metadata/_custom_type_script = "uid://djtx5g7eebda4"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f01f7"]
+radius = 3.0
+
+[sub_resource type="Resource" id="Resource_00umo"]
+script = ExtResource("6_3syv0")
+texture = ExtResource("7_3syv0")
+texture_rotate_with_dir = false
+collision_shape = SubResource("CircleShape2D_f01f7")
+shape_offset = Vector2(0, 0)
+collision_mask = 1
+speed = 200.0
+damage = 1.0
+life_time = 5.0
+vfx_color = Color(1, 0, 0, 1)
+use_particles = true
+metadata/_custom_type_script = "uid://bm7im4vdq70il"
+
+[node name="SpinEnemy" instance=ExtResource("1_1fobo")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_7h87a")
+
+[node name="MoveComponent" parent="." index="2"]
+speed = 30.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0"]
+shape = SubResource("CircleShape2D_msyyt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" index="0"]
+shape = SubResource("CircleShape2D_gtbf7")
+
+[node name="HealthComponent" parent="." index="5"]
+max_health = 5.0
+die_sfx = ExtResource("3_27r4x")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="7"]
+libraries = {
+&"": SubResource("AnimationLibrary_00umo")
+}
+autoplay = "idle"
+
+[node name="ProjectileSpawner" type="Node2D" parent="." index="8"]
+script = ExtResource("4_34xdf")
+spawner_data = SubResource("Resource_6j5v1")
+projectile_data = SubResource("Resource_00umo")
+metadata/_custom_type_script = "uid://v1fag0bbj8rh"
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]

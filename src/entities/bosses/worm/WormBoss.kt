@@ -175,6 +175,10 @@ class WormBoss : Enemy() {
     override fun getHealthComp(): HealthComponent {
         return healthComponent
     }
+
+    override fun getScorePoint(): Int {
+        return 14300
+    }
 }
 
 

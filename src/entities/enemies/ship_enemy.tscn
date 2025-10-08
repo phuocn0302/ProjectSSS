@@ -1,0 +1,64 @@
+[gd_scene load_steps=12 format=3 uid="uid://dr7pqmtnhu0al"]
+
+[ext_resource type="PackedScene" uid="uid://bqar27ptqt5xu" path="res://src/entities/enemies/generic_enemy.tscn" id="1_5ggr7"]
+[ext_resource type="Script" uid="uid://v1fag0bbj8rh" path="res://gdj/entities/projectiles/ProjectileSpawner.gdj" id="2_sy38y"]
+[ext_resource type="Script" uid="uid://djtx5g7eebda4" path="res://gdj/entities/projectiles/spawners/CircleProjectileSpawnerData.gdj" id="3_ht0b8"]
+[ext_resource type="PackedScene" uid="uid://dfl00xfc5e7kj" path="res://src/particles/explode_particles.tscn" id="4_kj877"]
+[ext_resource type="Script" uid="uid://bm7im4vdq70il" path="res://gdj/entities/projectiles/ProjectileData.gdj" id="5_ht0b8"]
+[ext_resource type="Texture2D" uid="uid://f3wgaxd603wp" path="res://assets/texture/projectiles/npc/round_bullet.png" id="6_47fl1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sy38y"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ht0b8"]
+radius = 17.0
+
+[sub_resource type="Resource" id="Resource_g30xe"]
+script = ExtResource("3_ht0b8")
+number_of_projectiles = 3
+rotate_pattern = true
+rotate_speed = 20.0
+spawn_direction = Vector2(0, -1)
+spawn_interval = 1.0
+metadata/_custom_type_script = "uid://djtx5g7eebda4"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sxqkn"]
+radius = 3.0
+
+[sub_resource type="Resource" id="Resource_kj877"]
+script = ExtResource("5_ht0b8")
+texture = ExtResource("6_47fl1")
+texture_rotate_with_dir = false
+collision_shape = SubResource("CircleShape2D_sxqkn")
+shape_offset = Vector2(0, 0)
+collision_mask = 1
+speed = 100.0
+damage = 1.0
+life_time = 10.0
+vfx_color = Color(1, 0, 0, 1)
+use_particles = true
+metadata/_custom_type_script = "uid://bm7im4vdq70il"
+
+[node name="ShipEnemy" instance=ExtResource("1_5ggr7")]
+
+[node name="MoveComponent" parent="." index="2"]
+speed = 40.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0"]
+shape = SubResource("CircleShape2D_sy38y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" index="0"]
+shape = SubResource("CircleShape2D_ht0b8")
+
+[node name="HealthComponent" parent="." index="5" node_paths=PackedStringArray("entity")]
+max_health = 5.0
+die_sfx = ExtResource("4_kj877")
+entity = NodePath("..")
+
+[node name="ProjectileSpawner" type="Node2D" parent="." index="7"]
+script = ExtResource("2_sy38y")
+spawner_data = SubResource("Resource_g30xe")
+projectile_data = SubResource("Resource_kj877")
+metadata/_custom_type_script = "uid://v1fag0bbj8rh"
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]

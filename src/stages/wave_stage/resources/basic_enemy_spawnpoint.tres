@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="EnemySpawnPositions" load_steps=2 format=3 uid="uid://cfy1gqy4ykt08"]
+
+[ext_resource type="Script" uid="uid://bjetgk6pjltx8" path="res://gdj/stages/wave_stage/EnemySpawnPositions.gdj" id="1_rxxga"]
+
+[resource]
+script = ExtResource("1_rxxga")
+positions = Array[Vector2]([Vector2(42, 0), Vector2(74, 0), Vector2(106, 0), Vector2(138, 0)])
+metadata/_custom_type_script = "uid://bjetgk6pjltx8"

@@ -20,4 +20,5 @@ abstract class  Enemy : Entity() {
 
     abstract fun getMaxHealth() : Double
     abstract fun getHealthComp() : HealthComponent
+    abstract fun getScorePoint() : Int
 }

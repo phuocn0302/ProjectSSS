@@ -91,7 +91,7 @@ class DemoStageManager : Node2D() {
 
     @RegisterFunction
     fun spawnEnemy() {
-        val enemy = GODOT_ENEMY?.instantiate() as? entities.enemies.godot_enemy.GodotEnemy
+        val enemy = GODOT_ENEMY?.instantiate() as? Enemy
         enemy?.globalPosition = enemySpawnPos.pickRandom()!!
 
         enemy?.onDefeated?.connect(Callable(this, "updateScore".toGodotName()).bind(1))

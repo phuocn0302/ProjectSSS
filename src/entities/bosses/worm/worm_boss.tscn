@@ -42,7 +42,7 @@
 
 [sub_resource type="Resource" id="Resource_d1jqm"]
 script = ExtResource("2_lcaun")
-max_health = 300.0
+max_health = 20.0
 metadata/_custom_type_script = "uid://b875f1tfsn74d"
 
 [sub_resource type="Shader" id="Shader_01cui"]

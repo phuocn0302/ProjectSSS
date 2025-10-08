@@ -1,0 +1,122 @@
+[gd_scene load_steps=10 format=3 uid="uid://bqar27ptqt5xu"]
+
+[ext_resource type="Script" uid="uid://b7moq4o1mgbut" path="res://gdj/entities/enemies/GenericEnemy.gdj" id="1_bd48y"]
+[ext_resource type="Texture2D" uid="uid://cge2yjkf860oh" path="res://assets/texture/npc/enemies/ship_enemy.png" id="2_8jhb1"]
+[ext_resource type="Script" uid="uid://dtif47dgd2c4h" path="res://src/commons/components/movements/MoveComponent.kt" id="3_6uvms"]
+[ext_resource type="Script" uid="uid://k4bvu3ajrnp" path="res://gdj/commons/components/etc/HitboxComponent.gdj" id="4_l0p4q"]
+[ext_resource type="Script" uid="uid://d0gf87hveesrj" path="res://gdj/commons/components/etc/HurtboxComponent.gdj" id="5_a2td7"]
+[ext_resource type="Script" uid="uid://dka2on5w1r0ov" path="res://gdj/commons/components/etc/HealthComponent.gdj" id="6_pmy6g"]
+[ext_resource type="Script" uid="uid://tpl3rw1xolie" path="res://src/commons/components/sfx/HitFlashComponent.kt" id="7_dhxqi"]
+
+[sub_resource type="Shader" id="Shader_bd48y"]
+code = "shader_type canvas_item;
+
+// === Outline Controls ===
+uniform bool outline_enabled = false;
+uniform vec4 outline_color    : source_color = vec4(1.0);
+uniform float outline_size    : hint_range(0.0, 16.0, 0.1) = 1.0;
+uniform float alpha_threshold : hint_range(0.0, 1.0, 0.01) = 0.0;
+uniform int outline_samples   : hint_range(4, 8) = 4;
+
+// === Flash Controls ===
+uniform vec4 flash_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform float flash_strength : hint_range(0.0, 1.0, 0.1) = 0.0;
+
+// === Outline Sampling Directions ===
+const vec2[8] DIRS = vec2[8](
+	vec2(1.0, 0.0), vec2(0.0, 1.0),  vec2(-1.0, 0.0),  vec2(0.0, -1.0),
+	vec2(1.0, 1.0), vec2(-1.0, 1.0), vec2(-1.0, -1.0), vec2(1.0, -1.0)
+);
+
+void fragment() {
+	vec4 tex = texture(TEXTURE, UV);
+	float alpha = tex.a;
+
+	if (alpha <= 0.0 && outline_size <= 0.0) discard;
+
+	bool solid = alpha > alpha_threshold;
+	bool found_outline = false;
+
+	// Only check outline if enabled and current pixel is transparent
+	if (outline_enabled && !solid && outline_size > 0.0) {
+		vec2 offset = TEXTURE_PIXEL_SIZE * outline_size;
+		for (int i = 0; i < outline_samples; i++) {
+			if (texture(TEXTURE, UV + DIRS[i] * offset).a > alpha_threshold) {
+				found_outline = true;
+				break;
+			}
+		}
+	}
+
+	// Color decision
+	if (solid) {
+		COLOR = tex;
+	} else if (outline_enabled && found_outline) {
+		COLOR = outline_color;
+	} else {
+		discard;
+	}
+
+	// === Flash Effect ===
+	COLOR.rgb = mix(COLOR.rgb, flash_color.rgb, flash_strength);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8jhb1"]
+resource_local_to_scene = true
+shader = SubResource("Shader_bd48y")
+shader_parameter/outline_enabled = true
+shader_parameter/outline_color = Color(1, 0, 0, 1)
+shader_parameter/outline_size = 1.0
+shader_parameter/alpha_threshold = 0.0
+shader_parameter/outline_samples = 4
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_strength = 0.0
+
+[node name="GenericEnemy" type="Node2D"]
+script = ExtResource("1_bd48y")
+metadata/_custom_type_script = "uid://b7moq4o1mgbut"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_8jhb1")
+rotation = 1.5708
+texture = ExtResource("2_8jhb1")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -46)
+
+[node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("entity")]
+unique_name_in_owner = true
+script = ExtResource("3_6uvms")
+move_type = 1
+speed = 80.0
+entity = NodePath("..")
+
+[node name="HitboxComponent" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 16
+script = ExtResource("4_l0p4q")
+metadata/_custom_type_script = "uid://k4bvu3ajrnp"
+
+[node name="HurtboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
+unique_name_in_owner = true
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("5_a2td7")
+health_component = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://d0gf87hveesrj"
+
+[node name="HealthComponent" type="Node" parent="." node_paths=PackedStringArray("entity")]
+unique_name_in_owner = true
+script = ExtResource("6_pmy6g")
+entity = NodePath("..")
+metadata/_custom_type_script = "uid://dka2on5w1r0ov"
+
+[node name="HitFlashComponent" type="Node" parent="." node_paths=PackedStringArray("sprite", "health_component", "entity")]
+unique_name_in_owner = true
+script = ExtResource("7_dhxqi")
+sprite = NodePath("../Sprite2D")
+health_component = NodePath("../HealthComponent")
+entity = NodePath("..")

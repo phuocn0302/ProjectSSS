@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WaveData" load_steps=4 format=3 uid="uid://l6is7gt8txfh"]
+
+[ext_resource type="PackedScene" uid="uid://7fx33mvlv67i" path="res://src/entities/enemies/godot_enemy/godot_enemy.tscn" id="1_4vs1r"]
+[ext_resource type="Resource" uid="uid://cfy1gqy4ykt08" path="res://src/stages/wave_stage/resources/basic_enemy_spawnpoint.tres" id="2_qnyut"]
+[ext_resource type="Script" uid="uid://cjecllwrga6ph" path="res://gdj/stages/wave_stage/WaveData.gdj" id="3_t7qjh"]
+
+[resource]
+script = ExtResource("3_t7qjh")
+enemy_scene = ExtResource("1_4vs1r")
+wave_duration_seconds = 5.0
+spawn_interval_seconds = 1.0
+enemy_spawn_positions = ExtResource("2_qnyut")
+metadata/_custom_type_script = "uid://cjecllwrga6ph"

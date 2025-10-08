@@ -1,15 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://7fx33mvlv67i"]
+[gd_scene load_steps=8 format=3 uid="uid://7fx33mvlv67i"]
 
-[ext_resource type="Texture2D" uid="uid://dsgkic5beqh6q" path="res://assets/texture/npc/enemies/godot_enemy.png" id="1_0dou4"]
-[ext_resource type="Script" uid="uid://b1k757qd1315d" path="res://src/entities/enemies/godot_enemy/GodotEnemy.kt" id="1_n6ru6"]
-[ext_resource type="Script" uid="uid://dtif47dgd2c4h" path="res://src/commons/components/movements/MoveComponent.kt" id="3_f2su7"]
-[ext_resource type="Script" uid="uid://cuxob5vyvkk4m" path="res://src/commons/components/etc/HealthComponent.kt" id="4_a5kt4"]
-[ext_resource type="PackedScene" uid="uid://dfl00xfc5e7kj" path="res://src/particles/explode_particles.tscn" id="5_qav3f"]
-[ext_resource type="Script" uid="uid://o66i5m677qg1" path="res://src/commons/components/etc/HitboxComponent.kt" id="5_xfy8p"]
-[ext_resource type="Script" uid="uid://chsuvyscxd1l5" path="res://src/commons/components/etc/HurtboxComponent.kt" id="6_4o2ve"]
-[ext_resource type="Script" uid="uid://tpl3rw1xolie" path="res://src/commons/components/sfx/HitFlashComponent.kt" id="9_6oukh"]
+[ext_resource type="PackedScene" uid="uid://bqar27ptqt5xu" path="res://src/entities/enemies/generic_enemy.tscn" id="1_jr0pm"]
+[ext_resource type="Texture2D" uid="uid://w58tf5oqek0d" path="res://assets/texture/godot.png" id="2_ghyt3"]
+[ext_resource type="PackedScene" uid="uid://c3rq577ok406m" path="res://src/particles/circle_explosion.tscn" id="3_7k80t"]
 
-[sub_resource type="Shader" id="Shader_5t7db"]
+[sub_resource type="Shader" id="Shader_jr0pm"]
 code = "shader_type canvas_item;
 
 // === Outline Controls ===
@@ -63,109 +58,36 @@ void fragment() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ia1k"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ghyt3"]
 resource_local_to_scene = true
-shader = SubResource("Shader_5t7db")
-shader_parameter/outline_enabled = false
-shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader = SubResource("Shader_jr0pm")
+shader_parameter/outline_enabled = true
+shader_parameter/outline_color = Color(1, 0, 0, 1)
 shader_parameter/outline_size = 1.0
 shader_parameter/alpha_threshold = 0.0
 shader_parameter/outline_samples = 4
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_strength = 0.0
 
-[sub_resource type="Animation" id="Animation_f2su7"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
+[sub_resource type="CircleShape2D" id="CircleShape2D_2mr3x"]
+radius = 13.1529
 
-[sub_resource type="Animation" id="Animation_n6ru6"]
-resource_name = "idle"
-length = 0.6
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.45, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [0.0, 0.261799, -0.261799, 0.0]
-}
+[sub_resource type="CircleShape2D" id="CircleShape2D_ea50s"]
+radius = 19.2354
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_a5kt4"]
-_data = {
-&"RESET": SubResource("Animation_f2su7"),
-&"idle": SubResource("Animation_n6ru6")
-}
+[node name="GenericEnemy" instance=ExtResource("1_jr0pm")]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qav3f"]
-radius = 13.0
+[node name="Sprite2D" parent="." index="0"]
+material = SubResource("ShaderMaterial_ghyt3")
+rotation = 0.0
+texture = ExtResource("2_ghyt3")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5t7db"]
-radius = 17.0
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0"]
+shape = SubResource("CircleShape2D_2mr3x")
 
-[node name="GodotEnemy" type="Node2D" groups=["e_godot", "enemy"]]
-script = ExtResource("1_n6ru6")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" index="0"]
+shape = SubResource("CircleShape2D_ea50s")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(0, -46)
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_4ia1k")
-texture = ExtResource("1_0dou4")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../Sprite2D")
-libraries = {
-&"": SubResource("AnimationLibrary_a5kt4")
-}
-
-[node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("entity")]
-script = ExtResource("3_f2su7")
-move_type = 1
-entity = NodePath("..")
-
-[node name="HealthComponent" type="Node" parent="." node_paths=PackedStringArray("entity")]
-script = ExtResource("4_a5kt4")
-max_health = 6.0
-die_sfx = ExtResource("5_qav3f")
-entity = NodePath("..")
-
-[node name="HitboxComponent" type="Area2D" parent="."]
-collision_layer = 16
-script = ExtResource("5_xfy8p")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
-shape = SubResource("CircleShape2D_qav3f")
-
-[node name="HurtboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
-collision_layer = 16
-collision_mask = 0
-script = ExtResource("6_4o2ve")
-health_component = NodePath("../HealthComponent")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
-shape = SubResource("CircleShape2D_5t7db")
-
-[node name="HitFlashComponent" type="Node" parent="." node_paths=PackedStringArray("sprite", "health_component", "entity")]
-script = ExtResource("9_6oukh")
-sprite = NodePath("../Sprite2D")
-health_component = NodePath("../HealthComponent")
-entity = NodePath("..")
-
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]
-[connection signal="health_reached_zero" from="HealthComponent" to="." method="_on_health_component_health_reached_zero"]
+[node name="HealthComponent" parent="." index="5"]
+max_health = 3.0
+die_sfx = ExtResource("3_7k80t")

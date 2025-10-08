@@ -1,5 +1,6 @@
 package entities.player
 
+import commons.components.etc.HealthComponent
 import commons.state_machine.StateMachine
 import entities.Entity
 import entities.projectiles.ProjectileSpawner
@@ -27,6 +28,7 @@ class Player : Entity() {
     private lateinit var stateMachine: StateMachine
     private lateinit var inputHandler: PlayerInputHandler
     private lateinit var mobileInputHandler: MobileInputHandler
+    private lateinit var healthComponent: HealthComponent
 
     @RegisterFunction
     override fun _enterTree() {
@@ -36,6 +38,7 @@ class Player : Entity() {
     @RegisterFunction
     override fun _ready() {
         projectileSpawner = getNodeAs("%ProjectileSpawner")!!
+        healthComponent = getNodeAs("%HealthComponent")!!
 
         stateMachine = getNodeAs("StateMachine")!!
         inputHandler = getNodeAs("%InputHandler")!!
@@ -68,5 +71,17 @@ class Player : Entity() {
     @RegisterFunction
     override fun _physicsProcess(delta: Double) {
         stateMachine.physicsProcess(delta)
+    }
+
+    fun getMaxHealth() : Double {
+        return healthComponent.maxHealth
+    }
+
+    fun getHealth() : Double {
+        return healthComponent.currentHealth
+    }
+
+    fun getHealthComp() : HealthComponent {
+        return healthComponent
     }
 }
