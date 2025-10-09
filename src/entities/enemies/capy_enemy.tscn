@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dsw1h3kypkuvs"]
+[gd_scene load_steps=25 format=3 uid="uid://dsw1h3kypkuvs"]
 
 [ext_resource type="PackedScene" uid="uid://bqar27ptqt5xu" path="res://src/entities/enemies/generic_enemy.tscn" id="1_4bli8"]
 [ext_resource type="Texture2D" uid="uid://b7k0h1lu7la1g" path="res://assets/texture/npc/enemies/capy_enemy.png" id="2_7kdc5"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dutpnjw2uhfvb" path="res://src/particles/homing_projectile_particles.tscn" id="6_qbrj2"]
 [ext_resource type="Script" uid="uid://6a8nyghjiyib" path="res://gdj/entities/projectiles/types/HomingProjectileData.gdj" id="7_68nqw"]
 [ext_resource type="Texture2D" uid="uid://b3vy0ravaq21x" path="res://assets/texture/projectiles/npc/missile_sheet.png" id="8_3eswg"]
+[ext_resource type="AudioStream" uid="uid://c8tlfogks0mgq" path="res://assets/sounds/sfx/laserShoot.wav" id="9_axumc"]
 
 [sub_resource type="Shader" id="Shader_bd48y"]
 code = "shader_type canvas_item;
@@ -158,6 +159,11 @@ use_particles = true
 particles = ExtResource("6_qbrj2")
 metadata/_custom_type_script = "uid://6a8nyghjiyib"
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_axumc"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("9_axumc")
+
 [node name="GenericEnemy" instance=ExtResource("1_4bli8")]
 
 [node name="Sprite2D" parent="." index="0"]
@@ -187,3 +193,9 @@ spawner_data = SubResource("Resource_pb57p")
 projectile_type = 1
 projectile_data = SubResource("Resource_w1x6g")
 metadata/_custom_type_script = "uid://v1fag0bbj8rh"
+
+[node name="AudioStreamPlayer2D" parent="." index="8"]
+stream = SubResource("AudioStreamRandomizer_axumc")
+volume_db = -10.0
+
+[connection signal="on_spawned" from="ProjectileSpawner" to="AudioStreamPlayer2D" method="play" binds= [0]]

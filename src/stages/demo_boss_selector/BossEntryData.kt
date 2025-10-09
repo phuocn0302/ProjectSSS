@@ -20,5 +20,5 @@ class BossEntryData : Resource() {
 
     @Export
     @RegisterProperty
-    var bossScene: PackedScene? = null
+    var bossScene: String = "null"
 }

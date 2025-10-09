@@ -7,13 +7,18 @@ import godot.annotation.Export
 import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
+import godot.annotation.RegisterSignal
 import godot.api.Node
 import godot.api.Timer
+import godot.core.signal0
 import godot.global.GD
 
 
 @RegisterClass
 open class ProjectileSpawner : Component2D() {
+
+    @RegisterSignal
+    val onSpawned by signal0()
 
 	@Export
 	@RegisterProperty
@@ -64,6 +69,7 @@ open class ProjectileSpawner : Component2D() {
 	@RegisterFunction
 	open fun spawn() {
 		spawnerData.spawn(objectPool, this)
+        onSpawned.emit()
 	}
 
 	private fun setupPool() {

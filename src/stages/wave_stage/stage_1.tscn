@@ -1,19 +1,20 @@
-[gd_scene load_steps=17 format=3 uid="uid://c58hjj3x4gqoa"]
+[gd_scene load_steps=18 format=3 uid="uid://c58hjj3x4gqoa"]
 
 [ext_resource type="Script" uid="uid://bg1d44hk8sfni" path="res://gdj/stages/wave_stage/WaveStageManager.gdj" id="1_35m3f"]
 [ext_resource type="Script" uid="uid://cog4u1myqrsjt" path="res://gdj/stages/wave_stage/WaveStageData.gdj" id="2_35m3f"]
 [ext_resource type="PackedScene" uid="uid://ckjlvrurfq6x2" path="res://src/entities/bosses/godot/godot_boss.tscn" id="2_t4hft"]
 [ext_resource type="Script" uid="uid://cjecllwrga6ph" path="res://gdj/stages/wave_stage/WaveData.gdj" id="3_t4hft"]
 [ext_resource type="PackedScene" uid="uid://oalne3evw244" path="res://src/entities/player/player.tscn" id="4_35m3f"]
-[ext_resource type="Resource" uid="uid://l6is7gt8txfh" path="res://src/stages/wave_stage/resources/wave1.tres" id="5_lextb"]
+[ext_resource type="Resource" uid="uid://l6is7gt8txfh" path="res://src/stages/wave_stage/resources/wave1.tres" id="5_pffej"]
 [ext_resource type="FontFile" uid="uid://dd7cq4p1wglng" path="res://assets/font/monogram.ttf" id="6_8w3i3"]
-[ext_resource type="PackedScene" uid="uid://c3rf03lph6xe7" path="res://src/stages/title_screen/title_screen.tscn" id="6_pffej"]
 [ext_resource type="Texture2D" uid="uid://c1ijkynb2addy" path="res://assets/texture/ui/health_bar.png" id="7_3t3pf"]
 [ext_resource type="Texture2D" uid="uid://ckfe8jdrlb7eg" path="res://assets/texture/ui/player_health_bar.png" id="8_3t3pf"]
+[ext_resource type="PackedScene" uid="uid://cynqh04opabb" path="res://src/stages/wave_stage/stage_2.tscn" id="9_1n46b"]
+[ext_resource type="AudioStream" uid="uid://bwyj5ncrhpgb" path="res://assets/sounds/bgm/Juhani Junkala [Retro Game Music Pack] Level 1.wav" id="11_h0ta5"]
 
-[sub_resource type="Resource" id="Resource_lextb"]
+[sub_resource type="Resource" id="Resource_h0ta5"]
 script = ExtResource("2_35m3f")
-waves = Array[ExtResource("3_t4hft")]([ExtResource("5_lextb"), ExtResource("5_lextb"), ExtResource("5_lextb")])
+waves = Array[ExtResource("3_t4hft")]([ExtResource("5_pffej"), ExtResource("5_pffej"), ExtResource("5_pffej")])
 inter_wave_delay_seconds = 2.0
 boss_scene = ExtResource("2_t4hft")
 metadata/_custom_type_script = "uid://cog4u1myqrsjt"
@@ -44,8 +45,8 @@ gravity = Vector3(0, 0, 0)
 
 [node name="Stage1" type="Node2D"]
 script = ExtResource("1_35m3f")
-wave_stage_data = SubResource("Resource_lextb")
-next_stage = ExtResource("6_pffej")
+wave_stage_data = SubResource("Resource_h0ta5")
+next_stage = ExtResource("9_1n46b")
 metadata/_custom_type_script = "uid://bg1d44hk8sfni"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -137,3 +138,7 @@ process_material = SubResource("ParticleProcessMaterial_osogt")
 [node name="Player" parent="." instance=ExtResource("4_35m3f")]
 unique_name_in_owner = true
 position = Vector2(90, 267)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_h0ta5")
+volume_db = -10.0

@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://c3rq577ok406m"]
+[gd_scene load_steps=16 format=3 uid="uid://c3rq577ok406m"]
 
 [ext_resource type="Texture2D" uid="uid://djwg6o0pu41" path="res://assets/texture/sfx/circle_explosion_2.png" id="1_uyiyp"]
 [ext_resource type="PackedScene" uid="uid://dfl00xfc5e7kj" path="res://src/particles/explode_particles.tscn" id="2_sf7re"]
 [ext_resource type="Script" uid="uid://bg7b5pq6cvl1r" path="res://src/commons/components/sfx/ScreenShakeComponent.kt" id="3_veyq0"]
+[ext_resource type="AudioStream" uid="uid://dy3nhsvfi64p0" path="res://assets/sounds/sfx/explosion.wav" id="4_oanv5"]
 
 [sub_resource type="Shader" id="Shader_uyiyp"]
 code = "shader_type canvas_item;
@@ -142,6 +143,10 @@ script = null
 
 [node name="ScreenShakeComponent" type="Node" parent="."]
 script = ExtResource("3_veyq0")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_oanv5")
+autoplay = true
 
 [connection signal="animation_finished" from="." to="." method="queue_free"]
 [connection signal="tree_entered" from="." to="ScreenShakeComponent" method="shake"]

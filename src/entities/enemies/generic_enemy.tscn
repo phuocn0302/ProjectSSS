@@ -120,3 +120,5 @@ script = ExtResource("7_dhxqi")
 sprite = NodePath("../Sprite2D")
 health_component = NodePath("../HealthComponent")
 entity = NodePath("..")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

@@ -1,0 +1,174 @@
+[gd_scene load_steps=23 format=3 uid="uid://cynqh04opabb"]
+
+[ext_resource type="Script" uid="uid://bg1d44hk8sfni" path="res://gdj/stages/wave_stage/WaveStageManager.gdj" id="1_h3dk8"]
+[ext_resource type="Script" uid="uid://cog4u1myqrsjt" path="res://gdj/stages/wave_stage/WaveStageData.gdj" id="3_amyjk"]
+[ext_resource type="Script" uid="uid://cjecllwrga6ph" path="res://gdj/stages/wave_stage/WaveData.gdj" id="4_7jji2"]
+[ext_resource type="PackedScene" uid="uid://7fx33mvlv67i" path="res://src/entities/enemies/godot_enemy/godot_enemy.tscn" id="5_7jji2"]
+[ext_resource type="Resource" uid="uid://cfy1gqy4ykt08" path="res://src/stages/wave_stage/resources/basic_enemy_spawnpoint.tres" id="6_68ftt"]
+[ext_resource type="FontFile" uid="uid://dd7cq4p1wglng" path="res://assets/font/monogram.ttf" id="7_0ea47"]
+[ext_resource type="PackedScene" uid="uid://dsw1h3kypkuvs" path="res://src/entities/enemies/capy_enemy.tscn" id="7_e4hfp"]
+[ext_resource type="PackedScene" uid="uid://10pxsohagw8h" path="res://src/stages/wave_stage/stage_3.tscn" id="8_7jji2"]
+[ext_resource type="PackedScene" uid="uid://bqvomxuvx0srd" path="res://src/entities/bosses/capy/capy_boss.tscn" id="8_amyjk"]
+[ext_resource type="Texture2D" uid="uid://c1ijkynb2addy" path="res://assets/texture/ui/health_bar.png" id="8_kifwx"]
+[ext_resource type="Texture2D" uid="uid://ckfe8jdrlb7eg" path="res://assets/texture/ui/player_health_bar.png" id="9_3ualu"]
+[ext_resource type="PackedScene" uid="uid://oalne3evw244" path="res://src/entities/player/player.tscn" id="10_4nbmj"]
+[ext_resource type="AudioStream" uid="uid://bbjdefryghj5p" path="res://assets/sounds/bgm/Juhani Junkala [Retro Game Music Pack] Level 2.wav" id="13_7jji2"]
+
+[sub_resource type="Resource" id="Resource_kifwx"]
+script = ExtResource("4_7jji2")
+enemy_scene = ExtResource("5_7jji2")
+wave_duration_seconds = 5.0
+spawn_interval_seconds = 1.0
+enemy_spawn_positions = ExtResource("6_68ftt")
+metadata/_custom_type_script = "uid://cjecllwrga6ph"
+
+[sub_resource type="Resource" id="Resource_3ualu"]
+script = ExtResource("4_7jji2")
+enemy_scene = ExtResource("7_e4hfp")
+wave_duration_seconds = 5.0
+spawn_interval_seconds = 2.0
+enemy_spawn_positions = ExtResource("6_68ftt")
+metadata/_custom_type_script = "uid://cjecllwrga6ph"
+
+[sub_resource type="Resource" id="Resource_4nbmj"]
+script = ExtResource("4_7jji2")
+enemy_scene = ExtResource("5_7jji2")
+wave_duration_seconds = 10.0
+spawn_interval_seconds = 2.0
+enemy_spawn_positions = ExtResource("6_68ftt")
+metadata/_custom_type_script = "uid://cjecllwrga6ph"
+
+[sub_resource type="Resource" id="Resource_7jji2"]
+script = ExtResource("3_amyjk")
+waves = Array[ExtResource("4_7jji2")]([SubResource("Resource_kifwx"), SubResource("Resource_3ualu"), SubResource("Resource_4nbmj")])
+inter_wave_delay_seconds = 2.0
+boss_scene = ExtResource("8_amyjk")
+metadata/_custom_type_script = "uid://cog4u1myqrsjt"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pffej"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h0ta5"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3t3pf"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_osogt"]
+bg_color = Color(0, 0.898039, 0.960784, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_osogt"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(90, 0, 0)
+emission_shape_scale = Vector3(90, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 180.0
+initial_velocity_max = 220.0
+gravity = Vector3(0, 0, 0)
+
+[node name="Stage2" type="Node2D"]
+script = ExtResource("1_h3dk8")
+wave_stage_data = SubResource("Resource_7jji2")
+next_stage = ExtResource("8_7jji2")
+metadata/_custom_type_script = "uid://bg1d44hk8sfni"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="InputHint" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+offset_left = 54.0
+offset_top = 120.0
+offset_right = 126.0
+offset_bottom = 165.0
+theme_override_fonts/font = ExtResource("7_0ea47")
+theme_override_font_sizes/font_size = 0
+text = "Drag: Move
+Swipe: Dash"
+metadata/_edit_lock_ = true
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+offset_right = 180.0
+offset_bottom = 320.0
+color = Color(0, 0, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="BossHealthBar" type="ProgressBar" parent="CanvasLayer"]
+unique_name_in_owner = true
+z_index = 1000
+offset_left = 4.0
+offset_top = 5.0
+offset_right = 176.0
+offset_bottom = 12.0
+theme_override_styles/background = SubResource("StyleBoxFlat_pffej")
+theme_override_styles/fill = SubResource("StyleBoxFlat_h0ta5")
+value = 100.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite" type="Sprite2D" parent="CanvasLayer/BossHealthBar"]
+unique_name_in_owner = true
+position = Vector2(86, 4)
+texture = ExtResource("8_kifwx")
+
+[node name="PlayerHealthBar" type="ProgressBar" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 24.0
+offset_top = 311.0
+offset_right = 178.0
+offset_bottom = 319.0
+theme_override_styles/background = SubResource("StyleBoxFlat_3t3pf")
+theme_override_styles/fill = SubResource("StyleBoxFlat_osogt")
+value = 100.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/PlayerHealthBar"]
+position = Vector2(65, -7)
+texture = ExtResource("9_3ualu")
+
+[node name="Score" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 24.0
+offset_top = 296.0
+offset_right = 84.0
+offset_bottom = 319.0
+theme_override_fonts/font = ExtResource("7_0ea47")
+text = "Score: 100"
+metadata/_edit_use_anchors_ = true
+
+[node name="WaveNumber" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 129.0
+offset_top = 296.0
+offset_right = 177.0
+offset_bottom = 319.0
+theme_override_fonts/font = ExtResource("7_0ea47")
+text = "Wave 1/3"
+metadata/_edit_use_anchors_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true
+anchor_mode = 0
+
+[node name="Star" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(0.44, 0.44, 0.44, 1)
+amount = 70
+lifetime = 5.0
+process_material = SubResource("ParticleProcessMaterial_osogt")
+
+[node name="Player" parent="." instance=ExtResource("10_4nbmj")]
+unique_name_in_owner = true
+position = Vector2(90, 267)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_7jji2")
+volume_db = -10.0
+autoplay = true

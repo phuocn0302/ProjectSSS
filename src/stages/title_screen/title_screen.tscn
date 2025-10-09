@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c3rf03lph6xe7"]
+[gd_scene load_steps=23 format=3 uid="uid://c3rf03lph6xe7"]
 
 [ext_resource type="Script" uid="uid://bqgwq8ppa5id2" path="res://gdj/stages/title_screen/TitleScreenManager.gdj" id="1_jobga"]
 [ext_resource type="PackedScene" uid="uid://cn2osbb230q8y" path="res://src/utils/scenes/ui/quit_game_confirm.tscn" id="2_5yodc"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://b6wp88jet4l56" path="res://assets/texture/ui/title_screen/button/option_hover.png" id="9_lwj2x"]
 [ext_resource type="Texture2D" uid="uid://ckiy0hico2p8u" path="res://assets/texture/ui/title_screen/button/quit.png" id="10_rf16a"]
 [ext_resource type="Texture2D" uid="uid://53uui4v7u5bp" path="res://assets/texture/ui/title_screen/button/quit_hover.png" id="11_gn4uv"]
+[ext_resource type="AudioStream" uid="uid://bgwt2pwy0mc3u" path="res://assets/sounds/bgm/Juhani Junkala [Retro Game Music Pack] Title Screen.wav" id="15_sv04c"]
 
 [sub_resource type="Animation" id="Animation_681iy"]
 length = 0.001
@@ -206,3 +207,8 @@ disabled = true
 texture_normal = ExtResource("10_rf16a")
 texture_focused = ExtResource("11_gn4uv")
 metadata/_edit_use_anchors_ = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_sv04c")
+volume_db = -10.0
+autoplay = true

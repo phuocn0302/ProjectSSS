@@ -17,6 +17,7 @@ import godot.coroutines.await
 import godot.coroutines.godotCoroutine
 import godot.extension.getNodeAs
 import godot.global.GD
+import stages.wave_stage.WaveStageManager
 
 @RegisterClass
 class DemoBossSelector : Control() {
@@ -60,7 +61,7 @@ class DemoBossSelector : Control() {
 
 			entryContainer.addChild(entry!!)
 			
-			entry?.mouseEntered?.connect { entry.grabFocus() }
+			entry.mouseEntered?.connect { entry.grabFocus() }
 			entry?.pressed?.connect(Callable(this, "onStagesSelected".toGodotName()).bind(bossData.bossScene))
 
 			bossEntries.add(entry)
@@ -72,15 +73,15 @@ class DemoBossSelector : Control() {
 	}
 
 	@RegisterFunction
-	fun onStagesSelected(boss: PackedScene) {
-		val stage = DEMO_STAGE?.instantiate() as? stages.demo_stage.DemoStageManager
-		stage?.boss = boss
-
-		val tree = getTree()
-		tree?.currentScene?.queueFree()
-
-		tree?.root?.addChild(stage!!)
-		tree?.currentScene = stage
+	fun onStagesSelected(stage: String) {
+//		val stage = boss?.instantiate() as? WaveStageManager
+//
+//		val tree = getTree()
+//		tree?.currentScene?.queueFree()
+//
+//		tree?.root?.addChild(stage!!)
+//		tree?.currentScene = stage
+        getTree()?.changeSceneToFile(stage)
 	}
 
 	@RegisterFunction
