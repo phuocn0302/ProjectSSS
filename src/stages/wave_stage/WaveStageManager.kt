@@ -12,27 +12,32 @@ import godot.api.Tween
 import godot.api.Label
 import godot.api.PackedScene
 import godot.api.Timer
+import godot.api.ConfigFile
 import godot.core.Callable
 import godot.core.Vector2
 import godot.core.toGodotName
 import godot.core.variantArrayOf
 import godot.coroutines.GodotDispatchers
-import godot.coroutines.godotCoroutine
 import godot.coroutines.await
+import godot.coroutines.godotCoroutine
 import godot.extension.getNodeAs
 import godot.global.GD
 import commons.singletons.Utils
 import godot.api.CanvasLayer
+import godot.api.InputEvent
+import godot.core.connect
 import godot.global.GD.load
 import utils.scenes.ui.StageClear
+import utils.scenes.ui.StageRetry
 
 @RegisterClass
 class WaveStageManager : Node2D() {
 
-    companion object {
-        private val DEFAULT_BOSS = load<PackedScene>("res://src/entities/bosses/godot/godot_boss.tscn")
-        private val DEFAULT_ENEMY = load<PackedScene>("res://src/entities/enemies/godot_enemy/godot_enemy.tscn")
-    }
+	companion object {
+		private val DEFAULT_BOSS = load<PackedScene>("res://src/entities/bosses/godot/godot_boss.tscn")
+		private val DEFAULT_ENEMY = load<PackedScene>("res://src/entities/enemies/godot_enemy/godot_enemy.tscn")
+		private val STAGE_RETRY = load<PackedScene>("res://src/utils/scenes/ui/stage_retry.tscn")
+	}
 
     @Export
     @RegisterProperty
@@ -52,8 +57,9 @@ class WaveStageManager : Node2D() {
     private var enemySpawnTimer: Timer? = null
     private var currentWave: Int = 0
     private var wavesActive: Boolean = false
-    private var score: Int = 0
-    private var enemiesDefeated: Int = 0
+	private var score: Int = 0
+	private var enemiesDefeated: Int = 0
+	private var highScore: Int = 0
 
     @RegisterFunction
     override fun _ready() {
@@ -69,27 +75,39 @@ class WaveStageManager : Node2D() {
         playerHealthBar.visible = true
         playerHealthBar.maxValue = player.getMaxHealth()
         playerHealthBar.value = player.getMaxHealth()
-        player.getHealthComp().healthDepleted.connect(Callable(this, "updatePlayerHealthBar".toGodotName()))
+		player.getHealthComp().healthDepleted.connect(Callable(this, "updatePlayerHealthBar".toGodotName()))
+		player.onDefeated.connect(Callable(this, "onPlayerDie".toGodotName()))
 
-        setupTimers()
+		setupTimers()
 
 
-        score = 0
-        scoreLabel.text = "Score: $score"
-        val totalWavesInit = waveStageData?.waves?.size ?: 0
+		score = 0
+		scoreLabel.text = "Score: $score"
+		loadHighScore()
+		val totalWavesInit = waveStageData?.waves?.size ?: 0
         waveNumberLabel.text = if (totalWavesInit > 0) "Wave 0/$totalWavesInit" else "Wave 0"
 
         // Wait for player input to begin waves
         setProcess(true)
     }
 
-    @RegisterFunction
-    override fun _process(delta: Double) {
-        if (player.inputVector != Vector2.ZERO) {
-            startNextWave()
-            setProcess(false)
-        }
-    }
+	@RegisterFunction
+	override fun _process(delta: Double) {
+		if (player.inputVector != Vector2.ZERO) {
+			startNextWave()
+			setProcess(false)
+		}
+	}
+	}
+
+	@RegisterFunction
+	override fun _input(event: InputEvent?) {
+		event?.let {
+			if (it.isActionPressed("ui_cancel")) {
+				showPauseMenu()
+			}
+		}
+	}
 
     private fun setupTimers() {
         waveTimer = Timer().also { timer ->
@@ -165,33 +183,33 @@ class WaveStageManager : Node2D() {
         enemySpawnTimer?.start()
     }
 
-    @RegisterFunction
-    fun onWaveEnded() = godotCoroutine(context = GodotDispatchers.MainThread) {
-        if (!wavesActive) return@godotCoroutine
-        wavesActive = false
+	@RegisterFunction
+	fun onWaveEnded() {
+		if (!wavesActive) return
+		wavesActive = false
 
-        enemySpawnTimer?.stop()
-        GD.print("Wave #$currentWave ended")
+		enemySpawnTimer?.stop()
+		GD.print("Wave #$currentWave ended")
 
-        val totalWaves = waveStageData?.waves?.size ?: 0
-        if (currentWave >= totalWaves) {
-            spawnBoss()
-            return@godotCoroutine
-        }
+		val totalWaves = waveStageData?.waves?.size ?: 0
+		if (currentWave >= totalWaves) {
+			spawnBoss()
+			return
+		}
 
-        // Delay before starting the next wave
-        val interWaveDelay = waveStageData?.interWaveDelaySeconds ?: 2.0
-        if (interWaveDelay > 0.0) {
-            val delay = Timer()
-            delay.oneShot = true
-            delay.waitTime = interWaveDelay
-            addChild(delay)
-            delay.start()
-            delay.timeout.connect(Callable(this@WaveStageManager, "onInterWaveDelayElapsed".toGodotName()))
-        } else {
-            onInterWaveDelayElapsed()
-        }
-    }
+		// Delay before starting the next wave
+		val interWaveDelay = waveStageData?.interWaveDelaySeconds ?: 2.0
+		if (interWaveDelay > 0.0) {
+			val delay = Timer()
+			delay.oneShot = true
+			delay.waitTime = interWaveDelay
+			addChild(delay)
+			delay.start()
+			delay.timeout.connect(Callable(this@WaveStageManager, "onInterWaveDelayElapsed".toGodotName()))
+		} else {
+			onInterWaveDelayElapsed()
+		}
+	}
 
     @RegisterFunction
     fun onInterWaveDelayElapsed() {
@@ -244,18 +262,25 @@ fun updateBossHealthBar(amount: Double, boss: Enemy) {
 	playerHealthBar.value = player.getHealth()
     }
 
-@RegisterFunction
-fun onBossDefeated(points: Int) {
-	score += points
-	scoreLabel.text = "Score: $score"
-	bossHealthBar.visible = false
+	@RegisterFunction
+	fun onBossDefeated(points: Int) {
+		score += points
+		scoreLabel.text = "Score: $score"
+		bossHealthBar.visible = false
 
-	enemySpawnTimer?.stop()
-	waveTimer?.stop()
+		// Check and save high score
+		if (score > highScore) {
+			highScore = score
+			saveHighScore()
+			GD.print("New high score: $highScore")
+		}
 
-	val waitTween = Utils.createTweenTimer(this@WaveStageManager, 3.0)
-	waitTween?.finished?.connect(Callable(this, "showStageClear".toGodotName()))
-}
+		enemySpawnTimer?.stop()
+		waveTimer?.stop()
+
+		val waitTween = Utils.createTweenTimer(this@WaveStageManager, 3.0)
+		waitTween?.finished?.connect(Callable(this, "showStageClear".toGodotName()))
+	}
 
     @RegisterFunction
     fun showStageClear() {
@@ -267,7 +292,73 @@ fun onBossDefeated(points: Int) {
 		tree?.currentScene?.queueFree()
 		tree?.root?.addChild(ui)
 		tree?.currentScene = ui
-    }
+	}
+
+	private fun loadHighScore() {
+		val config = ConfigFile()
+		val err = config.load("user://highscore.cfg")
+		if (err == godot.core.Error.OK) {
+			highScore = (config.getValue("game", "high_score", 0) as Long).toInt()
+		}
+	}
+
+	private fun saveHighScore() {
+		val config = ConfigFile()
+		config.setValue("game", "high_score", highScore)
+		config.save("user://highscore.cfg")
+	}
+
+	@RegisterFunction
+	fun onPlayerDie() {
+		// Stop all timers
+		enemySpawnTimer?.stop()
+		waveTimer?.stop()
+
+		showRetryDialog()
+	}
+
+	@RegisterFunction
+	fun showRetryDialog() {
+		val retry = STAGE_RETRY?.instantiate() as? StageRetry
+		retry?.yesPressed?.connect {
+            onRetry()
+        }
+		retry?.noPressed?.connect {
+            returnToTitle()
+        }
+
+		canvasLayer.addChild(retry!!)
+	}
+
+	@RegisterFunction
+	fun onRetry() {
+        GD.print("wtf")
+		val tree = getTree()
+		val currentScenePath = tree?.currentScene?.sceneFilePath
+		if (currentScenePath != null) {
+			tree?.changeSceneToFile(currentScenePath)
+		} else {
+			// Fallback to stage_1 if no scene path
+			tree?.changeSceneToFile("res://src/stages/wave_stage/stage_1.tscn")
+		}
+	}
+
+	@RegisterFunction
+	fun returnToTitle() {
+        GD.print("wtf")
+		getTree()?.changeSceneToFile("res://src/stages/title_screen/title_screen.tscn")
+	}
+
+	@RegisterFunction
+	fun showPauseMenu() {
+		// Stop all timers
+		enemySpawnTimer?.stop()
+		waveTimer?.stop()
+
+		// Show pause menu (you'll need to create this UI)
+		// For now, just return to title
+		getTree()?.changeSceneToFile("res://src/stages/title_screen/title_screen.tscn")
+	}
 }
 
 

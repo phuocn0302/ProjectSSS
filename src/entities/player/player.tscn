@@ -174,7 +174,9 @@ frame_progress = 0.640853
 [node name="HealthComponent" type="Node" parent="Components" node_paths=PackedStringArray("entity")]
 unique_name_in_owner = true
 script = ExtResource("9_wvtmh")
+max_health = 10.0
 die_sfx = ExtResource("10_j3ovn")
+queue_free_on_die = false
 entity = NodePath("../..")
 
 [node name="HurtboxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("health_component")]

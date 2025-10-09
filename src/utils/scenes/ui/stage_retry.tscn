@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cjcln02nsqn7k"]
 
-[ext_resource type="Script" uid="uid://bvhds26i7dgyb" path="res://src/utils/scenes/ui/StageRetry.kt" id="1_gi1iw"]
+[ext_resource type="Script" uid="uid://dimyet7rwu17w" path="res://gdj/utils/scenes/ui/StageRetry.gdj" id="1_cirjd"]
 [ext_resource type="Texture2D" uid="uid://nirtsbb8flm2" path="res://assets/texture/ui/dialog/try_again.png" id="2_28j0g"]
 [ext_resource type="Texture2D" uid="uid://r6ilnjuvjiix" path="res://assets/texture/ui/dialog/no_button.png" id="3_grdp6"]
 [ext_resource type="Texture2D" uid="uid://cx3m20gph5kgf" path="res://assets/texture/ui/dialog/no_button_hover.png" id="4_o76y0"]
@@ -16,7 +16,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_gi1iw")
+script = ExtResource("1_cirjd")
+metadata/_custom_type_script = "uid://dimyet7rwu17w"
 
 [node name="BG" type="ColorRect" parent="."]
 unique_name_in_owner = true
@@ -82,5 +83,5 @@ grow_vertical = 0
 texture_normal = ExtResource("5_umcr0")
 texture_focused = ExtResource("6_u8575")
 
-[connection signal="pressed" from="DialogControl/NoButton" to="." method="_on_no_button_pressed"]
-[connection signal="pressed" from="DialogControl/YesButton" to="." method="_on_yes_button_pressed"]
+[connection signal="pressed" from="DialogControl/NoButton" to="." method="on_no_button_pressed" binds= [true]]
+[connection signal="pressed" from="DialogControl/YesButton" to="." method="on_yes_button_pressed" binds= [true]]

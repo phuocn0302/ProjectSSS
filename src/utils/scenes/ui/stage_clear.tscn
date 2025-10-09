@@ -47,6 +47,17 @@ theme_override_fonts/font = ExtResource("1_1v0wn")
 text = "Score: 100"
 horizontal_alignment = 1
 
+[node name="HiScore" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 27.0
+offset_top = 144.0
+offset_right = 146.0
+offset_bottom = 166.0
+theme_override_fonts/font = ExtResource("1_1v0wn")
+text = "Hi-Score: 100"
+horizontal_alignment = 1
+
 [node name="DialogControl" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3

@@ -8,13 +8,19 @@ import godot.annotation.Export
 import godot.annotation.RegisterClass
 import godot.annotation.RegisterFunction
 import godot.annotation.RegisterProperty
+import godot.annotation.RegisterSignal
 import godot.api.OS
 import godot.core.Vector2
+import godot.core.connect
+import godot.core.signal0
 import godot.core.variantArrayOf
 import godot.extension.getNodeAs
 
 @RegisterClass
 class Player : Entity() {
+
+    @RegisterSignal
+    val onDefeated by signal0()
 
     @Export
     @RegisterProperty
@@ -41,6 +47,12 @@ class Player : Entity() {
         healthComponent = getNodeAs("%HealthComponent")!!
 
         stateMachine = getNodeAs("StateMachine")!!
+
+        healthComponent.healthReachedZero.connect {
+            projectileSpawner.active = false
+            onDefeated.emit()
+
+        }
         inputHandler = getNodeAs("%InputHandler")!!
         mobileInputHandler = getNodeAs("%MobileInputHandler")!!
 

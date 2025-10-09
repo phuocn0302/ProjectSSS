@@ -40,7 +40,7 @@ metadata/_custom_type_script = "uid://cjecllwrga6ph"
 
 [sub_resource type="Resource" id="Resource_7jji2"]
 script = ExtResource("3_amyjk")
-waves = Array[ExtResource("4_7jji2")]([SubResource("Resource_kifwx"), SubResource("Resource_3ualu"), SubResource("Resource_4nbmj")])
+waves = Array[ExtResource("4_7jji2")]([SubResource("Resource_kifwx"), SubResource("Resource_3ualu"), SubResource("Resource_4nbmj"), SubResource("Resource_4nbmj")])
 inter_wave_delay_seconds = 2.0
 boss_scene = ExtResource("8_amyjk")
 metadata/_custom_type_script = "uid://cog4u1myqrsjt"
@@ -172,3 +172,5 @@ position = Vector2(90, 267)
 stream = ExtResource("13_7jji2")
 volume_db = -10.0
 autoplay = true
+
+[connection signal="finished" from="AudioStreamPlayer2D" to="AudioStreamPlayer2D" method="play"]
